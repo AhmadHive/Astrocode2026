@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os  # هذا هو السطر الناقص الذي يسبب فشل الرفع
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -79,7 +79,6 @@ WSGI_APPLICATION = 'AstroCode2026.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 # Add these at the top of your settings.py
-import os
 from urllib.parse import urlparse, parse_qsl
 
 load_dotenv()
