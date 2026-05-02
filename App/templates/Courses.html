@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Space+Mono&display=swap');
+
+    :root {
+        --cyan-glow: #00d2ff;
+        --purple-glow: #bc13fe;
+        --dark-bg: #050505;
+    }
+
+    body {
+        background-color: var(--dark-bg);
+        color: white;
+        font-family: 'Space Mono', monospace;
+        overflow-x: hidden;
+    }
+
+    .courses-header {
+        padding: 100px 20px 50px;
+        text-align: center;
+        background: linear-gradient(to bottom, rgba(0, 210, 255, 0.05), transparent);
+    }
+
+    .cyber-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(2rem, 5vw, 4rem);
+        text-transform: uppercase;
+        letter-spacing: 10px;
+        color: #fff;
+        text-shadow: 0 0 20px var(--cyan-glow);
+        margin-bottom: 20px;
+    }
+
+    .course-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        padding: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .course-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(0, 210, 255, 0.1);
+        padding: 30px;
+        position: relative;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+    }
+
+    .course-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        margin-bottom: 15px;
+        border-radius: 6px;
+    }
+
+    .course-card::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 2px;
+        background: var(--cyan-glow);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+    }
+
+    .course-card:hover {
+        border-color: var(--cyan-glow);
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(0, 210, 255, 0.1);
+    }
+
+    .course-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .instructor-name {
+        font-family: 'Orbitron', sans-serif;
+        color: var(--cyan-glow);
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .course-name {
+        font-size: 1.5rem;
+        font-weight: 900;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .instructor-bio {
+        font-size: 0.9rem;
+        color: #aaa;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        border-left: 2px solid rgba(255, 255, 255, 0.1);
+        padding-left: 15px;
+    }
+
+    .course-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .time-tag {
+        background: rgba(0, 210, 255, 0.1);
+        color: var(--cyan-glow);
+        padding: 5px 12px;
+        font-size: 0.8rem;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--cyan-glow);
+        border-radius: 50%;
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.5); opacity: 0.5; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    .reveal-item {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(20px);
+    }
+</style>
+
+<section class="min-h-screen">
+    <div class="courses-header">
+        <h1 class="cyber-title">Available Courses</h1>
+        <p class="mono text-cyan-400/60">> SESSION_LIST_2026_UPDATED</p>
+    </div>
+
+    <div class="course-grid" id="courseContainer"></div>
+</section>
+
+<script>
+    const coursesData = [
+        {
+            courseTitle: "Astro-Robotics 101",
+            instructor: "Dr. Sarah Mitchell",
+            bio: "Specialist in autonomous rover navigation and NASA-certified robotics engineer.",
+            time: "Mon, 10:00 AM - 12:00 PM",
+            status: "Online",
+            image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/19_dx3irf.png"
+        },
+        {
+            courseTitle: "AI in Space Exploration",
+            instructor: "Prof. James Chen",
+            bio: "Machine learning researcher focusing on deep space signal processing and pattern recognition.",
+            time: "Tue, 02:00 PM - 04:00 PM",
+            status: "On-Site",
+            image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/20_kswvyx.png"
+        },
+        {
+            courseTitle: "Satellite Data Analysis",
+            instructor: "Eng. Ahmed Rayan",
+            bio: "Geospatial data expert with 10+ years experience in analyzing orbital imaging.",
+            time: "Wed, 11:00 AM - 01:00 PM",
+            status: "Workshop",
+            image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/19_dx3irf.png"
+        },
+        {
+            courseTitle: "Cybersecurity for Satellites",
+            instructor: "Commander Lex Luthor",
+            bio: "Security consultant specialized in protecting uplink/downlink communication channels.",
+            time: "Thu, 09:00 AM - 11:00 AM",
+            status: "Encrypted Session",
+            image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/20_kswvyx.png"
+        }
+    ];
+
+    function loadCourses() {
+        const container = document.getElementById('courseContainer');
+        
+        coursesData.forEach(course => {
+            const card = document.createElement('div');
+            card.className = 'course-card reveal-item';
+            card.innerHTML = `
+                <img src="${course.image}" alt="${course.courseTitle}">
+                <span class="instructor-name">// ${course.instructor}</span>
+                <h2 class="course-name">${course.courseTitle}</h2>
+                <p class="instructor-bio">${course.bio}</p>
+                <div class="course-meta">
+                    <div class="time-tag">
+                        <span class="status-dot"></span>
+                        ${course.time}
+                    </div>
+                    <span class="mono text-[10px] opacity-40">${course.status}</span>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        gsap.to(".reveal-item", {
+            opacity: 1,
+            filter: "blur(0px)",
+            y: 0,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power2.out"
+        });
+    }
+
+    window.onload = loadCourses;
+</script>
+{% endblock %}

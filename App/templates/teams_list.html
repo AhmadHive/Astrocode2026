@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="p-10 bg-[#020408] min-h-screen text-white pt-24">
+    <header class="mb-12">
+        <h2 class="text-4xl font-black italic tracking-tighter uppercase">Deployed <span class="text-cyan-400">Units</span></h2>
+        <p class="mono text-[10px] text-gray-500 mt-2">Active squads in orbit</p>
+        
+        <form method="get" class="mt-8 flex flex-wrap gap-4 p-4 border border-white/10 bg-white/5 rounded-xl">
+            <select name="challenge" class="bg-black border border-white/20 p-2 mono text-xs focus:border-cyan-400 outline-none">
+                <option value="">All Challenges</option>
+                {% for c in challenges %}
+                <option value="{{ c.id }}">{{ c.name }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="university" placeholder="Filter by University..." class="bg-black border border-white/20 p-2 mono text-xs focus:border-cyan-400 outline-none">
+            <button type="submit" class="px-6 py-2 bg-cyan-500 text-black mono font-bold text-xs uppercase hover:bg-cyan-400 transition-colors">Apply_Filter</button>
+        </form>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for team in teams %}
+        <div class="astro-panel p-6 border border-white/10 bg-white/[0.03] relative group hover:border-cyan-500/50 transition-all">
+            <div class="flex justify-between items-start mb-4">
+                <h4 class="text-xl font-bold tracking-tight text-white">{{ team.team_name }}</h4>
+                <span class="px-2 py-1 bg-cyan-500/10 text-cyan-400 mono text-[8px] border border-cyan-500/20 uppercase">
+                    {{ team.challenge.track.name }}
+                </span>
+            </div>
+            <div class="space-y-2 mono text-[10px] text-gray-400">
+                <p><span class="text-gray-600">UNI:</span> {{ team.university }}</p>
+                <p><span class="text-gray-600">CHALLENGE:</span> {{ team.challenge.name }}</p>
+                <p><span class="text-gray-600">LEADER:</span> {{ team.leader_name }}</p>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-white/5">
+                {% if team.submission %}
+                    <a href="{{ team.submission.drive_link }}" target="_blank" class="text-green-400 hover:text-green-300 mono text-[9px] flex items-center gap-2">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> PROJECT_SUBMITTED_VIEW_LINK
+                    </a>
+                {% else %}
+                    <span class="text-red-500/50 mono text-[9px] uppercase">Waiting_for_submission...</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

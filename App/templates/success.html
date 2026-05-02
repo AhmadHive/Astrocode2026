@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="min-h-[90vh] flex items-center justify-center px-4 relative overflow-hidden">
+    
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" id="success-glow"></div>
+
+    <div class="max-w-3xl w-full hull-border p-12 text-center bg-[#020408]/80 backdrop-blur-3xl relative">
+        
+        <div class="mb-10 flex justify-center">
+            <div class="relative group">
+                <div class="absolute inset-0 -m-4 border border-cyan-500/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                <div class="absolute inset-0 -m-8 border border-cyan-500/10 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                
+                <div class="bg-cyan-500/10 p-8 rounded-full border border-cyan-500/50 relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div id="success-content">
+            <div class="mono text-[10px] text-cyan-400 tracking-[0.6em] uppercase mb-4">Transmission_Verified</div>
+            <h2 class="text-5xl font-black italic tracking-tighter uppercase mb-6">Touchdown <span class="text-cyan-400">Confirmed</span></h2>
+            
+            <p class="text-gray-400 text-lg leading-relaxed mb-10 max-w-xl mx-auto">
+                Project assets for <span class="text-white font-bold tracking-widest uppercase mono">Squad_{{ user.team_name }}</span> have been successfully integrated into the central data-core. 
+                <br><br>
+                <span class="text-sm italic text-gray-500 uppercase tracking-widest">Orbit stable. Payload secured. Welcome to the future of AstroCode 2026.</span>
+            </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+            <a href="{% url 'home' %}" 
+               class="relative group/btn py-4 px-10 overflow-hidden transition-all">
+                <div class="absolute inset-0 bg-cyan-600/20 border border-cyan-500/50 group-hover/btn:bg-cyan-500 transition-colors"></div>
+                <span class="relative z-10 mono font-bold text-xs uppercase tracking-[0.3em] group-hover/btn:text-black transition-colors">
+                    Return_to_Deck
+                </span>
+            </a>
+            
+            <a href="{% url 'submission' %}" 
+               class="relative group/btn py-4 px-10 overflow-hidden transition-all">
+                <div class="absolute inset-0 border border-white/10 bg-white/5 group-hover/btn:bg-white/10 transition-colors"></div>
+                <span class="relative z-10 mono font-bold text-xs uppercase tracking-[0.3em] transition-colors">
+                    Review_Uplink
+                </span>
+            </a>
+        </div>
+
+        <footer class="mt-16 pt-8 border-t border-white/5">
+            <p class="mono text-[9px] text-gray-600 uppercase tracking-[0.5em] italic">
+                "Science is the force that leads us to the stars"
+            </p>
+        </footer>
+    </div>
+</section>
+
+<script>
+    // GSAP: The "Landing" Sequence
+    const tl = gsap.timeline();
+
+    tl.from(".hull-border", {
+        duration: 1.5,
+        y: 100,
+        opacity: 0,
+        scale: 0.9,
+        ease: "expo.out"
+    })
+    .from(".group", {
+        duration: 1,
+        scale: 0,
+        rotation: 180,
+        opacity: 0,
+        ease: "back.out(1.7)"
+    }, "-=0.8")
+    .from("#success-content > *", {
+        duration: 0.8,
+        y: 20,
+        opacity: 0,
+        stagger: 0.2,
+        ease: "power3.out"
+    }, "-=0.5")
+    .from(".group/btn", {
+        duration: 0.8,
+        y: 20,
+        opacity: 0,
+        stagger: 0.1,
+        ease: "power3.out"
+    }, "-=0.3");
+
+    // Dynamic glow pulse
+    gsap.to("#success-glow", {
+        duration: 4,
+        scale: 1.2,
+        opacity: 0.1,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+    });
+</script>
+{% endblock %}

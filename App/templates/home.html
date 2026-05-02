@@ -1,0 +1,735 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Space+Mono&display=swap');
+
+    /* الهيدر الأساسي */
+    .webgpu-full-width-wrapper {
+        position: relative;
+        width: 100vw;
+        height: 500px;
+        margin-left: calc(-50vw + 50%);
+        margin-right: calc(-50vw + 50%);
+        background: #000;
+        overflow: hidden;
+        border-bottom: 1px solid rgba(0, 210, 255, 0.3);
+    }
+
+    #webgpuCanvas {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .text-overlay-cyber {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
+        opacity: 0;
+        transition: all 0.8s ease;
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    .webgpu-full-width-wrapper:hover .text-overlay-cyber {
+        opacity: 1;
+    }
+
+    .astro-title {
+        color: #fff;
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(2.5rem, 8vw, 5rem);
+        text-transform: uppercase;
+        letter-spacing: 20px;
+        text-shadow: 0 0 30px #00d2ff;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        filter: blur(10px);
+        margin: 0;
+    }
+
+    .webgpu-full-width-wrapper:hover .astro-title {
+        transform: translateY(0);
+        filter: blur(0);
+        letter-spacing: 10px;
+    }
+
+    .mono { font-family: 'Space Mono', monospace; }
+
+    /* تأثير الـ Reveal */
+    .reveal-text {
+        opacity: 0;
+        filter: blur(20px);
+        transform: translateY(30px);
+    }
+
+    /* العداد الأساسي (الوقت) */
+    .countdown-container {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        margin-bottom: 3rem;
+        padding: 20px;
+    }
+
+    .countdown-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .countdown-label {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: #00d2ff;
+        letter-spacing: 2px;
+    }
+
+    .flip-card {
+        background: #1a1a1a;
+        color: white;
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 900;
+        font-size: 3rem;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        position: relative;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        min-width: 80px;
+        text-align: center;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .flip-card::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 2;
+    }
+
+    /* العداد الثاني (عداد الجوائز) */
+    .prizes-counter-wrapper {
+        text-align: center;
+        margin: 4rem 0;
+        padding: 2rem;
+        border-top: 1px solid rgba(0, 210, 255, 0.1);
+        border-bottom: 1px solid rgba(0, 210, 255, 0.1);
+    }
+
+    .prizes-number {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 5rem;
+        font-weight: 900;
+        color: #00d2ff;
+        text-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+        display: block;
+    }
+
+    /* Glitch Hover Effect */
+    .flip-card:hover {
+        border-color: #00d2ff;
+        box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+        cursor: crosshair;
+    }
+
+    .flip-card:hover .time-val {
+        animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+    }
+
+    @keyframes glitch {
+        0% { transform: translate(0); }
+        20% { transform: translate(-2px, 2px); color: #ff00ff; }
+        40% { transform: translate(-2px, -2px); color: #00d2ff; }
+        60% { transform: translate(2px, 2px); }
+        80% { transform: translate(2px, -2px); }
+        100% { transform: translate(0); }
+    }
+
+    .about-border-left {
+        border-left: 2px solid #00d2ff;
+        padding-left: 1.5rem;
+        position: relative;
+    }
+
+    @keyframes dash {
+        from { stroke-dashoffset: 251; }
+        to { stroke-dashoffset: 62; }
+    }
+
+    /* --- تأثير الـ Terminal --- */
+    .terminal-typing {
+        font-family: 'Space Mono', monospace;
+        color: #00d2ff; 
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        position: relative;
+        display: inline-block;
+        width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .terminal-typing::after {
+        content: '';
+        position: absolute;
+        right: -8px;
+        top: 0;
+        width: 10px;
+        height: 100%;
+        background-color: #00d2ff;
+        animation: cursor-blink 0.8s infinite;
+        opacity: 0;
+    }
+
+    .terminal-typing.active {
+        animation: typing-effect 0.8s steps(15) forwards;
+    }
+
+    .terminal-typing.active::after {
+        opacity: 1;
+    }
+
+    @keyframes typing-effect {
+        from { width: 0; }
+        to { width: 100%; }
+    }
+
+    @keyframes cursor-blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+
+    .text-organized { color: #a855f7; }
+    .text-organized::after { background-color: #a855f7; }
+
+    /* --- 3D Carousel Styles --- */
+    .carousel-container {
+        perspective: 1200px;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .carousel-track {
+        position: relative;
+        width: 300px;
+        height: 200px;
+        transform-style: preserve-3d;
+    }
+
+    .carousel-item {
+        position: absolute;
+        width: 300px;
+        height: 200px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(0, 210, 255, 0.3);
+        background: #111;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .carousel-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* --- Pixel Dispersion Canvas Styles --- */
+    .pixel-dispersion-section {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #050505;
+        position: relative;
+    }
+
+    #pixelCanvas {
+        max-width: 100%;
+        max-height: 100%;
+    }
+    
+</style>
+
+<section class="min-h-screen flex flex-col items-center bg-[#050505] text-white overflow-x-hidden pb-20">
+    
+    <div class="webgpu-full-width-wrapper mb-16" id="mainContainer">
+        <canvas id="webgpuCanvas"></canvas>
+        <div class="text-overlay-cyber">
+            <h1 class="astro-title">Astro Code 2026</h1>
+        </div>
+    </div>
+
+    <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 px-4">
+        
+        <div class="lg:col-span-8 group">
+            <div class="hull-border p-12 border border-white/10 relative overflow-hidden transition-all duration-500 hover:border-cyan-400/50 bg-black/40 backdrop-blur-md">
+                <div class="absolute top-4 right-8 mono text-[8px] opacity-20 flex gap-4">
+                    <span>LAT: 31.9454° N</span>
+                    <span>LONG: 35.9284° E</span>
+                </div>
+
+                <header class="mb-12" id="hero-text">
+                    <h2 class="text-6xl font-black mb-4 italic tracking-tighter uppercase leading-none">
+                        Welcome, <span class="text-cyan-400">Commander</span>
+                    </h2>
+                    <div class="h-[1px] w-full bg-gradient-to-r from-cyan-500/50 to-transparent mb-6"></div>
+                    <p class="mono text-sm text-gray-400 tracking-[4px] uppercase">Designation: {{ user.team_name }}</p>
+                </header>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="flex items-center gap-6">
+                        <div class="relative w-24 h-24">
+                            <svg class="w-full h-full -rotate-90">
+                                <circle cx="48" cy="48" r="40" stroke="rgba(255,255,255,0.05)" stroke-width="4" fill="transparent"/>
+                                <circle cx="48" cy="48" r="40" stroke="#00D2FF" stroke-width="4" fill="transparent" 
+                                        stroke-dasharray="251" stroke-dashoffset="62" class="animate-[dash_3s_ease-in-out]"/>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center mono font-bold text-xl">75%</div>
+                        </div>
+                        <div>
+                            <h3 class="mono text-xs text-cyan-400 mb-1">SYNC_STATUS</h3>
+                            <p class="text-lg font-bold uppercase tracking-tight">System Online</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col justify-center">
+                        <h3 class="mono text-xs text-cyan-400 mb-2 tracking-widest">TRANSMISSION_LOG</h3>
+                        <div class="text-yellow-500 mono text-xs animate-pulse italic">
+                            > WAITING FOR ENCRYPTED PAYLOAD...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-4 space-y-6">
+            <div class="hull-border p-8 border border-purple-500/30 bg-black/40">
+                <h3 class="mono text-[10px] font-bold text-purple-400 uppercase tracking-[0.3em] mb-8 flex items-center justify-between">
+                    Crew_Manifest
+                    <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
+                </h3>
+                <ul class="space-y-6">
+                    <li class="flex flex-col border-b border-white/5 pb-4">
+                        <span class="mono text-[9px] text-gray-500 uppercase italic">Commander</span>
+                        <span class="text-lg font-bold tracking-tight">{{ user.leader_name }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-4xl w-full mt-40 px-4 mb-20" id="aboutSection">
+        
+        <div class="reveal-text countdown-container">
+            <div class="countdown-item">
+                <div class="flip-card"><span class="time-val" id="months">00</span></div>
+                <span class="countdown-label">Month</span>
+            </div>
+            <div class="countdown-item">
+                <div class="flip-card"><span class="time-val" id="days">00</span></div>
+                <span class="countdown-label">Day</span>
+            </div>
+            <div class="countdown-item">
+                <div class="flip-card"><span class="time-val" id="hours">00</span></div>
+                <span class="countdown-label">Hour</span>
+            </div>
+            <div class="countdown-item">
+                <div class="flip-card"><span class="time-val" id="minutes">00</span></div>
+                <span class="countdown-label">Minute</span>
+            </div>
+            <div class="countdown-item">
+                <div class="flip-card"><span class="time-val" id="seconds">00</span></div>
+                <span class="countdown-label">Seconds</span>
+            </div>
+        </div>
+
+        <div class="relative">
+            <h3 class="mono text-cyan-400 text-xs tracking-[0.5em] mb-10 uppercase opacity-60 reveal-text">// MISSION_BRIEFING</h3>
+            
+            <div class="space-y-10">
+                <h2 class="reveal-text text-5xl md:text-6xl font-black tracking-tighter leading-tight italic uppercase">
+                    About <span class="text-cyan-400">Astrocode</span>
+                </h2>
+
+                <div class="reveal-text grid grid-cols-1 md:grid-cols-2 gap-6 my-12">
+                    <div class="p-6 border border-cyan-500/20 bg-cyan-950/10 rounded-lg">
+                        <h4 class="mono text-cyan-400 text-xs mb-2 tracking-widest uppercase">Launch_Date</h4>
+                        <p class="text-3xl font-bold italic tracking-tight">8-9 June 2026</p>
+                    </div>
+                    <a href="https://www.google.com/maps/place/%D8%AC%D8%A7%D9%85%D8%B9%D8%A9+%D8%B9%D9%85%D8%A7%D9%86+%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9%E2%80%AD/@32.1163174,35.8840363,17z/data=!3m1!4b1!4m6!3m5!1s0x151c9da8110d261f:0xb03fdda6ac56638f!8m2!3d32.1163174!4d35.8818476!16s%2Fm%2F0gh8lmm?entry=ttu&g_ep=EgoyMDI2MDQyMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="p-6 border border-purple-500/20 bg-purple-950/10 rounded-lg group hover:border-purple-400 transition-colors">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="mono text-purple-400 text-xs mb-2 tracking-widest uppercase">Target_Coordinates</h4>
+                                <p class="text-2xl font-bold tracking-tight">Amman Arab University</p>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-400 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="reveal-text prizes-counter-wrapper">
+                    <span class="prizes-number" id="prizeCounter">0</span>
+                    <span class="countdown-label" style="font-size: 1.2rem;">Total Prize Pool (JOD)</span>
+                </div>
+                
+                <p class="reveal-text text-xl md:text-2xl text-gray-300 font-light leading-relaxed">
+                    Astro Code 2026 is a <span class="text-white font-bold">national, multidisciplinary competition</span> bringing together university students to solve challenges in space science, AI, and software development. 
+                </p>
+
+                <p class="reveal-text text-xl md:text-2xl text-gray-300 font-light leading-relaxed">
+                    Participants use advanced technology and creative approaches to develop innovative solutions in areas like <span class="text-cyan-200">robotics, data analysis, Artificial Intelligence, health and medicine, Web and App, and space systems.</span>
+                </p>
+
+                <div class="reveal-text about-border-left">
+                    <p class="text-xl md:text-2xl text-gray-400 italic">
+                        The competition focuses on tackling real-world challenges in Jordan, turning national issues into practical projects with tangible impact.
+                    </p>
+                </div>
+
+                <p class="reveal-text text-lg text-cyan-400/80 mono bg-cyan-950/20 p-6 border border-cyan-500/10">
+                    > Over 30 teams from more than 10 universities participate, collaborating to implement and present their solutions while gaining hands-on experience and teamwork skills.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-6xl w-full mt-40 px-4 mb-40 overflow-hidden" id="splitRevealSection">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            
+            <div class="reveal-side-left opacity-0 translate-x-[-150px]">
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                    <div class="relative bg-black rounded-lg overflow-hidden border border-white/10 flex flex-col items-center">
+                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669580/11_jmbtuz.png" class="w-full h-[450px] object-cover grayscale hover:grayscale-0 transition-all duration-700 block">
+                        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none">
+                            <span class="terminal-typing">> Host</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal-side-right opacity-0 translate-x-[150px]">
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                    <div class="relative bg-black rounded-lg overflow-hidden border border-white/10 flex flex-col items-center">
+                        <img src="https://res-console.cloudinary.com/diadkkzve/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/Ml9hMWhzZGc=/template_primary" class="w-full h-[450px] object-cover grayscale hover:grayscale-0 transition-all duration-700 block">
+                        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none">
+                            <span class="terminal-typing text-organized">> Organized</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-6xl w-full mt-40 px-4 mb-40" id="partnersSection">
+        <h3 class="mono text-cyan-400 text-xs tracking-[0.5em] mb-4 uppercase opacity-60 text-center reveal-text">// STRATEGIC_ALLIANCE</h3>
+        <h2 class="reveal-text text-4xl md:text-5xl font-black tracking-tighter leading-tight italic uppercase text-center mb-16">
+            Our <span class="text-cyan-400">Partners</span>
+        </h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+
+    <div class="partner-logo opacity-0 blur-xl translate-y-10">
+        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669579/10_wcljha.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
+    </div>
+
+    <div class="partner-logo opacity-0 blur-xl translate-y-10">
+        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/16_vtnfly.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
+    </div>
+
+    <div class="partner-logo opacity-0 blur-xl translate-y-10">
+        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669580/15_rid5p2.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
+    </div>
+
+    <div class="partner-logo opacity-0 blur-xl translate-y-10">
+        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/18_bizxou.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
+    </div>
+
+    <div class="partner-logo opacity-0 blur-xl translate-y-10">
+        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669579/3_cecyf9.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
+    </div>
+
+    <div class="partner-logo opacity-0 blur-xl translate-y-10">
+        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669475/2_a1hsdg.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
+    </div>
+
+</div>
+
+
+    <div class="max-w-6xl w-full mt-40 px-4 mb-40" id="sponsorsSection">
+        <h3 class="mono text-purple-400 text-xs tracking-[0.5em] mb-4 uppercase opacity-60 text-center reveal-text">// FINANCIAL_SUPPORT</h3>
+        <h2 class="reveal-text text-4xl md:text-5xl font-black tracking-tighter leading-tight italic uppercase text-center mb-16">
+            Our <span class="text-purple-400">Sponsors</span>
+        </h2>
+
+        <div class="carousel-container reveal-text">
+            <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-item"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669580/12_noypwg.png" alt="Sponsor 1"></div>
+                <div class="carousel-item"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669580/14_axrphn.png" alt="Sponsor 2"></div>
+                <div class="carousel-item"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669580/13_eay4k4.png" alt="Sponsor 3"></div>
+                <div class="carousel-item"><img src="https://media.licdn.com/dms/image/v2/D4E0BAQHWOCD8xolUsw/company-logo_200_200/company-logo_200_200/0/1691155261164/ieee_young_professionals_logo?e=2147483647&v=beta&t=Ir-Uv_mhOHncVbJEg8FMPUSwNACWGIS772D5bwlOVSg" alt="Sponsor 4"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pixel-dispersion-section" id="pixelContainer">
+        <canvas id="pixelCanvas"></canvas>
+    </div>
+
+</section>
+
+<script type="module">
+    gsap.registerPlugin(ScrollTrigger);
+
+    // --- Countdown Logic ---
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 30);
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const diff = targetDate.getTime() - now;
+        if (diff > 0) {
+            const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
+            const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById('months').innerText = String(months).padStart(2, '0');
+            document.getElementById('days').innerText = String(days).padStart(2, '0');
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(mins).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(secs).padStart(2, '0');
+        }
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // --- WebGPU ---
+    const canvas = document.getElementById('webgpuCanvas');
+    const container = document.getElementById('mainContainer');
+    const colorImageUrl = 'https://res.cloudinary.com/diadkkzve/image/upload/f_auto,q_auto/Screenshot_2026-05-01_224431_yz6ipk'; 
+    const depthImageUrl = 'https://res.cloudinary.com/diadkkzve/image/upload/v1777669584/image-depth-map-generator_a88748be_a9lbco.png';
+    let hoverIntensity = 0.0;
+
+    async function initGPU() {
+        if (!navigator.gpu) return;
+        const adapter = await navigator.gpu.requestAdapter();
+        const device = await adapter.requestDevice();
+        const context = canvas.getContext('webgpu');
+        const [baseBitmap, depthBitmap] = await Promise.all([fetchImage(colorImageUrl), fetchImage(depthImageUrl)]);
+        canvas.width = baseBitmap.width; canvas.height = baseBitmap.height;
+        const format = navigator.gpu.getPreferredCanvasFormat();
+        context.configure({ device, format });
+        const colorTex = createTex(device, baseBitmap);
+        const depthTex = createTex(device, depthBitmap);
+        const shaderModule = device.createShaderModule({
+            code: `
+                struct VOut { @builtin(position) pos: vec4f, @location(0) uv: vec2f };
+                @vertex fn vs(@builtin(vertex_index) i: u32) -> VOut {
+                    var p = array<vec2f, 4>(vec2f(-1,1), vec2f(1,1), vec2f(-1,-1), vec2f(1,-1));
+                    var u = array<vec2f, 4>(vec2f(0,0), vec2f(1,0), vec2f(0,1), vec2f(1,1));
+                    return VOut(vec4f(p[i], 0, 1), u[i]);
+                }
+                @group(0) @binding(0) var s: sampler;
+                @group(0) @binding(1) var t: texture_2d<f32>;
+                @group(0) @binding(2) var d: texture_2d<f32>;
+                struct U { p: f32, h: f32 };
+                @group(0) @binding(3) var<uniform> params: U;
+                @fragment fn fs(@location(0) uv: vec2f) -> @location(0) vec4f {
+                    let c = textureSample(t, s, uv);
+                    let depth = textureSample(d, s, uv).r;
+                    let dist = abs(depth - params.p);
+                    if (dist < 0.05 && params.h > 0.01) {
+                        return mix(c, vec4f(0.0, 0.85, 1.0, 1.0), (1.0 - dist/0.05) * params.h * 0.7);
+                    }
+                    return c;
+                }
+            `
+        });
+        const uBuffer = device.createBuffer({ size: 8, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST });
+        const pipeline = device.createRenderPipeline({
+            layout: 'auto',
+            vertex: { module: shaderModule, entryPoint: 'vs' },
+            fragment: { module: shaderModule, entryPoint: 'fs', targets: [{ format }] },
+            primitive: { topology: 'triangle-strip' }
+        });
+        const bindGroup = device.createBindGroup({
+            layout: pipeline.getBindGroupLayout(0),
+            entries: [
+                { binding: 0, resource: device.createSampler({ magFilter: 'linear' }) },
+                { binding: 1, resource: colorTex.createView() },
+                { binding: 2, resource: depthTex.createView() },
+                { binding: 3, resource: { buffer: uBuffer } }
+            ]
+        });
+        container.addEventListener('mouseenter', () => hoverIntensity = 1.0);
+        container.addEventListener('mouseleave', () => hoverIntensity = 0.0);
+        let prog = 0.0; let currH = 0.0;
+        function render() {
+            prog = (prog + 0.002) % 1.0; currH += (hoverIntensity - currH) * 0.05;
+            device.queue.writeBuffer(uBuffer, 0, new Float32Array([prog, currH]));
+            const enc = device.createCommandEncoder();
+            const pass = enc.beginRenderPass({ colorAttachments: [{ view: context.getCurrentTexture().createView(), loadOp: 'clear', clearValue: [0,0,0,1], storeOp: 'store' }] });
+            pass.setPipeline(pipeline); pass.setBindGroup(0, bindGroup); pass.draw(4); pass.end();
+            device.queue.submit([enc.finish()]); requestAnimationFrame(render);
+        }
+        render();
+    }
+    async function fetchImage(u) { const r = await fetch(u); return await createImageBitmap(await r.blob()); }
+    function createTex(d, b) {
+        const t = d.createTexture({ size: [b.width, b.height, 1], format: 'rgba8unorm', usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.RENDER_ATTACHMENT });
+        d.queue.copyExternalImageToTexture({ source: b }, { texture: t }, [b.width, b.height]);
+        return t;
+    }
+    initGPU();
+
+    // GSAP General Animations
+    gsap.from("#hero-text", { duration: 1.2, y: 40, opacity: 0, ease: "power3.out", delay: 0.2 });
+    gsap.from(".hull-border", { duration: 1.5, opacity: 0, scale: 0.98, stagger: 0.2, ease: "expo.out" });
+
+    gsap.utils.toArray(".reveal-text").forEach((el) => {
+        gsap.to(el, {
+            scrollTrigger: { 
+                trigger: el, 
+                start: "top 85%", 
+                toggleActions: "play none none reverse", 
+                onEnter: () => { if(el.id === 'aboutSection' || el.querySelector('#prizeCounter')) startPrizeCounter(); } 
+            },
+            opacity: 1, 
+            filter: "blur(0px)", 
+            y: 0, 
+            duration: 1.2, 
+            ease: "power2.out"
+        });
+    });
+
+    gsap.to(".reveal-side-left", { scrollTrigger: { trigger: "#splitRevealSection", start: "top 80%", scrub: 1, onEnter: () => document.querySelector('.reveal-side-left .terminal-typing').classList.add('active') }, x: 0, opacity: 1 });
+    gsap.to(".reveal-side-right", { scrollTrigger: { trigger: "#splitRevealSection", start: "top 80%", scrub: 1, onEnter: () => document.querySelector('.reveal-side-right .terminal-typing').classList.add('active') }, x: 0, opacity: 1 });
+
+    gsap.to(".partner-logo", { scrollTrigger: { trigger: "#partnersSection", start: "top 85%" }, opacity: 1, filter: "blur(0px)", y: 0, duration: 1.5, stagger: 0.1 });
+
+    // --- 3D Carousel Scroll Logic ---
+    const items = document.querySelectorAll('.carousel-item');
+    const totalItems = items.length;
+    const radius = 400; 
+
+    gsap.set("#carouselTrack", { transformOrigin: "50% 50% -400px" });
+
+    items.forEach((item, i) => {
+        const angle = (i / totalItems) * 360;
+        gsap.set(item, {
+            rotationY: angle,
+            transformOrigin: `50% 50% -${radius}px`
+        });
+    });
+
+    gsap.to("#carouselTrack", {
+        rotationY: 360,
+        ease: "none",
+        scrollTrigger: {
+            trigger: "#sponsorsSection",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1
+        }
+    });
+
+    function startPrizeCounter() {
+        const obj = { val: 0 };
+        const counterEl = document.getElementById('prizeCounter');
+        if(!counterEl) return;
+        gsap.to(obj, {
+            val: 1000,
+            duration: 2.5,
+            ease: "power3.out",
+            onUpdate: function() {
+                counterEl.innerText = Math.floor(obj.val).toLocaleString();
+            }
+        });
+    }
+
+    // --- Pixel Dispersion Logic (Astro Code 2026) ---
+    const pCanvas = document.getElementById('pixelCanvas');
+    const pCtx = pCanvas.getContext('2d', { willReadFrequently: true });
+    let particles = [];
+    const pText = "ASTRO CODE 2026";
+    
+    function initPixels() {
+        pCanvas.width = window.innerWidth;
+        pCanvas.height = 400;
+        pCtx.fillStyle = "white";
+        pCtx.font = "bold 80px Orbitron";
+        pCtx.textAlign = "center";
+        pCtx.textBaseline = "middle";
+        pCtx.fillText(pText, pCanvas.width / 2, pCanvas.height / 2);
+
+        const imgData = pCtx.getImageData(0, 0, pCanvas.width, pCanvas.height).data;
+        pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+        particles = [];
+
+        for (let y = 0; y < pCanvas.height; y += 4) {
+            for (let x = 0; x < pCanvas.width; x += 4) {
+                const alpha = imgData[(y * pCanvas.width + x) * 4 + 3];
+                if (alpha > 128) {
+                    particles.push({
+                        x: x, y: y,
+                        originX: x + (Math.random() - 0.5) * 1200,
+                        originY: y + (Math.random() - 0.5) * 1200
+                    });
+                }
+            }
+        }
+    }
+
+    function drawPixels(prog) {
+        pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+        pCtx.fillStyle = "#00d2ff";
+        particles.forEach(p => {
+            const cx = p.originX + (p.x - p.originX) * prog;
+            const cy = p.originY + (p.y - p.originY) * prog;
+            pCtx.fillRect(cx, cy, 2, 2);
+        });
+    }
+
+    initPixels();
+    const pObj = { p: 0 };
+    gsap.to(pObj, {
+        p: 1,
+        scrollTrigger: {
+            trigger: "#pixelContainer",
+            start: "top 80%",
+            end: "bottom bottom",
+            scrub: 1.5
+        },
+        onUpdate: () => drawPixels(pObj.p)
+    });
+
+    window.addEventListener('resize', initPixels);
+
+</script>
+{% endblock %}

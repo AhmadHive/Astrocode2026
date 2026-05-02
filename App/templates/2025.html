@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Space+Mono&display=swap');
+
+    :root {
+        --cyan-astro: #00d2ff;
+        --gold-winner: #ffcc00;
+        --dark-bg: #050505;
+    }
+
+    body {
+        background-color: var(--dark-bg);
+        color: white;
+        font-family: 'Space Mono', monospace;
+    }
+
+    .archive-header {
+        height: 40vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to bottom, rgba(0, 210, 255, 0.1), transparent);
+        border-bottom: 1px dashed rgba(0, 210, 255, 0.3);
+    }
+
+    .section-container {
+        max-width: 1100px;
+        margin: 60px auto;
+        padding: 20px;
+    }
+
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        position: relative;
+        margin-bottom: 40px;
+    }
+
+    .section-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2rem;
+        color: var(--cyan-astro);
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .section-title::before {
+        content: "";
+        width: 4px;
+        height: 30px;
+        background: var(--cyan-astro);
+        display: inline-block;
+    }
+
+    .image-grid {
+        display: grid;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+
+    @media (min-width: 768px) {
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .img-placeholder {
+        aspect-ratio: 16/9;
+        background: #111;
+        border: 1px solid rgba(0, 210, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        color: #444;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+    .img-placeholder:hover {
+        transform: scale(1.05);
+        border-color: var(--cyan-astro);
+    }
+
+    .img-placeholder img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .challenge-card {
+        border-left: 1px solid var(--cyan-astro);
+        padding-left: 20px;
+        margin-bottom: 20px;
+    }
+
+    .winner-box {
+        border: 1px solid var(--gold-winner);
+        background: rgba(255, 204, 0, 0.05);
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .rank-1 { color: var(--gold-winner); font-weight: 900; }
+
+    .reveal { opacity: 0; transform: translateY(30px); }
+</style>
+
+<div class="archive-header">
+    <h1 class="font-black text-5xl italic uppercase tracking-tighter" style="font-family: 'Orbitron';">Mission Report: 2025</h1>
+    <p class="text-cyan-400 mt-4 opacity-70">// ARCHIVE_FILE_025 // STATUS: COMPLETED</p>
+</div>
+
+<div class="section-container">
+    
+    <div class="glass-panel reveal">
+        <h2 class="section-title">01. Official Events & Briefing</h2>
+        <div class="text-gray-300 leading-relaxed space-y-4">
+            <p>
+                The University of Amman organized the <span class="text-white font-bold">"AstroCode: Explore. Code. Launch"</span> competition under the patronage of <span class="text-cyan-400">Prof. Dr. Mohammad Al-Widyan</span>. 
+                Supported by the IEEE Student Branch and specialized communities like AESS and IEEE Computer Society, the event simulated global space challenges to empower students in aerospace technology.
+            </p>
+            <p>
+                A keynote panel titled <span class="italic text-white">"Space Development in the Era of Modern Technology"</span> featured experts like 
+                Dr. Ammar Skaji, Dr. Hanna Sabat, and Dr. Ahmad Al-Hesban, moderated by Mohammad Abu Amsha.
+            </p>
+        </div>
+
+        <div class="image-grid grid-3">
+            <div class="img-placeholder"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669579/4_gdy98l.png" alt="Inauguration"></div>
+            <div class="img-placeholder"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669585/Screenshot_2026-05-01_221500_qgjndz.png" alt="Panel Discussion"></div>
+            <div class="img-placeholder"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669579/6_cgpyt6.png" alt="IEEE Group"></div>
+        </div>
+    </div>
+
+    <div class="glass-panel reveal">
+        <h2 class="section-title">02. The 24H Hackathon</h2>
+        <p class="mb-6 text-gray-400">100 Students | 20 Teams | Intensive 24-Hour Sprint</p>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="challenge-card">
+                <h4 class="text-cyan-400 text-sm font-bold">// SPACE BIOLOGY ENGINE</h4>
+                <p class="text-xs text-gray-300">AI-powered dashboard for NASA bioscience publications.</p>
+            </div>
+            <div class="challenge-card">
+                <h4 class="text-cyan-400 text-sm font-bold">// EXOPLANET HUNTING</h4>
+                <p class="text-xs text-gray-300">Using ML to identify new planets outside our solar system.</p>
+            </div>
+            <div class="challenge-card">
+                <h4 class="text-cyan-400 text-sm font-bold">// HABITAT LAYOUT CREATOR</h4>
+                <p class="text-xs text-gray-300">Designing life-support systems for space habitats.</p>
+            </div>
+            <div class="challenge-card">
+                <h4 class="text-cyan-400 text-sm font-bold">// SPACETRASH HACK</h4>
+                <p class="text-xs text-gray-300">Sustainable recycling systems for Mars missions.</p>
+            </div>
+        </div>
+
+        <div class="image-grid grid-4">
+            <div class="img-placeholder"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/21_ce4x4e.png" alt=""></div>
+            <div class="img-placeholder"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669584/Screenshot_2026-05-01_221054_gsohhs.png" alt=""></div>
+            <div class="img-placeholder"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669582/25_vohmpp.png" alt=""></div>
+            <div class="img-placeholder"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669582/24_e7rx4h.png" alt=""></div>
+        </div>
+    </div>
+
+    <div class="glass-panel reveal">
+        <h2 class="section-title">03. Victory & Rewards</h2>
+        <div class="space-y-4">
+            <div class="winner-box">
+                <p class="rank-1 text-2xl mb-1">1st PLACE: TEAM TURBINES</p>
+                <p class="text-xs opacity-60">Aviation Sciences & Information Technology</p>
+            </div>
+            <div class="border-l-2 border-gray-500 pl-4">
+                <p class="text-lg">2nd Place: Team Astranova</p>
+                <p class="text-xs opacity-60">IT & Pharmacy</p>
+            </div>
+            <div class="border-l-2 border-gray-500 pl-4">
+                <p class="text-lg">3rd Place: Team Orbital Vision</p>
+                <p class="text-xs opacity-60">JUST University</p>
+            </div>
+            
+            <div class="mt-8 p-4 bg-cyan-900/20 border border-cyan-500/30">
+                <h4 class="text-sm font-bold text-cyan-400 mb-2">INNOVATION AWARD ($100)</h4>
+                <p class="text-xs">Shared by: <span class="text-white">TechNest</span> & <span class="text-white">Zero Gravity</span></p>
+            </div>
+        </div>
+
+        <div class="image-grid grid-4">
+            <div class="img-placeholder"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669582/27_bjfaq2.png" alt=""></div>
+            <div class="img-placeholder"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669582/28_sdaddi.png" alt=""></div>
+            <div class="img-placeholder"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669582/26_cevhkg.png" alt=""></div>
+            <div class="img-placeholder"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669582/29_dj0m48.png" alt=""></div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.utils.toArray(".reveal").forEach(el => {
+        gsap.to(el, {
+            scrollTrigger: {
+                trigger: el,
+                start: "top 80%",
+            },
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power2.out"
+        });
+    });
+</script>
+{% endblock %}
