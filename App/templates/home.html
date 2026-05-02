@@ -12,7 +12,7 @@
     .webgpu-full-width-wrapper {
         position: relative;
         width: 100vw;
-        height: 500px;
+        height: clamp(300px, 40vh, 400px); /* تم تصغير الهيدر وجعله متجاوباً */
         margin-left: calc(-50vw + 50%);
         margin-right: calc(-50vw + 50%);
         background: #000;
@@ -47,20 +47,21 @@
     .astro-title {
         color: #fff;
         font-family: 'Orbitron', sans-serif;
-        font-size: clamp(2.5rem, 8vw, 5rem);
+        font-size: clamp(2rem, 8vw, 5rem);
         text-transform: uppercase;
-        letter-spacing: 20px;
+        letter-spacing: clamp(5px, 2vw, 20px);
         text-shadow: 0 0 30px #00d2ff;
         transform: translateY(30px);
         transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
         filter: blur(10px);
         margin: 0;
+        text-align: center;
     }
 
     .webgpu-full-width-wrapper:hover .astro-title {
         transform: translateY(0);
         filter: blur(0);
-        letter-spacing: 10px;
+        letter-spacing: clamp(2px, 1vw, 10px);
     }
 
     .mono { font-family: 'Space Mono', monospace; }
@@ -75,7 +76,8 @@
     /* العداد الأساسي (الوقت) */
     .countdown-container {
         display: flex;
-        gap: 1.5rem;
+        flex-wrap: wrap; /* للسماح بالتفاف العناصر في الموبايل */
+        gap: 1rem;
         justify-content: center;
         margin-bottom: 3rem;
         padding: 20px;
@@ -101,12 +103,12 @@
         color: white;
         font-family: 'Orbitron', sans-serif;
         font-weight: 900;
-        font-size: 3rem;
+        font-size: clamp(1.5rem, 5vw, 3rem);
         padding: 0.5rem 1rem;
         border-radius: 8px;
         position: relative;
         border: 1px solid rgba(255, 255, 255, 0.1);
-        min-width: 80px;
+        min-width: clamp(60px, 15vw, 80px);
         text-align: center;
         overflow: hidden;
         transition: all 0.3s ease;
@@ -134,7 +136,7 @@
 
     .prizes-number {
         font-family: 'Orbitron', sans-serif;
-        font-size: 5rem;
+        font-size: clamp(3rem, 10vw, 5rem);
         font-weight: 900;
         color: #00d2ff;
         text-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
@@ -176,7 +178,7 @@
     .terminal-typing {
         font-family: 'Space Mono', monospace;
         color: #00d2ff; 
-        font-size: 1.8rem;
+        font-size: clamp(1.2rem, 4vw, 1.8rem);
         text-transform: uppercase;
         letter-spacing: 4px;
         position: relative;
@@ -227,19 +229,20 @@
         align-items: center;
         justify-content: center;
         position: relative;
+        overflow: hidden;
     }
 
     .carousel-track {
         position: relative;
-        width: 300px;
-        height: 200px;
+        width: clamp(200px, 60vw, 300px);
+        height: clamp(133px, 40vw, 200px);
         transform-style: preserve-3d;
     }
 
     .carousel-item {
         position: absolute;
-        width: 300px;
-        height: 200px;
+        width: 100%;
+        height: 100%;
         border-radius: 12px;
         overflow: hidden;
         border: 1px solid rgba(0, 210, 255, 0.3);
@@ -256,7 +259,7 @@
     /* --- Pixel Dispersion Canvas Styles --- */
     .pixel-dispersion-section {
         width: 100%;
-        height: 100vh;
+        height: clamp(50vh, 100vh, 800px);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -273,7 +276,7 @@
 
 <section class="min-h-screen flex flex-col items-center bg-[#050505] text-white overflow-x-hidden pb-20">
     
-    <div class="webgpu-full-width-wrapper mb-16" id="mainContainer">
+    <div class="webgpu-full-width-wrapper mb-10 md:mb-16" id="mainContainer">
         <canvas id="webgpuCanvas"></canvas>
         <div class="text-overlay-cyber">
             <h1 class="astro-title">Astro Code 2026</h1>
@@ -283,39 +286,39 @@
     <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 px-4">
         
         <div class="lg:col-span-8 group">
-            <div class="hull-border p-12 border border-white/10 relative overflow-hidden transition-all duration-500 hover:border-cyan-400/50 bg-black/40 backdrop-blur-md">
-                <div class="absolute top-4 right-8 mono text-[8px] opacity-20 flex gap-4">
+            <div class="hull-border p-6 md:p-12 border border-white/10 relative overflow-hidden transition-all duration-500 hover:border-cyan-400/50 bg-black/40 backdrop-blur-md">
+                <div class="absolute top-4 right-4 md:right-8 mono text-[8px] opacity-20 flex gap-2 md:gap-4">
                     <span>LAT: 31.9454° N</span>
                     <span>LONG: 35.9284° E</span>
                 </div>
 
                 <header class="mb-12" id="hero-text">
-                    <h2 class="text-6xl font-black mb-4 italic tracking-tighter uppercase leading-none">
+                    <h2 class="text-4xl md:text-6xl font-black mb-4 italic tracking-tighter uppercase leading-none">
                         Welcome, <span class="text-cyan-400">Commander</span>
                     </h2>
                     <div class="h-[1px] w-full bg-gradient-to-r from-cyan-500/50 to-transparent mb-6"></div>
-                    <p class="mono text-sm text-gray-400 tracking-[4px] uppercase">Designation: {{ user.team_name }}</p>
+                    <p class="mono text-xs md:text-sm text-gray-400 tracking-[4px] uppercase">Designation: {{ user.team_name }}</p>
                 </header>
 
-                <div class="grid md:grid-cols-2 gap-12">
-                    <div class="flex items-center gap-6">
-                        <div class="relative w-24 h-24">
+                <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+                    <div class="flex items-center gap-4 md:gap-6">
+                        <div class="relative w-20 h-20 md:w-24 md:h-24 flex-shrink-0">
                             <svg class="w-full h-full -rotate-90">
-                                <circle cx="48" cy="48" r="40" stroke="rgba(255,255,255,0.05)" stroke-width="4" fill="transparent"/>
-                                <circle cx="48" cy="48" r="40" stroke="#00D2FF" stroke-width="4" fill="transparent" 
+                                <circle cx="50%" cy="50%" r="40%" stroke="rgba(255,255,255,0.05)" stroke-width="4" fill="transparent"/>
+                                <circle cx="50%" cy="50%" r="40%" stroke="#00D2FF" stroke-width="4" fill="transparent" 
                                         stroke-dasharray="251" stroke-dashoffset="62" class="animate-[dash_3s_ease-in-out]"/>
                             </svg>
-                            <div class="absolute inset-0 flex items-center justify-center mono font-bold text-xl">75%</div>
+                            <div class="absolute inset-0 flex items-center justify-center mono font-bold text-lg md:text-xl">75%</div>
                         </div>
                         <div>
-                            <h3 class="mono text-xs text-cyan-400 mb-1">SYNC_STATUS</h3>
-                            <p class="text-lg font-bold uppercase tracking-tight">System Online</p>
+                            <h3 class="mono text-[10px] md:text-xs text-cyan-400 mb-1">SYNC_STATUS</h3>
+                            <p class="text-base md:text-lg font-bold uppercase tracking-tight">System Online</p>
                         </div>
                     </div>
 
                     <div class="flex flex-col justify-center">
-                        <h3 class="mono text-xs text-cyan-400 mb-2 tracking-widest">TRANSMISSION_LOG</h3>
-                        <div class="text-yellow-500 mono text-xs animate-pulse italic">
+                        <h3 class="mono text-[10px] md:text-xs text-cyan-400 mb-2 tracking-widest">TRANSMISSION_LOG</h3>
+                        <div class="text-yellow-500 mono text-[10px] md:text-xs animate-pulse italic">
                             > WAITING FOR ENCRYPTED PAYLOAD...
                         </div>
                     </div>
@@ -324,7 +327,7 @@
         </div>
 
         <div class="lg:col-span-4 space-y-6">
-            <div class="hull-border p-8 border border-purple-500/30 bg-black/40">
+            <div class="hull-border p-6 md:p-8 border border-purple-500/30 bg-black/40 h-full">
                 <h3 class="mono text-[10px] font-bold text-purple-400 uppercase tracking-[0.3em] mb-8 flex items-center justify-between">
                     Crew_Manifest
                     <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
@@ -332,14 +335,14 @@
                 <ul class="space-y-6">
                     <li class="flex flex-col border-b border-white/5 pb-4">
                         <span class="mono text-[9px] text-gray-500 uppercase italic">Commander</span>
-                        <span class="text-lg font-bold tracking-tight">{{ user.leader_name }}</span>
+                        <span class="text-base md:text-lg font-bold tracking-tight">{{ user.leader_name }}</span>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <div class="max-w-4xl w-full mt-40 px-4 mb-20" id="aboutSection">
+    <div class="max-w-4xl w-full mt-20 md:mt-40 px-4 mb-20 md:mb-20" id="aboutSection">
         
         <div class="reveal-text countdown-container">
             <div class="countdown-item">
@@ -365,23 +368,23 @@
         </div>
 
         <div class="relative">
-            <h3 class="mono text-cyan-400 text-xs tracking-[0.5em] mb-10 uppercase opacity-60 reveal-text">// MISSION_BRIEFING</h3>
+            <h3 class="mono text-cyan-400 text-[10px] md:text-xs tracking-[0.5em] mb-10 uppercase opacity-60 reveal-text">// MISSION_BRIEFING</h3>
             
             <div class="space-y-10">
-                <h2 class="reveal-text text-5xl md:text-6xl font-black tracking-tighter leading-tight italic uppercase">
+                <h2 class="reveal-text text-4xl md:text-6xl font-black tracking-tighter leading-tight italic uppercase">
                     About <span class="text-cyan-400">Astrocode</span>
                 </h2>
 
                 <div class="reveal-text grid grid-cols-1 md:grid-cols-2 gap-6 my-12">
                     <div class="p-6 border border-cyan-500/20 bg-cyan-950/10 rounded-lg">
                         <h4 class="mono text-cyan-400 text-xs mb-2 tracking-widest uppercase">Launch_Date</h4>
-                        <p class="text-3xl font-bold italic tracking-tight">8-9 June 2026</p>
+                        <p class="text-2xl md:text-3xl font-bold italic tracking-tight">8-9 June 2026</p>
                     </div>
-                    <a href="https://www.google.com/maps/place/%D8%AC%D8%A7%D9%85%D8%B9%D8%A9+%D8%B9%D9%85%D8%A7%D9%86+%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A%D8%A9%E2%80%AD/@32.1163174,35.8840363,17z/data=!3m1!4b1!4m6!3m5!1s0x151c9da8110d261f:0xb03fdda6ac56638f!8m2!3d32.1163174!4d35.8818476!16s%2Fm%2F0gh8lmm?entry=ttu&g_ep=EgoyMDI2MDQyMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="p-6 border border-purple-500/20 bg-purple-950/10 rounded-lg group hover:border-purple-400 transition-colors">
+                    <a href="https://www.google.com/maps/place/..." target="_blank" class="p-6 border border-purple-500/20 bg-purple-950/10 rounded-lg group hover:border-purple-400 transition-colors">
                         <div class="flex justify-between items-start">
                             <div>
                                 <h4 class="mono text-purple-400 text-xs mb-2 tracking-widest uppercase">Target_Coordinates</h4>
-                                <p class="text-2xl font-bold tracking-tight">Amman Arab University</p>
+                                <p class="text-xl md:text-2xl font-bold tracking-tight">Amman Arab University</p>
                             </div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-400 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -393,51 +396,51 @@
 
                 <div class="reveal-text prizes-counter-wrapper">
                     <span class="prizes-number" id="prizeCounter">0</span>
-                    <span class="countdown-label" style="font-size: 1.2rem;">Total Prize Pool (JOD)</span>
+                    <span class="countdown-label" style="font-size: clamp(0.9rem, 3vw, 1.2rem);">Total Prize Pool (JOD)</span>
                 </div>
                 
-                <p class="reveal-text text-xl md:text-2xl text-gray-300 font-light leading-relaxed">
+                <p class="reveal-text text-lg md:text-2xl text-gray-300 font-light leading-relaxed">
                     Astro Code 2026 is a <span class="text-white font-bold">national, multidisciplinary competition</span> bringing together university students to solve challenges in space science, AI, and software development. 
                 </p>
 
-                <p class="reveal-text text-xl md:text-2xl text-gray-300 font-light leading-relaxed">
+                <p class="reveal-text text-lg md:text-2xl text-gray-300 font-light leading-relaxed">
                     Participants use advanced technology and creative approaches to develop innovative solutions in areas like <span class="text-cyan-200">robotics, data analysis, Artificial Intelligence, health and medicine, Web and App, and space systems.</span>
                 </p>
 
                 <div class="reveal-text about-border-left">
-                    <p class="text-xl md:text-2xl text-gray-400 italic">
+                    <p class="text-lg md:text-2xl text-gray-400 italic">
                         The competition focuses on tackling real-world challenges in Jordan, turning national issues into practical projects with tangible impact.
                     </p>
                 </div>
 
-                <p class="reveal-text text-lg text-cyan-400/80 mono bg-cyan-950/20 p-6 border border-cyan-500/10">
+                <p class="reveal-text text-base md:text-lg text-cyan-400/80 mono bg-cyan-950/20 p-6 border border-cyan-500/10">
                     > Over 30 teams from more than 10 universities participate, collaborating to implement and present their solutions while gaining hands-on experience and teamwork skills.
                 </p>
             </div>
         </div>
     </div>
 
-    <div class="max-w-6xl w-full mt-40 px-4 mb-40 overflow-hidden" id="splitRevealSection">
+    <div class="max-w-6xl w-full mt-20 md:mt-40 px-4 mb-20 md:mb-40 overflow-hidden" id="splitRevealSection">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             
-            <div class="reveal-side-left opacity-0 translate-x-[-150px]">
+            <div class="reveal-side-left opacity-0 md:translate-x-[-150px] translate-x-[-50px]">
                 <div class="relative group">
                     <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
                     <div class="relative bg-black rounded-lg overflow-hidden border border-white/10 flex flex-col items-center">
-                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669580/11_jmbtuz.png" class="w-full h-[450px] object-cover grayscale hover:grayscale-0 transition-all duration-700 block">
-                        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none">
+                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669580/11_jmbtuz.png" class="w-full h-64 md:h-[450px] object-cover grayscale hover:grayscale-0 transition-all duration-700 block">
+                        <div class="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 pointer-events-none">
                             <span class="terminal-typing">> Host</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="reveal-side-right opacity-0 translate-x-[150px]">
+            <div class="reveal-side-right opacity-0 md:translate-x-[150px] translate-x-[50px]">
                 <div class="relative group">
                     <div class="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
                     <div class="relative bg-black rounded-lg overflow-hidden border border-white/10 flex flex-col items-center">
-                        <img src="https://res-console.cloudinary.com/diadkkzve/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/Ml9hMWhzZGc=/template_primary" class="w-full h-[450px] object-cover grayscale hover:grayscale-0 transition-all duration-700 block">
-                        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none">
+                        <img src="https://res-console.cloudinary.com/diadkkzve/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/Ml9hMWhzZGc=/template_primary" class="w-full h-64 md:h-[450px] object-cover grayscale hover:grayscale-0 transition-all duration-700 block">
+                        <div class="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 pointer-events-none">
                             <span class="terminal-typing text-organized">> Organized</span>
                         </div>
                     </div>
@@ -446,44 +449,44 @@
         </div>
     </div>
 
-    <div class="max-w-6xl w-full mt-40 px-4 mb-40" id="partnersSection">
-        <h3 class="mono text-cyan-400 text-xs tracking-[0.5em] mb-4 uppercase opacity-60 text-center reveal-text">// STRATEGIC_ALLIANCE</h3>
-        <h2 class="reveal-text text-4xl md:text-5xl font-black tracking-tighter leading-tight italic uppercase text-center mb-16">
+    <div class="max-w-6xl w-full mt-20 md:mt-40 px-4 mb-20 md:mb-40" id="partnersSection">
+        <h3 class="mono text-cyan-400 text-[10px] md:text-xs tracking-[0.5em] mb-4 uppercase opacity-60 text-center reveal-text">// STRATEGIC_ALLIANCE</h3>
+        <h2 class="reveal-text text-3xl md:text-5xl font-black tracking-tighter leading-tight italic uppercase text-center mb-10 md:mb-16">
             Our <span class="text-cyan-400">Partners</span>
         </h2>
         
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-8 items-center">
 
-    <div class="partner-logo opacity-0 blur-xl translate-y-10">
-        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669579/10_wcljha.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
+            <div class="partner-logo opacity-0 blur-xl translate-y-10">
+                <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669579/10_wcljha.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
+            </div>
+
+            <div class="partner-logo opacity-0 blur-xl translate-y-10">
+                <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/16_vtnfly.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
+            </div>
+
+            <div class="partner-logo opacity-0 blur-xl translate-y-10">
+                <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669580/15_rid5p2.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
+            </div>
+
+            <div class="partner-logo opacity-0 blur-xl translate-y-10">
+                <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/18_bizxou.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
+            </div>
+
+            <div class="partner-logo opacity-0 blur-xl translate-y-10">
+                <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669579/3_cecyf9.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
+            </div>
+
+            <div class="partner-logo opacity-0 blur-xl translate-y-10">
+                <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669475/2_a1hsdg.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
+            </div>
+
+        </div>
     </div>
 
-    <div class="partner-logo opacity-0 blur-xl translate-y-10">
-        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/16_vtnfly.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
-    </div>
-
-    <div class="partner-logo opacity-0 blur-xl translate-y-10">
-        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669580/15_rid5p2.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
-    </div>
-
-    <div class="partner-logo opacity-0 blur-xl translate-y-10">
-        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/18_bizxou.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
-    </div>
-
-    <div class="partner-logo opacity-0 blur-xl translate-y-10">
-        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669579/3_cecyf9.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
-    </div>
-
-    <div class="partner-logo opacity-0 blur-xl translate-y-10">
-        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669475/2_a1hsdg.png" alt="Partner" class="w-full opacity-80 hover:opacity-100 transition-opacity duration-500 rounded-md">
-    </div>
-
-</div>
-
-
-    <div class="max-w-6xl w-full mt-40 px-4 mb-40" id="sponsorsSection">
-        <h3 class="mono text-purple-400 text-xs tracking-[0.5em] mb-4 uppercase opacity-60 text-center reveal-text">// FINANCIAL_SUPPORT</h3>
-        <h2 class="reveal-text text-4xl md:text-5xl font-black tracking-tighter leading-tight italic uppercase text-center mb-16">
+    <div class="max-w-6xl w-full mt-20 md:mt-40 px-4 mb-20 md:mb-40" id="sponsorsSection">
+        <h3 class="mono text-purple-400 text-[10px] md:text-xs tracking-[0.5em] mb-4 uppercase opacity-60 text-center reveal-text">// FINANCIAL_SUPPORT</h3>
+        <h2 class="reveal-text text-3xl md:text-5xl font-black tracking-tighter leading-tight italic uppercase text-center mb-10 md:mb-16">
             Our <span class="text-purple-400">Sponsors</span>
         </h2>
 
@@ -634,30 +637,41 @@
     gsap.to(".partner-logo", { scrollTrigger: { trigger: "#partnersSection", start: "top 85%" }, opacity: 1, filter: "blur(0px)", y: 0, duration: 1.5, stagger: 0.1 });
 
     // --- 3D Carousel Scroll Logic ---
-    const items = document.querySelectorAll('.carousel-item');
-    const totalItems = items.length;
-    const radius = 400; 
+    function initCarousel() {
+        const items = document.querySelectorAll('.carousel-item');
+        const totalItems = items.length;
+        
+        // حساب الـ Radius بناءً على حجم الشاشة لتجنب خروج العناصر في الموبايل
+        const radius = window.innerWidth < 768 ? Math.max(160, window.innerWidth / 2.2) : 400; 
 
-    gsap.set("#carouselTrack", { transformOrigin: "50% 50% -400px" });
+        gsap.set("#carouselTrack", { transformOrigin: `50% 50% -${radius}px` });
 
-    items.forEach((item, i) => {
-        const angle = (i / totalItems) * 360;
-        gsap.set(item, {
-            rotationY: angle,
-            transformOrigin: `50% 50% -${radius}px`
+        items.forEach((item, i) => {
+            const angle = (i / totalItems) * 360;
+            gsap.set(item, {
+                rotationY: angle,
+                transformOrigin: `50% 50% -${radius}px`
+            });
         });
+
+        gsap.to("#carouselTrack", {
+            rotationY: 360,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "#sponsorsSection",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1
+            }
+        });
+    }
+    initCarousel();
+    // إعادة ضبط الـ Carousel عند تغيير حجم الشاشة
+    window.addEventListener('resize', () => {
+        ScrollTrigger.refresh();
+        initCarousel();
     });
 
-    gsap.to("#carouselTrack", {
-        rotationY: 360,
-        ease: "none",
-        scrollTrigger: {
-            trigger: "#sponsorsSection",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1
-        }
-    });
 
     function startPrizeCounter() {
         const obj = { val: 0 };
@@ -681,9 +695,14 @@
     
     function initPixels() {
         pCanvas.width = window.innerWidth;
-        pCanvas.height = 400;
+        // جعل مساحة الكانفاس مناسبة للشاشة
+        pCanvas.height = window.innerWidth < 768 ? 300 : 400;
         pCtx.fillStyle = "white";
-        pCtx.font = "bold 80px Orbitron";
+        
+        // تغيير حجم الخط ديناميكياً ليناسب الموبايل
+        const fontSize = Math.max(30, Math.min(80, window.innerWidth / 12));
+        pCtx.font = `bold ${fontSize}px Orbitron`;
+        
         pCtx.textAlign = "center";
         pCtx.textBaseline = "middle";
         pCtx.fillText(pText, pCanvas.width / 2, pCanvas.height / 2);
@@ -692,8 +711,11 @@
         pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
         particles = [];
 
-        for (let y = 0; y < pCanvas.height; y += 4) {
-            for (let x = 0; x < pCanvas.width; x += 4) {
+        // تقليل كثافة البيكسل في الموبايل لتحسين الأداء
+        const step = window.innerWidth < 768 ? 6 : 4;
+
+        for (let y = 0; y < pCanvas.height; y += step) {
+            for (let x = 0; x < pCanvas.width; x += step) {
                 const alpha = imgData[(y * pCanvas.width + x) * 4 + 3];
                 if (alpha > 128) {
                     particles.push({
@@ -709,10 +731,14 @@
     function drawPixels(prog) {
         pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
         pCtx.fillStyle = "#00d2ff";
+        
+        // تكبير حجم نقطة البيكسل قليلا في الموبايل للوضوح
+        const dotSize = window.innerWidth < 768 ? 3 : 2;
+
         particles.forEach(p => {
             const cx = p.originX + (p.x - p.originX) * prog;
             const cy = p.originY + (p.y - p.originY) * prog;
-            pCtx.fillRect(cx, cy, 2, 2);
+            pCtx.fillRect(cx, cy, dotSize, dotSize);
         });
     }
 
@@ -729,7 +755,10 @@
         onUpdate: () => drawPixels(pObj.p)
     });
 
-    window.addEventListener('resize', initPixels);
+    window.addEventListener('resize', () => {
+        initPixels();
+        drawPixels(pObj.p);
+    });
 
 </script>
 {% endblock %}
