@@ -17,7 +17,10 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 # السماح لجميع النطاقات في المرحلة الحالية (يمكنك تخصيصه لاحقاً لـ railway.app)
 ALLOWED_HOSTS = ['*']
-
+# أضف رابط موقعك هنا مع https://
+CSRF_TRUSTED_ORIGINS = [
+    'https://satisfied-curiosity-production-f8a2.up.railway.app',
+]
 # 4. تعريف التطبيقات
 INSTALLED_APPS = [
     'django.contrib.admin',
