@@ -8,11 +8,20 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Space+Mono&display=swap');
 
+    /* Ensure Left-to-Right layout */
+    .webgpu-full-width-wrapper, 
+    .countdown-container, 
+    .max-w-6xl, 
+    .max-w-4xl {
+        direction: ltr;
+        text-align: left;
+    }
+
     /* الهيدر الأساسي */
     .webgpu-full-width-wrapper {
         position: relative;
         width: 100vw;
-        height: clamp(300px, 40vh, 400px); /* تم تصغير الهيدر وجعله متجاوباً */
+        height: clamp(300px, 40vh, 400px); 
         margin-left: calc(-50vw + 50%);
         margin-right: calc(-50vw + 50%);
         background: #000;
@@ -76,7 +85,7 @@
     /* العداد الأساسي (الوقت) */
     .countdown-container {
         display: flex;
-        flex-wrap: wrap; /* للسماح بالتفاف العناصر في الموبايل */
+        flex-wrap: wrap; 
         gap: 1rem;
         justify-content: center;
         margin-bottom: 3rem;
@@ -274,7 +283,7 @@
     
 </style>
 
-<section class="min-h-screen flex flex-col items-center bg-[#050505] text-white overflow-x-hidden pb-20">
+<section class="min-h-screen flex flex-col items-center bg-[#050505] text-white overflow-x-hidden pb-20" style="direction: ltr;">
     
     <div class="webgpu-full-width-wrapper mb-10 md:mb-16" id="mainContainer">
         <canvas id="webgpuCanvas"></canvas>
