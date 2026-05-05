@@ -1,90 +1,121 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="min-h-[90vh] flex items-center justify-center px-4">
+<!-- تضمين مكتبة GSAP للأنيميشن -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<section class="min-h-[90vh] flex items-center justify-center px-4 py-10">
     <div class="relative w-full max-w-md group" id="login-portal">
         
-        <div class="absolute -inset-1 bg-gradient-to-b from-transparent via-cyan-500/20 to-transparent h-full w-full pointer-events-none overflow-hidden z-20">
-            <div class="w-full h-[2px] bg-cyan-400/50 shadow-[0_0_15px_rgba(0,210,255,0.5)] animate-[scan_4s_linear_infinite]"></div>
+        <!-- تأثير خط المسح (Scanner) -->
+        <div class="absolute -inset-1 bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent h-full w-full pointer-events-none overflow-hidden z-20">
+            <div class="w-full h-[2px] bg-cyan-400/40 shadow-[0_0_15px_rgba(0,210,255,0.4)] animate-[scan_4s_linear_infinite]"></div>
         </div>
 
-        <div class="hull-border p-10 relative overflow-hidden bg-[#020408]/60 backdrop-blur-2xl">
+        <!-- الهيكل الرئيسي للبطاقة -->
+        <div class="hull-border p-6 md:p-10 relative overflow-hidden bg-[#020408]/80 backdrop-blur-3xl border border-white/5">
             
+            <!-- الزوايا الزخرفية -->
             <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-500/50"></div>
             <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-500/50"></div>
 
             <header class="text-center mb-10">
                 <div class="mono text-[10px] text-cyan-400 tracking-[0.5em] uppercase mb-2">Identification_Required</div>
-                <h2 class="text-3xl font-black italic tracking-tighter uppercase">Access <span class="text-cyan-400">Portal</span></h2>
-                <p class="text-gray-500 text-xs mono mt-2 uppercase tracking-widest">Awaiting Encrypted Credentials...</p>
+                <h2 class="text-2xl md:text-3xl font-black italic tracking-tighter uppercase">Access <span class="text-cyan-400">Portal</span></h2>
+                <p class="text-gray-500 text-[10px] md:text-xs mono mt-2 uppercase tracking-widest">Awaiting Encrypted Credentials...</p>
             </header>
+
+            <!-- عرض رسائل الخطأ من Django إن وجدت -->
+            {% if messages %}
+            <div class="mb-6 space-y-2">
+                {% for message in messages %}
+                <div class="mono text-[10px] bg-red-500/10 border border-red-500/50 text-red-500 px-3 py-2 uppercase">
+                    [ERROR]: {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
 
             <form method="POST" class="space-y-6">
                 {% csrf_token %}
                 
+                <!-- حقل اسم المستخدم -->
                 <div class="relative group/input">
                     <label class="block mono text-[10px] text-gray-500 uppercase mb-2 ml-1 tracking-widest">Personnel_ID</label>
                     <input type="text" name="username" required
-                           class="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-none mono text-sm focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all placeholder:text-gray-700"
+                           class="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-none mono text-sm focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all placeholder:text-gray-700 text-white"
                            placeholder="Enter Team ID...">
                     <div class="absolute bottom-0 left-0 h-[1px] w-0 bg-cyan-400 group-focus-within/input:w-full transition-all duration-500"></div>
                 </div>
 
+                <!-- حقل كلمة المرور -->
                 <div class="relative group/input">
                     <label class="block mono text-[10px] text-gray-500 uppercase mb-2 ml-1 tracking-widest">Access_Key</label>
                     <input type="password" name="password" required
-                           class="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-none mono text-sm focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all placeholder:text-gray-700"
+                           class="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-none mono text-sm focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all placeholder:text-gray-700 text-white"
                            placeholder="••••••••">
                     <div class="absolute bottom-0 left-0 h-[1px] w-0 bg-cyan-400 group-focus-within/input:w-full transition-all duration-500"></div>
                 </div>
 
+                <!-- زر الإرسال -->
                 <button type="submit" 
                         class="w-full relative py-4 mt-4 group/btn overflow-hidden transition-all">
                     <div class="absolute inset-0 bg-cyan-600/20 border border-cyan-500/50 group-hover/btn:bg-cyan-500 transition-colors"></div>
                     <span class="relative z-10 mono font-bold uppercase tracking-[0.3em] group-hover/btn:text-black transition-colors">
                         Initiate_Sequence
                     </span>
+                    <!-- تأثير الـ Shine عند التحويم -->
                     <div class="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] group-hover/btn:left-[100%] transition-all duration-700"></div>
                 </button>
             </form>
 
             <footer class="mt-10 pt-6 border-t border-white/5 text-center">
                 <div class="flex justify-center gap-4 opacity-30">
-                    <div class="w-1 h-1 bg-white rounded-full"></div>
-                    <div class="w-1 h-1 bg-white rounded-full"></div>
-                    <div class="w-1 h-1 bg-white rounded-full"></div>
+                    <div class="w-1 h-1 bg-white rounded-full animate-pulse"></div>
+                    <div class="w-1 h-1 bg-white rounded-full animate-pulse [animation-delay:0.2s]"></div>
+                    <div class="w-1 h-1 bg-white rounded-full animate-pulse [animation-delay:0.4s]"></div>
                 </div>
-                <p class="mono text-[8px] text-gray-600 mt-4 tracking-widest">SECURE_CHANNEL_v4.02 // ENCRYPTION: AES-256</p>
+                <p class="mono text-[8px] text-gray-600 mt-4 tracking-widest uppercase">
+                    Secure_Channel_v4.02 // RSA_ENCRYPTED // AAU_SYSTEMS
+                </p>
             </footer>
         </div>
     </div>
 </section>
 
 <style>
+    /* أنيميشن المسح الضوئي */
     @keyframes scan {
         0% { transform: translateY(-100%); }
         100% { transform: translateY(1000%); }
     }
+
+    /* تحسين مظهر الخلفية عند التركيز */
+    input:focus {
+        box-shadow: inset 0 0 10px rgba(0, 210, 255, 0.05);
+    }
 </style>
 
 <script>
-    // Entrance Animation for the Portal
-    gsap.from("#login-portal", {
-        duration: 2,
-        y: 100,
-        opacity: 0,
-        scale: 0.95,
-        ease: "expo.out",
-        delay: 0.5
-    });
+    document.addEventListener("DOMContentLoaded", () => {
+        // أنيميشن الدخول للـ Portal
+        gsap.from("#login-portal", {
+            duration: 1.5,
+            y: 50,
+            opacity: 0,
+            scale: 0.98,
+            ease: "power4.out",
+            delay: 0.2
+        });
 
-    // Subtle float animation
-    gsap.to("#login-portal", {
-        duration: 4,
-        y: "-=10",
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
+        // حركة اهتزاز بسيطة (Float) لجعل الواجهة تبدو وكأنها هولوغرام
+        gsap.to("#login-portal", {
+            duration: 3,
+            y: "-=8",
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
     });
 </script>
 {% endblock %}

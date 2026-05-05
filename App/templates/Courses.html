@@ -22,43 +22,63 @@
     }
 
     .courses-header {
-        padding: 100px 20px 50px;
+        padding: 80px 15px 40px; /* تقليل الحواف للهاتف */
         text-align: center;
         background: linear-gradient(to bottom, rgba(0, 210, 255, 0.05), transparent);
     }
 
     .cyber-title {
         font-family: 'Orbitron', sans-serif;
-        font-size: clamp(2rem, 5vw, 4rem);
+        font-size: clamp(1.8rem, 8vw, 4rem); /* حجم مرن جداً */
         text-transform: uppercase;
-        letter-spacing: 10px;
+        letter-spacing: 4px; /* تقليل المسافات للهاتف */
         color: #fff;
-        text-shadow: 0 0 20px var(--cyan-glow);
-        margin-bottom: 20px;
+        text-shadow: 0 0 15px var(--cyan-glow);
+        margin-bottom: 15px;
+    }
+
+    @media (min-width: 768px) {
+        .cyber-title { letter-spacing: 10px; }
+        .courses-header { padding: 120px 20px 60px; }
     }
 
     .course-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 30px;
-        padding: 40px;
+        /* استخدام auto-fill بدلاً من auto-fit لضمان شكل متسق */
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+        gap: 20px;
+        padding: 20px;
         max-width: 1200px;
         margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+        .course-grid { 
+            gap: 30px;
+            padding: 40px;
+        }
     }
 
     .course-card {
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(0, 210, 255, 0.1);
-        padding: 30px;
+        padding: 20px; /* تقليل الحشو الداخلي في الموبايل */
         position: relative;
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         overflow: hidden;
         backdrop-filter: blur(10px);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    @media (min-width: 768px) {
+        .course-card { padding: 30px; }
     }
 
     .course-card img {
         width: 100%;
-        height: 180px;
+        height: 160px;
         object-fit: cover;
         margin-bottom: 15px;
         border-radius: 6px;
@@ -77,7 +97,7 @@
 
     .course-card:hover {
         border-color: var(--cyan-glow);
-        transform: translateY(-10px);
+        transform: translateY(-8px);
         box-shadow: 0 10px 30px rgba(0, 210, 255, 0.1);
     }
 
@@ -88,51 +108,59 @@
     .instructor-name {
         font-family: 'Orbitron', sans-serif;
         color: var(--cyan-glow);
-        font-size: 1.2rem;
-        margin-bottom: 10px;
+        font-size: 1rem;
+        margin-bottom: 8px;
         display: block;
     }
 
     .course-name {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         font-weight: 900;
-        margin-bottom: 15px;
+        margin-bottom: 12px;
         text-transform: uppercase;
-        letter-spacing: 2px;
+        letter-spacing: 1px;
+        line-height: 1.3;
+    }
+
+    @media (min-width: 768px) {
+        .course-name { font-size: 1.5rem; }
     }
 
     .instructor-bio {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         color: #aaa;
-        line-height: 1.6;
+        line-height: 1.5;
         margin-bottom: 20px;
         border-left: 2px solid rgba(255, 255, 255, 0.1);
-        padding-left: 15px;
+        padding-left: 12px;
+        flex-grow: 1; /* جعل الوصف يأخذ المساحة المتبقية لتوحيد حجم البطاقات */
     }
 
     .course-meta {
         display: flex;
+        flex-wrap: wrap; /* السماح للعناصر بالنزول لسطر جديد في الشاشات الصغيرة جداً */
         justify-content: space-between;
         align-items: center;
+        gap: 10px;
         margin-top: auto;
-        padding-top: 20px;
+        padding-top: 15px;
         border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .time-tag {
         background: rgba(0, 210, 255, 0.1);
         color: var(--cyan-glow);
-        padding: 5px 12px;
-        font-size: 0.8rem;
+        padding: 4px 10px;
+        font-size: 0.75rem;
         border-radius: 4px;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
     }
 
     .status-dot {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
         background: var(--cyan-glow);
         border-radius: 50%;
         animation: pulse 1.5s infinite;
@@ -140,7 +168,7 @@
 
     @keyframes pulse {
         0% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(1.5); opacity: 0.5; }
+        50% { transform: scale(1.4); opacity: 0.5; }
         100% { transform: scale(1); opacity: 1; }
     }
 
@@ -154,7 +182,7 @@
 <section class="min-h-screen">
     <div class="courses-header">
         <h1 class="cyber-title">Available Courses</h1>
-        <p class="mono text-cyan-400/60">> SESSION_LIST_2026_UPDATED</p>
+        <p class="mono text-cyan-400/60 text-xs md:text-sm">> SESSION_LIST_2026_UPDATED</p>
     </div>
 
     <div class="course-grid" id="courseContainer"></div>
@@ -163,35 +191,35 @@
 <script>
     const coursesData = [
         {
-            courseTitle: "Astro-Robotics 101",
-            instructor: "Dr. Sarah Mitchell",
-            bio: "Specialist in autonomous rover navigation and NASA-certified robotics engineer.",
-            time: "Mon, 10:00 AM - 12:00 PM",
-            status: "Online",
+            courseTitle: "Robotics design and programming",
+            instructor: "Khaled Ahmad",
+            bio: "Robotics and AI Trainer & Mechatronics Engineer | Founder Of RoboMind",
+            time: "13 MAY 2026 11:30 AM - 1:00 PM ",
+            status: "in Amman Arab University",
             image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/19_dx3irf.png"
         },
         {
-            courseTitle: "AI in Space Exploration",
-            instructor: "Prof. James Chen",
-            bio: "Machine learning researcher focusing on deep space signal processing and pattern recognition.",
-            time: "Tue, 02:00 PM - 04:00 PM",
-            status: "On-Site",
+            courseTitle: "Smart Web Apps with AI Agents",
+            instructor: "Mohammad Yacoub",
+            bio: "Founder of CODEgy | Senior Full-Stack .NET Developer | Oracle & SQL ServerExpert | Technical Trainer & IT Consultant",
+            time: "T19 MAY 2026 11:30 AM - 1:00 PM ",
+            status: "in Amman Arab University",
             image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/20_kswvyx.png"
         },
         {
-            courseTitle: "Satellite Data Analysis",
-            instructor: "Eng. Ahmed Rayan",
-            bio: "Geospatial data expert with 10+ years experience in analyzing orbital imaging.",
-            time: "Wed, 11:00 AM - 01:00 PM",
+            courseTitle: "Space and Aerospace Systems",
+            instructor: "Mohamad Abu Amsha",
+            bio: "Aircraft Maintenance Engineer || Chairman of IEEE AESS AAU || Student Sectional Representative AESS Jordan Chapter",
+            time: "16 MAY 2026 11:30 AM - 1:00 PM ",
             status: "Workshop",
-            image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/19_dx3irf.png"
+            image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/32_pzqlfv.png"
         },
-        {
-            courseTitle: "Cybersecurity for Satellites",
-            instructor: "Commander Lex Luthor",
-            bio: "Security consultant specialized in protecting uplink/downlink communication channels.",
-            time: "Thu, 09:00 AM - 11:00 AM",
-            status: "Encrypted Session",
+         {
+            courseTitle: "Smart Web Apps with AI Agents",
+            instructor: "Mohammad Yacoub",
+            bio: "Founder of CODEgy | Senior Full-Stack .NET Developer | Oracle & SQL ServerExpert | Technical Trainer & IT Consultant",
+            time: "T19 MAY 2026 11:30 AM - 1:00 PM ",
+            status: "in Amman Arab University",
             image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/20_kswvyx.png"
         }
     ];
@@ -212,7 +240,7 @@
                         <span class="status-dot"></span>
                         ${course.time}
                     </div>
-                    <span class="mono text-[10px] opacity-40">${course.status}</span>
+                    <span class="mono text-[9px] md:text-[10px] opacity-40 uppercase">${course.status}</span>
                 </div>
             `;
             container.appendChild(card);
@@ -223,7 +251,7 @@
             filter: "blur(0px)",
             y: 0,
             duration: 0.8,
-            stagger: 0.2,
+            stagger: 0.15,
             ease: "power2.out"
         });
     }

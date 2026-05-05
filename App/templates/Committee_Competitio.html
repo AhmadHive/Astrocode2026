@@ -2,159 +2,160 @@
 {% load static %}
 
 {% block content %}
-<section class="bg-[#050505] text-white py-24 overflow-x-hidden min-h-screen">
+<section class="bg-[#050505] text-white py-12 md:py-24 overflow-x-hidden min-h-screen">
     <div class="container mx-auto px-4">
-        <div class="text-center mb-24">
-            <h2 class="text-6xl font-black tracking-tighter uppercase italic text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400">
+        <!-- Header -->
+        <div class="text-center mb-16 md:mb-24">
+            <h2 class="text-4xl md:text-6xl font-black tracking-tighter uppercase italic text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400">
                 Astro Code 2026 Team
             </h2>
-            <div class="w-32 h-1 bg-blue-600 mx-auto mt-4 shadow-[0_0_20px_rgba(37,99,235,0.6)]"></div>
+            <div class="w-24 md:w-32 h-1 bg-blue-600 mx-auto mt-4 shadow-[0_0_20px_rgba(37,99,235,0.6)]"></div>
         </div>
 
-        <div class="max-w-5xl mx-auto space-y-24 relative">
+        <div class="max-w-5xl mx-auto space-y-16 md:space-y-24 relative">
             
             <!-- Member 1 -->
-            <div class="team-card flex items-center justify-center gap-10 opacity-0" data-direction="right">
-                <div class="w-1/2 text-right">
-                    <h3 class="text-3xl font-bold tracking-tight text-white/90">Jehad Al-Ahoda</h3>
-                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-xs mt-2">Astro Organizer</p>
+            <div class="team-card flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 opacity-0" data-direction="right">
+                <div class="w-full md:w-1/2 text-center md:text-right order-2 md:order-1">
+                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-white/90">Jehad Al-Ahoda</h3>
+                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-[10px] md:text-xs mt-2"> Chair Of IEEE AAU</p>
                 </div>
-                <div class="image-wrapper relative group">
-                    <div class="relative overflow-hidden rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
-                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/31_fjcll5.png" alt="Member" class="team-img w-56 h-64 object-cover transition-all duration-300">
+                <div class="image-wrapper relative group order-1 md:order-2">
+                    <div class="relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
+                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/31_fjcll5.png" alt="Member" class="team-img w-48 h-56 md:w-56 md:h-64 object-cover transition-all duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
                     <div class="pulse-ring"></div>
                 </div>
-                <div class="w-1/2"></div>
+                <div class="hidden md:block md:w-1/2 order-3"></div>
             </div>
 
             <!-- Member 2 -->
-            <div class="team-card flex flex-row-reverse items-center justify-center gap-10 opacity-0" data-direction="left">
-                <div class="w-1/2 text-left">
-                    <h3 class="text-3xl font-bold tracking-tight text-white/90">Yazan Al-Sadi</h3>
-                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-xs mt-2">Astro Organizer</p>
+            <div class="team-card flex flex-col md:flex-row-reverse items-center justify-center gap-6 md:gap-10 opacity-0" data-direction="left">
+                <div class="w-full md:w-1/2 text-center md:text-left order-2 md:order-1">
+                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-white/90">Yazan Al-Sadi</h3>
+                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-[10px] md:text-xs mt-2">Vice Chair Of AESS AAU</p>
                 </div>
-                <div class="image-wrapper relative group">
-                    <div class="relative overflow-hidden rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
-                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/30_slzhal.png" alt="Member" class="team-img w-56 h-64 object-cover transition-all duration-300">
+                <div class="image-wrapper relative group order-1 md:order-2">
+                    <div class="relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
+                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/30_slzhal.png" alt="Member" class="team-img w-48 h-56 md:w-56 md:h-64 object-cover transition-all duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
                     <div class="pulse-ring"></div>
                 </div>
-                <div class="w-1/2"></div>
+                <div class="hidden md:block md:w-1/2 order-3"></div>
             </div>
 
             <!-- Member 3 -->
-            <div class="team-card flex items-center justify-center gap-10 opacity-0" data-direction="right">
-                <div class="w-1/2 text-right">
-                    <h3 class="text-3xl font-bold tracking-tight text-white/90">Member Name 3</h3>
-                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-xs mt-2">Astro Organizer</p>
+            <div class="team-card flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 opacity-0" data-direction="right">
+                <div class="w-full md:w-1/2 text-center md:text-right order-2 md:order-1">
+                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-white/90">Mohamad Abu Amsha</h3>
+                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-[10px] md:text-xs mt-2">Chair Of AESS AAU <br> Chair Of Astrocode 2026</p>
                 </div>
-                <div class="image-wrapper relative group">
-                    <div class="relative overflow-hidden rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
-                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/32_pzqlfv.png" alt="Member" class="team-img w-56 h-64 object-cover transition-all duration-300">
+                <div class="image-wrapper relative group order-1 md:order-2">
+                    <div class="relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
+                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/32_pzqlfv.png" alt="Member" class="team-img w-48 h-56 md:w-56 md:h-64 object-cover transition-all duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
                     <div class="pulse-ring"></div>
                 </div>
-                <div class="w-1/2"></div>
+                <div class="hidden md:block md:w-1/2 order-3"></div>
             </div>
 
             <!-- Member 4 -->
-            <div class="team-card flex flex-row-reverse items-center justify-center gap-10 opacity-0" data-direction="left">
-                <div class="w-1/2 text-left">
-                    <h3 class="text-3xl font-bold tracking-tight text-white/90">Member Name 4</h3>
-                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-xs mt-2">Astro Organizer</p>
+            <div class="team-card flex flex-col md:flex-row-reverse items-center justify-center gap-6 md:gap-10 opacity-0" data-direction="left">
+                <div class="w-full md:w-1/2 text-center md:text-left order-2 md:order-1">
+                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-white/90">Hala Ali</h3>
+                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-[10px] md:text-xs mt-2">Chair Of CS AAU</p>
                 </div>
-                <div class="image-wrapper relative group">
-                    <div class="relative overflow-hidden rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
-                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/33_cc7ule.png" alt="Member" class="team-img w-56 h-64 object-cover transition-all duration-300">
+                <div class="image-wrapper relative group order-1 md:order-2">
+                    <div class="relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
+                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/33_cc7ule.png" alt="Member" class="team-img w-48 h-56 md:w-56 md:h-64 object-cover transition-all duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
                     <div class="pulse-ring"></div>
                 </div>
-                <div class="w-1/2"></div>
+                <div class="hidden md:block md:w-1/2 order-3"></div>
             </div>
 
             <!-- Member 5 -->
-            <div class="team-card flex items-center justify-center gap-10 opacity-0" data-direction="right">
-                <div class="w-1/2 text-right">
-                    <h3 class="text-3xl font-bold tracking-tight text-white/90">Member Name 5</h3>
-                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-xs mt-2">Astro Organizer</p>
+            <div class="team-card flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 opacity-0" data-direction="right">
+                <div class="w-full md:w-1/2 text-center md:text-right order-2 md:order-1">
+                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-white/90">Hedaya Yasin</h3>
+                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-[10px] md:text-xs mt-2">Chair Of EMBS AAU</p>
                 </div>
-                <div class="image-wrapper relative group">
-                    <div class="relative overflow-hidden rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
-                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/34_yocqt3.png" alt="Member" class="team-img w-56 h-64 object-cover transition-all duration-300">
+                <div class="image-wrapper relative group order-1 md:order-2">
+                    <div class="relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
+                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/34_yocqt3.png" alt="Member" class="team-img w-48 h-56 md:w-56 md:h-64 object-cover transition-all duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
                     <div class="pulse-ring"></div>
                 </div>
-                <div class="w-1/2"></div>
+                <div class="hidden md:block md:w-1/2 order-3"></div>
             </div>
 
             <!-- Member 6 -->
-            <div class="team-card flex flex-row-reverse items-center justify-center gap-10 opacity-0" data-direction="left">
-                <div class="w-1/2 text-left">
-                    <h3 class="text-3xl font-bold tracking-tight text-white/90">Member Name 6</h3>
-                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-xs mt-2">Astro Organizer</p>
+            <div class="team-card flex flex-col md:flex-row-reverse items-center justify-center gap-6 md:gap-10 opacity-0" data-direction="left">
+                <div class="w-full md:w-1/2 text-center md:text-left order-2 md:order-1">
+                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-white/90">Ali Shaheen</h3>
+                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-[10px] md:text-xs mt-2">Chair Of RAS AAU</p>
                 </div>
-                <div class="image-wrapper relative group">
-                    <div class="relative overflow-hidden rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
-                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/35_v3gmzm.png" alt="Member" class="team-img w-56 h-64 object-cover transition-all duration-300">
+                <div class="image-wrapper relative group order-1 md:order-2">
+                    <div class="relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
+                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/35_v3gmzm.png" alt="Member" class="team-img w-48 h-56 md:w-56 md:h-64 object-cover transition-all duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
                     <div class="pulse-ring"></div>
                 </div>
-                <div class="w-1/2"></div>
+                <div class="hidden md:block md:w-1/2 order-3"></div>
             </div>
 
             <!-- Member 7 -->
-            <div class="team-card flex items-center justify-center gap-10 opacity-0" data-direction="right">
-                <div class="w-1/2 text-right">
-                    <h3 class="text-3xl font-bold tracking-tight text-white/90">Member Name 7</h3>
-                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-xs mt-2">Astro Organizer</p>
+            <div class="team-card flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 opacity-0" data-direction="right">
+                <div class="w-full md:w-1/2 text-center md:text-right order-2 md:order-1">
+                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-white/90">Ahmmad Al-Khwaja</h3>
+                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-[10px] md:text-xs mt-2">AstroCode 2026 website developer</p>
                 </div>
-                <div class="image-wrapper relative group">
-                    <div class="relative overflow-hidden rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
-                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/36_tzkxhb.png" alt="Member" class="team-img w-56 h-64 object-cover transition-all duration-300">
+                <div class="image-wrapper relative group order-1 md:order-2">
+                    <div class="relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
+                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/36_tzkxhb.png" alt="Member" class="team-img w-48 h-56 md:w-56 md:h-64 object-cover transition-all duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
                     <div class="pulse-ring"></div>
                 </div>
-                <div class="w-1/2"></div>
+                <div class="hidden md:block md:w-1/2 order-3"></div>
             </div>
 
             <!-- Member 8 -->
-            <div class="team-card flex flex-row-reverse items-center justify-center gap-10 opacity-0" data-direction="left">
-                <div class="w-1/2 text-left">
-                    <h3 class="text-3xl font-bold tracking-tight text-white/90">Member Name 8</h3>
-                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-xs mt-2">Astro Organizer</p>
+            <div class="team-card flex flex-col md:flex-row-reverse items-center justify-center gap-6 md:gap-10 opacity-0" data-direction="left">
+                <div class="w-full md:w-1/2 text-center md:text-left order-2 md:order-1">
+                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-white/90">Layan Abueid</h3>
+                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-[10px] md:text-xs mt-2">Public Relations Officer</p>
                 </div>
-                <div class="image-wrapper relative group">
-                    <div class="relative overflow-hidden rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
-                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/37_fdiuny.png" alt="Member" class="team-img w-56 h-64 object-cover transition-all duration-300">
+                <div class="image-wrapper relative group order-1 md:order-2">
+                    <div class="relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
+                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/37_fdiuny.png" alt="Member" class="team-img w-48 h-56 md:w-56 md:h-64 object-cover transition-all duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
                     <div class="pulse-ring"></div>
                 </div>
-                <div class="w-1/2"></div>
+                <div class="hidden md:block md:w-1/2 order-3"></div>
             </div>
 
             <!-- Member 9 -->
-            <div class="team-card flex items-center justify-center gap-10 opacity-0" data-direction="right">
-                <div class="w-1/2 text-right">
-                    <h3 class="text-3xl font-bold tracking-tight text-white/90">Member Name 9</h3>
-                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-xs mt-2">Astro Organizer</p>
+            <div class="team-card flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 opacity-0" data-direction="right">
+                <div class="w-full md:w-1/2 text-center md:text-right order-2 md:order-1">
+                    <h3 class="text-2xl md:text-3xl font-bold tracking-tight text-white/90">Dania Abu Nawas </h3>
+                    <p class="text-blue-500 font-mono tracking-[0.2em] uppercase text-[10px] md:text-xs mt-2">Media Team Manager</p>
                 </div>
-                <div class="image-wrapper relative group">
-                    <div class="relative overflow-hidden rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
-                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/38_t9925b.png" alt="Member" class="team-img w-56 h-64 object-cover transition-all duration-300">
+                <div class="image-wrapper relative group order-1 md:order-2">
+                    <div class="relative overflow-hidden rounded-[2rem] md:rounded-[2.5rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
+                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669583/38_t9925b.png" alt="Member" class="team-img w-48 h-56 md:w-56 md:h-64 object-cover transition-all duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     </div>
                     <div class="pulse-ring"></div>
                 </div>
-                <div class="w-1/2"></div>
+                <div class="hidden md:block md:w-1/2 order-3"></div>
             </div>
 
         </div>
@@ -169,7 +170,7 @@
         transform: translate(-50%, -50%);
         width: 110%;
         height: 110%;
-        border-radius: 3rem;
+        border-radius: 2.5rem;
         border: 2px solid #2563eb;
         opacity: 0;
         pointer-events: none;
@@ -188,6 +189,14 @@
     .team-card {
         will-change: transform, opacity;
     }
+
+    /* Mobile adjustments for directions on small screens */
+    @media (max-width: 768px) {
+        .team-card {
+            transform: translateY(30px) !important;
+            text-align: center;
+        }
+    }
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -198,10 +207,14 @@
 
     document.querySelectorAll('.team-card').forEach((card) => {
         const direction = card.getAttribute('data-direction');
-        const startX = direction === 'right' ? 100 : -100;
+        const isMobile = window.innerWidth < 768;
+        
+        // On mobile we prefer a subtle slide up, on desktop we use the side directions
+        const startX = isMobile ? 0 : (direction === 'right' ? 100 : -100);
+        const startY = isMobile ? 50 : 0;
         const img = card.querySelector('.team-img');
 
-        gsap.set(card, { x: startX, opacity: 0 });
+        gsap.set(card, { x: startX, y: startY, opacity: 0 });
         gsap.set(img, { filter: "blur(8px) brightness(0.6)" });
 
         gsap.to(card, {
@@ -211,8 +224,9 @@
                 toggleActions: "play none none reverse",
             },
             x: 0,
+            y: 0,
             opacity: 1,
-            duration: 1,
+            duration: 1.2,
             ease: "power3.out"
         });
 
@@ -222,7 +236,7 @@
                 start: "top 90%",
             },
             filter: "blur(0px) brightness(1)",
-            duration: 0.6, 
+            duration: 0.8, 
             ease: "sine.out"
         });
     });

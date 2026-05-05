@@ -1,28 +1,47 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="min-h-screen flex items-center justify-center px-4 py-24 bg-[#020408]">
+<!-- تضمين مكتبة GSAP للأنيميشن -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<section class="min-h-screen flex items-center justify-center px-4 py-20 bg-[#020408]">
     <div class="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-5 gap-0 relative">
         
-        <div class="hidden lg:flex lg:col-span-2 flex-col justify-between p-8 border-y border-l border-white/10 bg-white/[0.02] rounded-l-3xl">
-            <div class="space-y-4">
+        <!-- اللوحة الجانبية (تظهر في الشاشات الكبيرة فقط) -->
+        <div class="hidden lg:flex lg:col-span-2 flex-col justify-between p-8 border border-white/10 bg-white/[0.02] rounded-l-3xl border-r-0">
+            <div class="space-y-6">
                 <div class="h-1 w-12 bg-cyan-500"></div>
-                <h3 class="mono text-[10px] tracking-[0.4em] text-cyan-400 uppercase">Protocol_Alpha</h3>
-                <p class="text-xs text-gray-500 leading-relaxed italic">
-                    "Every great discovery begins with a single line of code. Initialize your squad and prepare for the 2026 orbital ascent."
-                </p>
+                <div>
+                    <h3 class="mono text-[10px] tracking-[0.4em] text-cyan-400 uppercase mb-2">Protocol_Alpha</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed italic">
+                        "Every great discovery begins with a single line of code. Initialize your squad and prepare for the 2026 orbital ascent."
+                    </p>
+                </div>
+                
+                <!-- عداد أو بيانات شكلية لزيادة طابع السايبربانك -->
+                <div class="pt-4 space-y-3">
+                    <div class="w-full bg-white/5 h-[2px] overflow-hidden">
+                        <div class="bg-cyan-500 h-full w-1/3 animate-pulse"></div>
+                    </div>
+                    <p class="mono text-[8px] text-cyan-500/50 uppercase tracking-widest">System_Check: Optimal</p>
+                </div>
             </div>
             
-            <div class="mono text-[8px] text-gray-600 space-y-2 uppercase tracking-tighter">
-                <div class="flex justify-between"><span>STRUCT_VER:</span> <span>02.26</span></div>
-                <div class="flex justify-between"><span>ENCRYPTION:</span> <span>RSA_4096</span></div>
-                <div class="flex justify-between"><span>ORIGIN:</span> <span>ORBIT_STATION_JOR</span></div>
+            <div class="mono text-[8px] text-gray-600 space-y-2 uppercase tracking-tighter border-t border-white/5 pt-6">
+                <div class="flex justify-between"><span>STRUCT_VER:</span> <span class="text-gray-400">02.26</span></div>
+                <div class="flex justify-between"><span>ENCRYPTION:</span> <span class="text-gray-400">RSA_4096</span></div>
+                <div class="flex justify-between"><span>ORIGIN:</span> <span class="text-gray-400">AAU_STATION_JOR</span></div>
             </div>
         </div>
 
-        <div class="lg:col-span-3 hull-border p-10 lg:rounded-l-none bg-[#020408]/80 shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/10">
-            <header class="mb-10">
-                <h2 class="text-3xl font-black italic tracking-tighter uppercase text-white">Initialize <span class="text-cyan-400">Squad</span></h2>
+        <!-- قسم النموذج (Form Section) -->
+        <div class="lg:col-span-3 p-8 md:p-10 bg-[#020408]/80 shadow-[0_0_50px_rgba(0,210,255,0.05)] border border-white/10 rounded-2xl lg:rounded-l-none lg:rounded-r-3xl relative overflow-hidden">
+            
+            <!-- تأثير الضوء الخفي في الخلفية -->
+            <div class="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/5 blur-[100px] pointer-events-none"></div>
+
+            <header class="mb-8">
+                <h2 class="text-2xl md:text-3xl font-black italic tracking-tighter uppercase text-white">Initialize <span class="text-cyan-400">Squad</span></h2>
                 <div class="h-[1px] w-20 bg-gradient-to-r from-cyan-500 to-transparent mt-2"></div>
             </header>
 
@@ -31,34 +50,38 @@
                 
                 {% for field in form %}
                 <div class="relative group/field">
-                    <label class="block mono text-[9px] text-gray-500 uppercase mb-1 ml-1 tracking-widest">
+                    <label class="block mono text-[9px] text-gray-500 uppercase mb-1.5 ml-1 tracking-widest">
                         {{ field.label }}
                     </label>
                     <div class="relative">
                         
-                        {# التحقق إذا كان الحقل هو حقل اختيار التحدي #}
-                        {% if field.name == 'challenge' %}
+                        {# التحقق إذا كان الحقل هو حقل اختيار #}
+                        {% if field.field.choices %}
                             <select name="{{ field.name }}" id="{{ field.auto_id }}" 
                                     class="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-none mono text-sm focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all text-white appearance-none cursor-pointer">
                                 {% for choice in field.field.choices %}
-                                    <option value="{{ choice.0 }}" class="bg-[#020408] text-white">{{ choice.1 }}</option>
+                                    <option value="{{ choice.0 }}" class="bg-[#0b0e14] text-white">{{ choice.1 }}</option>
                                 {% endfor %}
                             </select>
                             <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-cyan-500/50">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                             </div>
                         {% else %}
-                            <input type="{{ field.field.widget.input_type }}" 
+                            <input type="{{ field.field.widget.input_type|default:'text' }}" 
                                    name="{{ field.name }}"
                                    id="{{ field.auto_id }}"
+                                   {% if field.value %}value="{{ field.value }}"{% endif %}
                                    class="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-none mono text-sm focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all placeholder:text-gray-700 text-white"
                                    placeholder="Input {{ field.label }}...">
                         {% endif %}
                         
-                        <div class="absolute inset-y-0 left-0 w-[2px] bg-cyan-500 opacity-0 group-focus-within/field:opacity-100 transition-opacity"></div>
+                        <!-- الخط الجانبي عند التركيز -->
+                        <div class="absolute inset-y-0 left-0 w-[2px] bg-cyan-500 scale-y-0 group-focus-within/field:scale-y-100 transition-transform duration-300"></div>
                     </div>
                     {% if field.errors %}
-                        <p class="text-[10px] text-red-400 mt-1 mono">{{ field.errors.0 }}</p>
+                        <p class="text-[9px] text-red-500 mt-1.5 mono tracking-tighter uppercase">
+                            [System_Error]: {{ field.errors.0 }}
+                        </p>
                     {% endif %}
                 </div>
                 {% endfor %}
@@ -66,7 +89,9 @@
                 <div class="pt-6">
                     <button type="submit" 
                             class="w-full relative py-4 group/btn overflow-hidden transition-all">
+                        <!-- الحدود والخلفية -->
                         <div class="absolute inset-0 bg-white/5 border border-white/20 group-hover/btn:border-cyan-500/50 transition-all"></div>
+                        <!-- تأثير التعبئة عند التحويم -->
                         <div class="absolute inset-0 bg-cyan-500 translate-x-[-101%] group-hover/btn:translate-x-0 transition-transform duration-500 ease-out"></div>
                         
                         <span class="relative z-10 mono font-bold uppercase tracking-[0.4em] group-hover/btn:text-black transition-colors text-white">
@@ -76,7 +101,7 @@
                     
                     <p class="text-center mt-6">
                         <a href="{% url 'login' %}" class="mono text-[10px] text-gray-500 hover:text-cyan-400 transition-colors uppercase tracking-widest">
-                            Existing Personnel? Log In
+                            Existing Personnel? <span class="border-b border-cyan-500/30">Log In</span>
                         </a>
                     </p>
                 </div>
@@ -85,29 +110,52 @@
     </div>
 </section>
 
+<style>
+    /* تحسين شكل القائمة المنسدلة في المتصفحات */
+    select option {
+        background: #0b0e14;
+        color: white;
+        padding: 10px;
+    }
+
+    /* أنيميشن بسيط للنبض */
+    @keyframes pulse-slow {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 0.6; }
+    }
+    .animate-pulse {
+        animation: pulse-slow 3s infinite;
+    }
+</style>
+
 <script>
-    // Animations
-    gsap.from(".lg:col-span-2", {
-        x: -50,
-        opacity: 0,
-        duration: 1.2,
-        ease: "power3.out"
-    });
+    document.addEventListener("DOMContentLoaded", () => {
+        // أنيميشن اللوحة اليسرى
+        gsap.from(".lg:col-span-2", {
+            x: -40,
+            opacity: 0,
+            duration: 1,
+            ease: "expo.out"
+        });
 
-    gsap.from(".lg:col-span-3", {
-        x: 50,
-        opacity: 0,
-        duration: 1.2,
-        ease: "power3.out"
-    });
+        // أنيميشن اللوحة اليمنى
+        gsap.from(".lg:col-span-3", {
+            x: 40,
+            opacity: 0,
+            duration: 1,
+            ease: "expo.out",
+            delay: 0.2
+        });
 
-    gsap.from(".group/field", {
-        opacity: 0,
-        y: 20,
-        stagger: 0.1,
-        duration: 0.8,
-        delay: 0.5,
-        ease: "back.out(1.7)"
+        // أنيميشن تتابعي للحقول
+        gsap.from(".group/field", {
+            opacity: 0,
+            y: 15,
+            stagger: 0.08,
+            duration: 0.6,
+            delay: 0.4,
+            ease: "power2.out"
+        });
     });
 </script>
 {% endblock %}
