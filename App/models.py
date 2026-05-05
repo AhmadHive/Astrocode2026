@@ -17,7 +17,7 @@ class TeamManager(BaseUserManager):
 
 class Track(models.Model):
     name = models.CharField(max_length=200)
-    logo = models.ImageField(upload_to='tracks/logos/')
+    logo = models.URLField()
     description = models.TextField()
     definition = models.TextField()
     def __str__(self): return self.name

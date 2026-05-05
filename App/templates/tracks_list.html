@@ -26,15 +26,17 @@
 
                     <div class="mb-8 flex justify-between items-start relative z-10">
                         <!-- الشعار (Logo) -->
-                        <div class="w-16 h-16 border border-white/10 rounded-xl flex items-center justify-center bg-[#05070a] overflow-hidden p-3 group-hover:border-cyan-500/30 transition-colors shadow-inner">
-                            {% if track.logo %}
-                                <img src="{{ track.logo.url }}" alt="{{ track.name }}" class="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100">
-                            {% else %}
-                                <svg class="w-8 h-8 text-gray-800 group-hover:text-cyan-500/50 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                                </svg>
-                            {% endif %}
-                        </div>
+                       <!-- الشعار (Logo) -->
+<div class="w-16 h-16 border border-white/10 rounded-xl flex items-center justify-center bg-[#05070a] overflow-hidden p-3 group-hover:border-cyan-500/30 transition-colors shadow-inner">
+    {% if track.logo %}
+        {# التعديل هنا: نستخدم track.logo مباشرة لأنه أصبح يحتوي على الرابط #}
+        <img src="{{ track.logo }}" alt="{{ track.name }}" class="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100">
+    {% else %}
+        <svg class="w-8 h-8 text-gray-800 group-hover:text-cyan-500/50 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+        </svg>
+    {% endif %}
+</div>
                         <!-- رقم القطاع -->
                         <div class="mono text-[8px] text-gray-600 uppercase tracking-widest px-2 py-1 border border-white/5 bg-white/5">
                             Sector_0{{ forloop.counter }}
