@@ -24,20 +24,26 @@
                     <!-- تأثير الشبكة الخلفية عند التحويم -->
                     <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none bg-[linear-gradient(rgba(0,210,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,210,255,0.1)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
 
-                    <div class="mb-8 flex justify-between items-start relative z-10">
-                        <!-- الشعار (Logo) - تم تكبيره وتحسين وضوحه -->
-                        <div class="w-20 h-20 md:w-24 md:h-24 border border-white/10 rounded-2xl flex items-center justify-center bg-[#05070a]/80 overflow-hidden p-2 group-hover:border-cyan-500/50 transition-all duration-500 shadow-2xl shadow-cyan-500/5">
+                    <!-- الجزء الخاص بالشعار المحدث (تم التكبير هنا) -->
+                    <div class="mb-10 flex justify-between items-start relative z-10">
+                        <!-- حاوية الشعار العملاقة: تم زيادة الحجم من w-28/36 إلى w-32/48 وتقليل الـ p -->
+                        <div class="w-32 h-32 md:w-48 md:h-48 border-2 border-white/10 rounded-2xl flex items-center justify-center bg-[#05070a] overflow-hidden p-2 group-hover:border-cyan-500/50 transition-all duration-500 shadow-2xl relative">
+                            <!-- تأثير خلفي لبروز الصورة -->
+                            <div class="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            
                             {% if track.logo %}
-                                <img src="{{ track.logo }}" alt="{{ track.name }}" class="w-full h-full object-contain transition-all duration-500 group-hover:scale-110">
+                                <img src="{{ track.logo }}" alt="{{ track.name }}" 
+                                     class="w-full h-full object-contain transition-all duration-700 group-hover:scale-110 relative z-10">
                             {% else %}
-                                <svg class="w-10 h-10 text-gray-700 group-hover:text-cyan-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                                <!-- تكبير الأيقونة البديلة -->
+                                <svg class="w-24 h-24 text-gray-800 group-hover:text-cyan-500/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
                                 </svg>
                             {% endif %}
                         </div>
 
                         <!-- رقم القطاع -->
-                        <div class="mono text-[9px] text-cyan-400/70 uppercase tracking-widest px-3 py-1.5 border border-cyan-500/20 bg-cyan-500/5 rounded-full">
+                        <div class="mono text-[10px] text-cyan-400 font-bold uppercase tracking-widest px-3 py-1 border border-cyan-500/30 bg-cyan-500/10">
                             Sector_0{{ forloop.counter }}
                         </div>
                     </div>
