@@ -10,42 +10,50 @@
         
         <!-- رأس الصفحة (Header) -->
         <div class="mb-20">
-            <a href="{% url 'tracks_list' %}" class="mono text-[9px] text-gray-500 hover:text-cyan-400 transition-colors mb-8 inline-flex items-center gap-2 uppercase tracking-[0.3em] group">
+            <a href="{% url 'tracks_list' %}" class="mono text-[9px] text-gray-500 hover:text-cyan-400 transition-colors mb-12 inline-flex items-center gap-2 uppercase tracking-[0.3em] group">
                 <span class="text-lg group-hover:-translate-x-1 transition-transform">←</span> Back_to_Sectors
             </a>
             
-            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-                <div class="relative flex flex-col md:flex-row items-start md:items-center gap-8">
-                    <!-- إضافة الشعار هنا -->
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-10">
+                <div class="relative flex flex-col md:flex-row items-start md:items-center gap-10">
+                    
+                    <!-- الشعار (Logo) - تم تكبيره وتحسينه -->
                     {% if track.logo %}
-                    <div class="w-24 h-24 border border-cyan-500/20 bg-cyan-500/5 backdrop-blur-md rounded-2xl p-4 flex items-center justify-center relative group overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <img src="{{ track.logo }}" alt="{{ track.name }}" class="w-full h-full object-contain relative z-10 filter drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]">
-                        <!-- زوايا الشعار -->
-                        <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-500/40"></div>
-                        <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-500/40"></div>
+                    <div class="w-28 h-28 md:w-32 md:h-32 border border-cyan-500/30 bg-[#05070a] backdrop-blur-md rounded-2xl p-4 flex items-center justify-center relative group overflow-hidden shadow-[0_0_30px_rgba(6,182,212,0.1)]">
+                        <!-- تأثير خلفية الشعار -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-40 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <img src="{{ track.logo }}" alt="{{ track.name }}" class="w-full h-full object-contain relative z-10 transition-transform duration-500 group-hover:scale-110">
+                        
+                        <!-- زوايا الشعار التقنية -->
+                        <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-500/50"></div>
+                        <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-500/50"></div>
                     </div>
                     {% endif %}
 
                     <div class="relative">
                         <!-- تأثير توهج خلف العنوان -->
-                        <div class="absolute -left-10 -top-10 w-40 h-40 bg-cyan-500/5 blur-[80px] pointer-events-none"></div>
-                        <h2 class="text-5xl md:text-7xl font-black italic tracking-tighter uppercase leading-none mb-4 text-white">
+                        <div class="absolute -left-10 -top-10 w-40 h-40 bg-cyan-500/10 blur-[100px] pointer-events-none"></div>
+                        
+                        <div class="mono text-[10px] text-cyan-500/60 tracking-[0.5em] uppercase mb-2">Sector_Identification</div>
+                        <h2 class="text-5xl md:text-7xl font-black italic tracking-tighter uppercase leading-none mb-6 text-white">
                             {{ track.name }}
                         </h2>
-                        <div class="flex items-center gap-3">
-                            <span class="relative flex h-2 w-2">
+                        
+                        <div class="flex items-center gap-4">
+                            <span class="relative flex h-3 w-3">
                                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
                             </span>
-                            <div class="mono text-xs text-cyan-400 tracking-[0.4em] uppercase">Status: Sector_Active</div>
+                            <div class="mono text-xs text-cyan-400 tracking-[0.4em] uppercase font-bold">Status: Sector_Active</div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="lg:w-1/3 p-5 border-l border-cyan-500/30 bg-cyan-500/5 backdrop-blur-sm">
-                    <p class="text-xs text-gray-400 italic leading-relaxed">
-                        "{{ track.definition }}"
+                <!-- تعريف المسار -->
+                <div class="lg:w-1/3 p-6 border-l-2 border-cyan-500/30 bg-cyan-500/5 backdrop-blur-sm rounded-r-lg">
+                    <p class="text-xs md:text-sm text-gray-400 italic leading-relaxed">
+                        "{{ track.definition|default:track.description }}"
                     </p>
                 </div>
             </div>
@@ -55,34 +63,42 @@
         <div class="grid grid-cols-1 gap-16">
             {% for challenge in track.challenges.all %}
             <div class="challenge-module relative group/module">
-                <!-- خط التتبع الجانبي -->
-                <div class="absolute -left-4 top-0 bottom-0 w-[1px] bg-gradient-to-b from-cyan-500 via-cyan-500/20 to-transparent opacity-30 group-hover/module:opacity-100 transition-opacity duration-700"></div>
+                <!-- خط التتبع الجانبي النشط -->
+                <div class="absolute -left-6 top-0 bottom-0 w-[2px] bg-gradient-to-b from-cyan-500 via-cyan-500/10 to-transparent opacity-20 group-hover/module:opacity-100 transition-opacity duration-700"></div>
                 
-                <div class="hull-border p-6 md:p-10 bg-white/[0.01] border border-white/5 transition-all hover:bg-white/[0.03] hover:border-white/10 relative overflow-hidden">
+                <div class="hull-border p-6 md:p-12 bg-white/[0.02] border border-white/5 transition-all hover:bg-white/[0.04] hover:border-cyan-500/30 relative overflow-hidden">
                     
                     <div class="grid lg:grid-cols-12 gap-12">
                         
                         <!-- تفاصيل المهمة (يسار) -->
                         <div class="lg:col-span-7">
-                            <div class="mono text-[10px] text-cyan-500 uppercase tracking-[0.5em] mb-4">Object_Challenge_0{{ forloop.counter }}</div>
-                            <h3 class="text-3xl md:text-4xl font-bold uppercase italic mb-8 tracking-tighter text-white">{{ challenge.name }}</h3>
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="mono text-[10px] text-cyan-500 uppercase tracking-[0.5em]">Object_Challenge_0{{ forloop.counter }}</div>
+                                <div class="h-[1px] flex-grow bg-white/10"></div>
+                            </div>
                             
-                            <div class="space-y-8">
+                            <h3 class="text-3xl md:text-5xl font-bold uppercase italic mb-8 tracking-tighter text-white group-hover/module:text-cyan-400 transition-colors">
+                                {{ challenge.name }}
+                            </h3>
+                            
+                            <div class="space-y-10">
                                 <div>
-                                    <h4 class="text-white text-[10px] mono uppercase tracking-widest mb-3 opacity-30">Operational_Details</h4>
-                                    <p class="text-gray-400 leading-relaxed text-sm antialiased">
+                                    <h4 class="text-white text-[10px] mono uppercase tracking-widest mb-4 opacity-40 flex items-center gap-2">
+                                        <span class="w-2 h-2 bg-white/20 rounded-full"></span> Operational_Details
+                                    </h4>
+                                    <p class="text-gray-400 leading-relaxed text-sm md:text-base antialiased">
                                         {{ challenge.details }}
                                     </p>
                                 </div>
                                 
-                                <div class="pt-6 border-t border-white/5">
-                                    <h4 class="text-cyan-400 text-[10px] mono uppercase tracking-widest mb-4">Requirements_Protocol</h4>
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="pt-8 border-t border-white/5">
+                                    <h4 class="text-cyan-400 text-[10px] mono uppercase tracking-widest mb-6">Requirements_Protocol</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
                                         {% for req in challenge.requirements.splitlines %}
                                             {% if req.strip %}
-                                            <div class="flex gap-3 items-start group/req">
-                                                <span class="w-1.5 h-[1px] bg-cyan-500 mt-2.5 group-hover/req:w-3 transition-all duration-300"></span>
-                                                <span class="text-[11px] text-gray-400 mono uppercase tracking-tighter group-hover/req:text-white transition-colors">{{ req }}</span>
+                                            <div class="flex gap-3 items-center group/req">
+                                                <span class="w-2 h-2 border border-cyan-500/50 rotate-45 group-hover/req:bg-cyan-500 transition-all"></span>
+                                                <span class="text-[11px] text-gray-500 mono uppercase tracking-tighter group-hover/req:text-white transition-colors">{{ req }}</span>
                                             </div>
                                             {% endif %}
                                         {% endfor %}
@@ -92,36 +108,42 @@
                         </div>
 
                         <!-- الأصول التقنية (يمين) -->
-                        <div class="lg:col-span-5 flex flex-col justify-between p-6 md:p-8 bg-[#05070a] border border-white/5 relative">
-                            <div>
-                                <h4 class="text-white text-[10px] mono uppercase tracking-widest mb-6 border-b border-white/10 pb-2">Technical_Assets</h4>
+                        <div class="lg:col-span-5 flex flex-col justify-between p-8 bg-[#05070a]/60 border border-white/5 relative rounded-xl shadow-inner">
+                            <div class="relative z-10">
+                                <h4 class="text-white text-[10px] mono uppercase tracking-widest mb-8 border-b border-white/10 pb-4 flex justify-between">
+                                    <span>Technical_Assets</span>
+                                    <span class="text-cyan-500/50">V1.0.4</span>
+                                </h4>
                                 
                                 <div class="space-y-4">
                                     {% if challenge.documentation_url %}
-                                    <a href="{{ challenge.documentation_url }}" class="flex items-center justify-between p-4 bg-white/5 border border-white/5 hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all group/asset">
-                                        <span class="mono text-[10px] text-gray-400 group-hover/asset:text-cyan-400 transition-colors uppercase italic">Documentation_Link</span>
-                                        <span class="text-cyan-500 group-hover/asset:translate-y-1 transition-transform">↓</span>
+                                    <a href="{{ challenge.documentation_url }}" target="_blank" class="flex items-center justify-between p-5 bg-white/5 border border-white/5 hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all group/asset rounded-lg">
+                                        <div class="flex flex-col">
+                                            <span class="mono text-[11px] text-white uppercase mb-1">Module_Docs</span>
+                                            <span class="mono text-[9px] text-gray-500 group-hover/asset:text-cyan-400/70">External_Data_Source</span>
+                                        </div>
+                                        <span class="text-cyan-500 group-hover/asset:translate-x-1 transition-transform">→</span>
                                     </a>
                                     {% endif %}
-                                    <a href="#" class="flex items-center justify-between p-4 bg-white/5 border border-white/5 hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all group/asset">
-                                        <span class="mono text-[10px] text-gray-400 group-hover/asset:text-cyan-400 transition-colors uppercase italic">Technical_Specs_V1.0</span>
-                                        <span class="text-cyan-500 group-hover/asset:translate-y-1 transition-transform">↓</span>
-                                    </a>
+                                    
+                                    <div class="flex items-center justify-between p-5 bg-white/[0.02] border border-dashed border-white/10 rounded-lg cursor-not-allowed opacity-60">
+                                        <span class="mono text-[10px] text-gray-500 uppercase">Secure_Specs_Locked</span>
+                                        <svg class="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- مؤشر إشارة مرئي (Visual Signal) -->
-                            <div class="mt-12 group-hover/module:opacity-100 opacity-50 transition-opacity">
-                                <div class="h-16 w-full flex items-end gap-[1px]">
-                                    <!-- شريط رادار ديناميكي بسيط باستخدام Divs -->
-                                    <div class="flex-1 bg-cyan-500/40 h-1/2 animate-[pulse_1s_infinite]"></div>
-                                    <div class="flex-1 bg-cyan-500/40 h-3/4 animate-[pulse_1.2s_infinite]"></div>
-                                    <div class="flex-1 bg-cyan-500/40 h-1/4 animate-[pulse_0.8s_infinite]"></div>
-                                    <div class="flex-1 bg-cyan-500/40 h-full animate-[pulse_1.5s_infinite]"></div>
-                                    <div class="flex-1 bg-cyan-500/40 h-2/3 animate-[pulse_1.1s_infinite]"></div>
-                                    <div class="flex-1 bg-cyan-500/40 h-1/2 animate-[pulse_0.9s_infinite]"></div>
+                            <!-- رادار الإشارة الديناميكي -->
+                            <div class="mt-16 group-hover/module:opacity-100 opacity-40 transition-all duration-500 relative">
+                                <div class="h-20 w-full flex items-end gap-[2px]">
+                                    <div class="flex-1 bg-cyan-500/30 h-1/2 animate-[pulse_1.5s_infinite] rounded-t-sm"></div>
+                                    <div class="flex-1 bg-cyan-400/40 h-3/4 animate-[pulse_1.8s_infinite] rounded-t-sm"></div>
+                                    <div class="flex-1 bg-cyan-500/50 h-1/4 animate-[pulse_1.2s_infinite] rounded-t-sm"></div>
+                                    <div class="flex-1 bg-cyan-300/40 h-full animate-[pulse_2s_infinite] rounded-t-sm"></div>
+                                    <div class="flex-1 bg-cyan-500/30 h-2/3 animate-[pulse_1.4s_infinite] rounded-t-sm"></div>
+                                    <div class="flex-1 bg-cyan-400/40 h-1/2 animate-[pulse_1.6s_infinite] rounded-t-sm"></div>
                                 </div>
-                                <div class="text-[8px] mono text-cyan-500/40 mt-4 tracking-[0.8em] text-center uppercase">Signal_Locked_Secure</div>
+                                <div class="absolute -bottom-6 left-0 right-0 text-[8px] mono text-cyan-500/40 tracking-[0.8em] text-center uppercase font-bold">Signal_Locked_Secure</div>
                             </div>
                         </div>
 
@@ -129,8 +151,9 @@
                 </div>
             </div>
             {% empty %}
-            <div class="text-center py-20 border border-dashed border-white/10">
-                <p class="mono text-gray-500 uppercase tracking-widest">No challenges deployed in this sector yet.</p>
+            <div class="text-center py-24 border-2 border-dashed border-white/5 rounded-3xl bg-white/[0.01]">
+                <div class="mono text-gray-600 uppercase tracking-widest text-sm mb-4">Sector_Empty</div>
+                <p class="text-gray-700 italic">Waiting for command center to deploy challenges...</p>
             </div>
             {% endfor %}
         </div>
@@ -148,27 +171,45 @@
                 start: "top 90%",
                 toggleActions: "play none none none"
             },
-            duration: 1,
+            duration: 1.2,
             opacity: 0,
-            y: 50,
-            x: -20,
-            ease: "power3.out",
+            y: 60,
+            ease: "expo.out",
             delay: i * 0.1
         });
     });
 
     // أنيميشن رأس الصفحة والشعار
     gsap.from(".relative", {
-        duration: 1.5,
-        y: 30,
+        duration: 1.8,
+        y: 40,
         opacity: 0,
-        ease: "expo.out"
+        ease: "power4.out",
+        stagger: 0.2
     });
 </script>
 
 <style>
     .hull-border {
-        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+        clip-path: polygon(
+            0 0, 
+            100% 0, 
+            100% calc(100% - 30px), 
+            calc(100% - 30px) 100%, 
+            0 100%
+        );
+    }
+    
+    @keyframes pulse {
+        0%, 100% { transform: scaleY(1); opacity: 0.4; }
+        50% { transform: scaleY(1.2); opacity: 0.8; }
+    }
+
+    /* تحسين القراءة في الشاشات الصغيرة */
+    @media (max-width: 768px) {
+        .hull-border {
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+        }
     }
 </style>
 {% endblock %}
