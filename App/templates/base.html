@@ -47,13 +47,30 @@
         /* تحويل خط الـ Mono أيضاً لنفس الخط المطلوب */
         .mono { font-family: 'BABAPRO FONT BOLD', sans-serif; }
 
-        .hull-border {
-            clip-path: polygon(15px 0%, 100% 0%, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0% 100%, 0% 15px);
-            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(0,210,255,0.01) 100%);
-            border: 1px solid rgba(0, 210, 255, 0.15);
-            backdrop-filter: blur(15px);
-        }
-
+       .hull-border {
+    /* 1. جعل الزوايا مقصوصة كما هي */
+    clip-path: polygon(15px 0%, 100% 0%, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0% 100%, 0% 15px);
+    
+    /* 2. خلفية أكثر بياضاً وسطوعاً (رفعنا الـ opacity بشكل كبير) */
+    background: linear-gradient(145deg, 
+        rgba(255, 255, 255, 0.25) 0%, 
+        rgba(0, 210, 255, 0.15) 100%
+    ) !important;
+    
+    /* 3. حدود مشعة جداً (Cyan Neon) */
+    border: 2px solid rgba(0, 210, 255, 0.9) !important;
+    
+    /* 4. السحر هنا: توهج خارجي قوي جداً يجعل النافذة تبدو كأنها كشاف ضوئي */
+    box-shadow: 
+        0 0 40px rgba(0, 210, 255, 0.4),            /* توهج أزرق خارجي */
+        inset 0 0 20px rgba(255, 255, 255, 0.3) !important; /* توهج أبيض داخلي */
+    
+    /* 5. زيادة التغبيش لعزل النجوم تماماً خلف النافذة */
+    backdrop-filter: blur(30px) !important;
+    
+    /* لضمان عدم وجود أي كلاس آخر يقلل السطوع */
+    opacity: 1 !important;
+}
         /* تحسين استجابة القائمة للهواتف */
         .nav-container {
             max-width: 80rem;
