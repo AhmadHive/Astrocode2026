@@ -44,12 +44,13 @@
 
     .course-grid {
         display: grid;
-        /* استخدام auto-fill بدلاً من auto-fit لضمان شكل متسق */
+       
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
         gap: 20px;
         padding: 20px;
         max-width: 1200px;
         margin: 0 auto;
+        margin-bottom: 5%;
     }
 
     @media (min-width: 768px) {
@@ -182,8 +183,11 @@
 <section class="min-h-screen">
     <div class="courses-header">
         <h1 class="cyber-title">Available Courses</h1>
-        <p class="mono text-cyan-400/60 text-xs md:text-sm">> SESSION_LIST_2026_UPDATED</p>
+        <p class="mono text-cyan-400/60 text-xs md:text-sm">The session is open to all students and anyone interested in the field</p>
+        <a href="https://chat.whatsapp.com/IqnWD1UJtYh6LakEuCnokw" class="hover:text-cyan-400 transition">Session Groube Linke</a>
+
     </div>
+
 
     <div class="course-grid" id="courseContainer"></div>
 </section>
@@ -194,33 +198,32 @@
             courseTitle: "Robotics design and programming",
             instructor: "Khaled Ahmad",
             bio: "Robotics and AI Trainer & Mechatronics Engineer | Founder Of RoboMind",
-            time: "13 MAY 2026 11:30 AM - 1:00 PM ",
-            status: "in Amman Arab University",
-            image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777994540/Screenshot_2026-05-05_182202_te0uiu.png"
+            time: "18 MAY 2026 6:00 pM - 8:00 PM ",
+            status: "Zoom Online Course",
+            image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777994540/Screenshot_2026-05-05_182202_te0uiu.png",
+            zoom_url:'https://www.youtube.com/watch?v=lF0MlMz2Rvk&t=11623s'
+
         },
-        {
-            courseTitle: "Smart Web Apps with AI Agents",
-            instructor: "Mohammad Yacoub",
-            bio: "Founder of CODEgy | Senior Full-Stack .NET Developer | Oracle & SQL ServerExpert | Technical Trainer & IT Consultant",
-            time: "T19 MAY 2026 11:30 AM - 1:00 PM ",
-            status: "in Amman Arab University",
-            image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/20_kswvyx.png"
-        },
+        
         {
             courseTitle: "Space and Aerospace Systems",
             instructor: "Mohamad Abu Amsha",
             bio: "Aircraft Maintenance Engineer || Chairman of IEEE AESS AAU || Student Sectional Representative AESS Jordan Chapter",
-            time: "16 MAY 2026 11:30 AM - 1:00 PM ",
-            status: "Workshop",
-            image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777960330/Screenshot_2026-05-05_085124_jszr5w.png"
+            time: "19-20 MAY 2026 6:00 PM - 8:00 PM ",
+            status: "Zoom Online Course",
+            image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777960330/Screenshot_2026-05-05_085124_jszr5w.png",
+            zoom_url:"https://www.youtube.com/watch?v=lF0MlMz2Rvk&t=11623s",
+            secound_Zoom_Url:"https://www.youtube.com/watch?v=lF0MlMz2Rvk&t=11623s",
+            Secound_name:"20 May Course Linke"
         },
          {
             courseTitle: "Smart Web Apps with AI Agents",
             instructor: "Mohammad Yacoub",
             bio: "Founder of CODEgy | Senior Full-Stack .NET Developer | Oracle & SQL ServerExpert | Technical Trainer & IT Consultant",
-            time: "T19 MAY 2026 11:30 AM - 1:00 PM ",
-            status: "in Amman Arab University",
-            image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/20_kswvyx.png"
+            time: "19-20 MAY 2026 6:00 PM - 8:00 PM ",
+            status: "Zoom Online Course",
+            image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/20_kswvyx.png",
+            zoom_url:"https://www.youtube.com/watch?v=lF0MlMz2Rvk&t=11623s"
         }
     ];
 
@@ -242,6 +245,7 @@
                     </div>
                     <span class="mono text-[9px] md:text-[10px] opacity-40 uppercase">${course.status}</span>
                 </div>
+                <a href=${course.zoom_url} target="_blank" class="hover:text-cyan-400 transition">Course Linke</a>
             `;
             container.appendChild(card);
         });

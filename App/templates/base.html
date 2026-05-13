@@ -76,6 +76,7 @@
             max-width: 80rem;
             margin-left: auto;
             margin-right: auto;
+            margin-bottom: 0%;
         }
 
         main {
@@ -125,11 +126,11 @@
 
             <!-- Bottom Row: Navigation Links -->
             <div class="flex flex-wrap justify-center gap-x-4 gap-y-2 md:gap-6 mono text-[10px] md:text-base tracking-wider uppercase border-t border-white/5 pt-3 md:pt-0 md:border-none">
-                <a href="{% url 'home' %}" class="hover:text-cyan-400 transition">Home</a>
+                <a href="{% url 'tracks_list' %}" class="hover:text-cyan-400 transition">Tracks</a>
                 <a href="{% url 'Courses' %}" class="hover:text-cyan-400 transition">Courses</a>
                 <a href="{% url 'AstroCode2025' %}" class="hover:text-cyan-400 transition whitespace-nowrap">AstroCode 2025</a>
                 <a href="{% url 'Committee_Competitio' %}" class="hover:text-cyan-400 transition">Committee</a>
-                <a href="{% url 'tracks_list' %}" class="hover:text-cyan-400 transition">Tracks</a>
+                <a href="{% url 'home' %}" class="hover:text-cyan-400 transition">Home</a>
                 <a href="{% url 'submission' %}" class="hover:text-cyan-400 transition sm:hidden">Submit</a>
             </div>
 
@@ -143,40 +144,58 @@
         </div>
     </main>
 
-    <footer class="relative z-10 p-6 md:p-10 border-t border-white/5 bg-black/40 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto flex flex-col gap-8">
+    <!-- أضفنا -mt-20 لرفعه للأعلى و z-20 لضمان ظهوره فوق المحتوى -->
+<!-- Footer Section -->
+<footer class="relative z-20 -mt-24 p-6 md:p-10 border-t border-cyan-500/30 bg-black/80 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto flex flex-col gap-8">
+        
+        <!-- Contact Grid: العناصر تصطف أفقياً مع التفاف مرن على الشاشات الصغيرة -->
+        <div class="flex flex-wrap justify-between gap-x-8 gap-y-6 mono text-[10px] md:text-xs uppercase tracking-widest border-b border-white/5 pb-8">
             
-            <!-- Contact Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mono text-[10px] md:text-xs uppercase tracking-widest border-b border-white/5 pb-8">
-                <div class="flex flex-col gap-2">
-                    <span class="text-cyan-400/60">Phone_Comm</span>
-                    <a href="tel:+962786324129" class="hover:text-cyan-400 transition">+962 78 632 4129</a>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <span class="text-cyan-400/60">Email_Access</span>
-                    <a href="mailto:amsha@ieee.org" class="hover:text-cyan-400 transition lowercase">amsha@ieee.org</a>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <span class="text-cyan-400/60">Insta_Link</span>
-                    <a href="https://www.instagram.com/aess.aau?igsh=ajJscGNwbndrMWx3&utm_source=qr" target="_blank" class="hover:text-cyan-400 transition">@aess.aau</a>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <span class="text-cyan-400/60">FB_Channel</span>
-                    <a href="https://www.facebook.com/share/1AwHbgQtMK/?mibextid=wwXIfr" target="_blank" class="hover:text-cyan-400 transition">IEEE AAU Community</a>
-                </div>
+            <!-- Phone -->
+            <div class="flex flex-col gap-2 min-w-[140px]">
+                <span class="text-cyan-400/60 text-[9px] md:text-xs">Phone</span>
+                <a href="tel:+962786324129" class="hover:text-cyan-400 transition inline-block [direction:ltr] text-right">
+                    +962 78 632 4129
+                </a>
             </div>
 
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="mono text-[8px] md:text-[9px] text-gray-600 tracking-[0.2em] md:tracking-[0.3em] uppercase text-center md:text-right">
-                    &copy; 2026 IEEE AAU | ORBITAL_STATION_JOR
-                </div>
-                <div class="flex gap-4 md:gap-6 text-gray-500 mono text-[8px] md:text-[9px] uppercase tracking-widest">
+            <!-- Email -->
+            <div class="flex flex-col gap-2 min-w-[140px]">
+                <span class="text-cyan-400/60 text-[9px] md:text-xs">Email</span>
+                <a href="mailto:amsha@ieee.org" class="hover:text-cyan-400 transition lowercase">amsha@ieee.org</a>
+            </div>
+
+            <!-- Instagram -->
+            <div class="flex flex-col gap-2 min-w-[140px]">
+                <span class="text-cyan-400/60 text-[9px] md:text-xs">Instagram</span>
+                <a href="https://www.instagram.com/aess.aau?igsh=ajJscGNwbndrMWx3&utm_source=qr" target="_blank" class="hover:text-cyan-400 transition">@aess.aau</a>
+            </div>
+
+            <!-- Facebook -->
+            <div class="flex flex-col gap-2 min-w-[140px]">
+                <span class="text-cyan-400/60 text-[9px] md:text-xs">Facebook</span>
+                <a href="https://www.facebook.com/share/1AwHbgQtMK/?mibextid=wwXIfr" target="_blank" class="hover:text-cyan-400 transition">IEEE AAU Community</a>
+            </div>
+
+        </div>
+
+        <!-- System Info & Copyright -->
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="mono text-[8px] md:text-[9px] text-gray-600 tracking-[0.2em] md:tracking-[0.3em] uppercase text-center md:text-right">
+                &copy; 2026 IEEE AAU | ORBITAL_STATION_JOR
+            </div>
+            
+            <div class="flex gap-4 md:gap-6 text-gray-500 mono text-[8px] md:text-[9px] uppercase tracking-widest">
+                <div class="flex items-center gap-2">
+                    <span class="w-1 h-1 bg-cyan-500 rounded-full animate-ping"></span>
                     <span class="text-cyan-500/50">System_Stable</span>
-                    <span>Latency: 24ms</span>
                 </div>
+                <span>Latency: 24ms</span>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 
     <script>
         const canvas = document.getElementById('starfield');

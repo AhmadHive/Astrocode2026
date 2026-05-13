@@ -20,13 +20,14 @@
     /* الهيدر الأساسي */
     .webgpu-full-width-wrapper {
         position: relative;
-        width: 100vw;
-        height: clamp(300px, 40vh, 400px); 
+        width: 110vw;
+        height: clamp(400px, 40vh, 400px); 
         margin-left: calc(-50vw + 50%);
         margin-right: calc(-50vw + 50%);
         background: #000;
         overflow: hidden;
         border-bottom: 1px solid rgba(0, 210, 255, 0.3);
+        margin-top: 0%;
     }
 
     #webgpuCanvas {
@@ -266,15 +267,19 @@
     }
 
     /* --- Pixel Dispersion Canvas Styles --- */
-    .pixel-dispersion-section {
-        width: 100%;
-        height: clamp(50vh, 100vh, 800px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #050505;
-        position: relative;
-    }
+    /* ابحث عن هذا الكود وقم بتعديله */
+.pixel-dispersion-section {
+    width: 100%;
+    /* تم تقليل الارتفاع من 100vh إلى 300px أو 400px */
+    height: clamp(210px, 50vh, 350px); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #050505;
+    position: relative;
+    /* إضافة هامش علوي وسفلي بسيط بدلاً من الفراغات الكبيرة */
+    margin: 2rem 0; 
+}
 
     #pixelCanvas {
         max-width: 100%;
@@ -287,9 +292,7 @@
     
     <div class="webgpu-full-width-wrapper mb-10 md:mb-16" id="mainContainer">
         <canvas id="webgpuCanvas"></canvas>
-        <div class="text-overlay-cyber">
-            <h1 class="astro-title">Astro Code 2026</h1>
-        </div>
+        
     </div>
 
     <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 px-4">
@@ -437,8 +440,8 @@
                 <div class="relative group">
                     <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
                     <div class="relative bg-black rounded-lg overflow-hidden border border-white/10 flex flex-col items-center">
-                        <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669580/11_jmbtuz.png" class="w-full h-64 md:h-[450px] object-cover grayscale hover:grayscale-0 transition-all duration-700 block">
-                        <div class="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 pointer-events-none">
+                    <img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669580/11_jmbtuz.png" 
+                    class="w-full h-64 md:h-[450px] object-cover block">                        <div class="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 pointer-events-none">
                             <span class="terminal-typing">> Host</span>
                         </div>
                     </div>
@@ -545,8 +548,8 @@
     // --- WebGPU ---
     const canvas = document.getElementById('webgpuCanvas');
     const container = document.getElementById('mainContainer');
-    const colorImageUrl = 'https://res.cloudinary.com/diadkkzve/image/upload/f_auto,q_auto/Screenshot_2026-05-01_224431_yz6ipk'; 
-    const depthImageUrl = 'https://res.cloudinary.com/diadkkzve/image/upload/v1777669584/image-depth-map-generator_a88748be_a9lbco.png';
+    const colorImageUrl = 'https://res.cloudinary.com/diadkkzve/image/upload/v1778701997/WhatsApp_Image_2026-05-13_at_10.50.10_PM_iiuffx.jpg'; 
+    const depthImageUrl = 'https://res.cloudinary.com/diadkkzve/image/upload/v1778701997/WhatsApp_Image_2026-05-13_at_10.50.10_PM_iiuffx.jpg';
     let hoverIntensity = 0.0;
 
     async function initGPU() {
