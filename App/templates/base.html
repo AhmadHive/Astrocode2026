@@ -1,104 +1,88 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="bg-[#020408] selection:bg-cyan-500/30">
+<html lang="ar" dir="rtl" class="selection:bg-cyan-500/30">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASTRO CODE 2026 | Mission Control</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
         /* تعريف الخط BABAPRO FONT BOLD */
         @font-face {
             font-family: 'BABAPRO FONT BOLD';
-            src: local('BABAPRO FONT BOLD'), local('Bauhaus'); /* Bauhaus هو البديل الأقرب تقنياً كما في الصورة */
+            src: local('BABAPRO FONT BOLD'), local('Bauhaus'), sans-serif;
         }
 
         :root {
             --pulsar: #00D2FF;
-            --void: #020408;
+            --void: #000000; /* سواد مطلق لأقصى درجة */
         }
 
         body {
             background-color: var(--void);
-            font-family: 'BABAPRO FONT BOLD', sans-serif; /* تغيير الخط الأساسي */
+            /* إنشاء نجوم ساطعة وحادة جداً كأنها نقاط ألماس */
+            background-image: 
+                radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 50px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 100px 150px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1.2px 1.2px at 180px 250px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 300px 100px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 350px 300px, #fff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 400px 400px; /* توزيع متوازن للنجوم */
+            background-attachment: fixed;
+
+            font-family: 'BABAPRO FONT BOLD', sans-serif;
             color: white;
             margin: 0;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(123, 31, 162, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 90% 80%, rgba(0, 210, 255, 0.08) 0%, transparent 50%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* تحويل خط الـ Mono أيضاً لنفس الخط المطلوب */
         .mono { font-family: 'BABAPRO FONT BOLD', sans-serif; }
 
-       .hull-border {
-    /* 1. جعل الزوايا مقصوصة كما هي */
-    clip-path: polygon(15px 0%, 100% 0%, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0% 100%, 0% 15px);
-    
-    /* 2. خلفية أكثر بياضاً وسطوعاً (رفعنا الـ opacity بشكل كبير) */
-    background: linear-gradient(145deg, 
-        rgba(255, 255, 255, 0.25) 0%, 
-        rgba(0, 210, 255, 0.15) 100%
-    ) !important;
-    
-    /* 3. حدود مشعة جداً (Cyan Neon) */
-    border: 2px solid rgba(0, 210, 255, 0.9) !important;
-    
-    /* 4. السحر هنا: توهج خارجي قوي جداً يجعل النافذة تبدو كأنها كشاف ضوئي */
-    box-shadow: 
-        0 0 40px rgba(0, 210, 255, 0.4),            /* توهج أزرق خارجي */
-        inset 0 0 20px rgba(255, 255, 255, 0.3) !important; /* توهج أبيض داخلي */
-    
-    /* 5. زيادة التغبيش لعزل النجوم تماماً خلف النافذة */
-    backdrop-filter: blur(30px) !important;
-    
-    /* لضمان عدم وجود أي كلاس آخر يقلل السطوع */
-    opacity: 1 !important;
-}
-        /* تحسين استجابة القائمة للهواتف */
-        .nav-container {
-            max-width: 80rem;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 0%;
+        /* تصميم الإطارات الزجاجية المشعة */
+        .hull-border {
+            clip-path: polygon(15px 0%, 100% 0%, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0% 100%, 0% 15px);
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(0, 210, 255, 0.6) !important;
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.15);
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px);
         }
 
-        main {
-            background: transparent !important;
+        .nav-container {
+            max-width: 80rem;
+            margin: 0 auto;
+        }
+
+        /* حل مشكلة المستطيل الأسود: إجبار كافة الحاويات على الشفافية */
+        main, main *, section, section *, .container, .container * {
+            background-color: transparent !important;
+        }
+
+        /* استثناء العناصر التي تحتاج لون خلفية لتعمل */
+        button, a.px-3, .hull-border, .hull-border *, input {
+            background-color: initial !important;
         }
 
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: var(--void); }
-        ::-webkit-scrollbar-thumb { background: rgba(0, 210, 255, 0.2); }
-        ::-webkit-scrollbar-thumb:hover { background: var(--pulsar); }
+        ::-webkit-scrollbar-thumb { background: var(--pulsar); }
     </style>
 </head>
 <body class="antialiased">
-    <canvas id="starfield" class="fixed inset-0 z-[-2]"></canvas>
 
+    <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 p-4 md:p-6">
         <div class="nav-container flex flex-col gap-4 px-4 md:px-8 py-4 hull-border">
 
             <!-- Top Row: Logo & Auth -->
             <div class="flex justify-between items-center w-full">
                 <div class="flex items-center gap-3 md:gap-4">
-                    <div class="w-1.5 h-1.5 md:w-2 md:h-2 bg-cyan-400 animate-pulse rounded-full shadow-[0_0_10px_#00D2FF]"></div>
+                    <div class="w-2 h-2 bg-cyan-400 animate-pulse rounded-full shadow-[0_0_10px_#00D2FF]"></div>
                     <a href="{% url 'home' %}" class="group">
                         <h1 class="text-sm md:text-xl font-bold tracking-[0.2em] md:tracking-[0.4em] uppercase mono text-cyan-400">
                             Astro_Code <span class="text-white/30 group-hover:text-white transition-colors duration-500">2026</span>
@@ -108,14 +92,10 @@
 
                 <div class="flex gap-3 md:gap-4 items-center mono text-[10px] md:text-sm tracking-widest uppercase">
                     {% if user.is_authenticated %}
-                        <a href="{% url 'submission' %}" class="text-cyan-400 hover:text-white transition hidden sm:block">
-                            Submit
-                        </a>
+                        <a href="{% url 'submission' %}" class="text-cyan-400 hover:text-white transition hidden sm:block">Submit</a>
                         <form action="{% url 'logout' %}" method="post" class="m-0">
                             {% csrf_token %}
-                            <button class="text-red-400 hover:text-white transition">
-                                Logout
-                            </button>
+                            <button class="text-red-400 hover:text-white transition">Logout</button>
                         </form>
                     {% else %}
                         <a href="{% url 'login' %}" class="text-gray-400 hover:text-cyan-400">Login</a>
@@ -131,131 +111,59 @@
                 <a href="{% url 'AstroCode2025' %}" class="hover:text-cyan-400 transition whitespace-nowrap">AstroCode 2025</a>
                 <a href="{% url 'Committee_Competitio' %}" class="hover:text-cyan-400 transition">Committee</a>
                 <a href="{% url 'home' %}" class="hover:text-cyan-400 transition">Home</a>
-                <a href="{% url 'submission' %}" class="hover:text-cyan-400 transition sm:hidden">Submit</a>
             </div>
 
         </div>
     </nav>
 
-    <!-- Content Padding Adjusted for Mobile -->
-    <main class="relative z-10 pt-44 md:pt-48 min-h-screen px-4 md:px-0">
+    <!-- Main Content Area -->
+    <main class="relative z-10 pt-48 min-h-screen px-4 md:px-0">
         <div class="max-w-7xl mx-auto">
-            {% block content %}{% endblock %}
+            {% block content %}
+            <!-- المحتوى الوارث سيظهر هنا فوق السواد والنجوم مباشرة -->
+            {% endblock %}
         </div>
     </main>
 
-    <!-- أضفنا -mt-20 لرفعه للأعلى و z-20 لضمان ظهوره فوق المحتوى -->
-<!-- Footer Section -->
-<footer class="relative z-20 -mt-24 p-6 md:p-10 border-t border-cyan-500/30 bg-black/80 backdrop-blur-xl">
-    <div class="max-w-7xl mx-auto flex flex-col gap-8">
-        
-        <!-- Contact Grid: العناصر تصطف أفقياً مع التفاف مرن على الشاشات الصغيرة -->
-        <div class="flex flex-wrap justify-between gap-x-8 gap-y-6 mono text-[10px] md:text-xs uppercase tracking-widest border-b border-white/5 pb-8">
+    <!-- Footer Section -->
+    <footer class="relative z-20 p-6 md:p-10 border-t border-cyan-500/30 bg-black/60 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto flex flex-col gap-8">
             
-            <!-- Phone -->
-            <div class="flex flex-col gap-2 min-w-[140px]">
-                <span class="text-cyan-400/60 text-[9px] md:text-xs">Phone</span>
-                <a href="tel:+962786324129" class="hover:text-cyan-400 transition inline-block [direction:ltr] text-right">
-                    +962 78 632 4129
-                </a>
-            </div>
-
-            <!-- Email -->
-            <div class="flex flex-col gap-2 min-w-[140px]">
-                <span class="text-cyan-400/60 text-[9px] md:text-xs">Email</span>
-                <a href="mailto:amsha@ieee.org" class="hover:text-cyan-400 transition lowercase">amsha@ieee.org</a>
-            </div>
-
-            <!-- Instagram -->
-            <div class="flex flex-col gap-2 min-w-[140px]">
-                <span class="text-cyan-400/60 text-[9px] md:text-xs">Instagram</span>
-                <a href="https://www.instagram.com/aess.aau?igsh=ajJscGNwbndrMWx3&utm_source=qr" target="_blank" class="hover:text-cyan-400 transition">@aess.aau</a>
-            </div>
-
-            <!-- Facebook -->
-            <div class="flex flex-col gap-2 min-w-[140px]">
-                <span class="text-cyan-400/60 text-[9px] md:text-xs">Facebook</span>
-                <a href="https://www.facebook.com/share/1AwHbgQtMK/?mibextid=wwXIfr" target="_blank" class="hover:text-cyan-400 transition">IEEE AAU Community</a>
-            </div>
-
-        </div>
-
-        <!-- System Info & Copyright -->
-        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="mono text-[8px] md:text-[9px] text-gray-600 tracking-[0.2em] md:tracking-[0.3em] uppercase text-center md:text-right">
-                &copy; 2026 IEEE AAU | ORBITAL_STATION_JOR
-            </div>
-            
-            <div class="flex gap-4 md:gap-6 text-gray-500 mono text-[8px] md:text-[9px] uppercase tracking-widest">
-                <div class="flex items-center gap-2">
-                    <span class="w-1 h-1 bg-cyan-500 rounded-full animate-ping"></span>
-                    <span class="text-cyan-500/50">System_Stable</span>
+            <div class="flex flex-wrap justify-between gap-x-8 gap-y-6 mono text-[10px] md:text-xs uppercase tracking-widest border-b border-white/5 pb-8">
+                <div class="flex flex-col gap-2 min-w-[140px]">
+                    <span class="text-cyan-400/60">Phone</span>
+                    <a href="tel:+962786324129" class="hover:text-cyan-400 transition inline-block [direction:ltr]">+962 78 632 4129</a>
                 </div>
-                <span>Latency: 24ms</span>
+                <div class="flex flex-col gap-2 min-w-[140px]">
+                    <span class="text-cyan-400/60">Email</span>
+                    <a href="mailto:amsha@ieee.org" class="hover:text-cyan-400 transition lowercase">amsha@ieee.org</a>
+                </div>
+                <div class="flex flex-col gap-2 min-w-[140px]">
+                    <span class="text-cyan-400/60">Instagram</span>
+                    <a href="https://www.instagram.com/aess.aau" target="_blank" class="hover:text-cyan-400 transition">@aess.aau</a>
+                </div>
+                <div class="flex flex-col gap-2 min-w-[140px]">
+                    <span class="text-cyan-400/60">Facebook</span>
+                    <a href="https://www.facebook.com/share/1AwHbgQtMK/" target="_blank" class="hover:text-cyan-400 transition">IEEE AAU Community</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="mono text-[8px] md:text-[9px] text-gray-600 tracking-[0.3em] uppercase">
+                    &copy; 2026 IEEE AAU | ORBITAL_STATION_JOR
+                </div>
+                <div class="flex gap-6 text-gray-500 mono text-[8px] md:text-[9px] uppercase tracking-widest">
+                    <div class="flex items-center gap-2">
+                        <span class="w-1 h-1 bg-cyan-500 rounded-full animate-ping"></span>
+                        <span class="text-cyan-500/50">System_Stable</span>
+                    </div>
+                    <span>Latency: 24ms</span>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
     <script>
-        const canvas = document.getElementById('starfield');
-        const ctx = canvas.getContext('2d');
-        let stars = [];
-
-        function initStars() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            stars = [];
-            const starCount = window.innerWidth < 768 ? 100 : 180;
-            
-            for(let i=0; i<starCount; i++) {
-                stars.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    size: Math.random() * (window.innerWidth < 768 ? 1.0 : 1.3),
-                    speed: Math.random() * 0.2 + 0.05,
-                    opacity: Math.random()
-                });
-            }
-        }
-
-        function drawNebulaGlow() {
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-            const grad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, canvas.width * 0.8);
-            grad.addColorStop(0, 'rgba(20, 10, 40, 0.4)');
-            grad.addColorStop(0.5, 'rgba(5, 15, 30, 0.2)');
-            grad.addColorStop(1, 'transparent');
-            
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function animate() {
-            ctx.fillStyle = '#020408';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            drawNebulaGlow();
-
-            stars.forEach(s => {
-                ctx.fillStyle = `rgba(255, 255, 255, ${s.opacity})`;
-                ctx.beginPath();
-                ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
-                ctx.fill();
-                
-                s.y -= s.speed;
-                if(s.y < 0) s.y = canvas.height;
-            });
-            requestAnimationFrame(animate);
-        }
-
-        window.addEventListener('resize', () => {
-            initStars();
-        });
-        
-        initStars();
-        animate();
-
         gsap.from("nav", {
             y: -50,
             opacity: 0,
