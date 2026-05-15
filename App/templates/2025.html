@@ -14,7 +14,6 @@
         --dark-bg: #050505;
     }
 
-    /* إضافة التوجيه هنا لضمان الكتابة من اليسار لليمين */
     .mission-report-wrapper {
         direction: ltr !important;
         text-align: left !important;
@@ -31,6 +30,7 @@
         align-items: center;
         background: linear-gradient(to bottom, rgba(0, 210, 255, 0.1), transparent);
         border-bottom: 1px dashed rgba(0, 210, 255, 0.3);
+        padding: 20px;
     }
 
     .section-container {
@@ -55,7 +55,7 @@
         display: flex;
         align-items: center;
         gap: 15px;
-        justify-content: flex-start; /* ضمان محاذاة العنوان لليسار */
+        justify-content: flex-start;
     }
 
     .section-title::before {
@@ -66,16 +66,24 @@
         display: inline-block;
     }
 
+    /* التعديل هنا: جعل الصور تأخذ عرض كامل على الهاتف */
     .image-grid {
         display: grid;
         gap: 15px;
         margin-top: 30px;
+        grid-template-columns: 1fr; /* عمود واحد افتراضياً للموبايل */
     }
 
-    .grid-3 { grid-template-columns: repeat(3, 1fr); }
-    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    /* للهواتف العريضة قليلاً أو التابلت */
+    @media (min-width: 480px) {
+        .image-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
 
+    /* للشاشات الكبيرة (الكمبيوتر) تعود كما كانت */
     @media (min-width: 768px) {
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
         .grid-4 { grid-template-columns: repeat(4, 1fr); }
     }
 
@@ -86,8 +94,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.7rem;
-        color: #444;
         position: relative;
         overflow: hidden;
         transition: transform 0.3s ease;
@@ -105,10 +111,8 @@
     }
 
     .challenge-card {
-        border-left: 1px solid var(--cyan-astro); /* الخط على اليسار */
-        border-right: none;
+        border-left: 1px solid var(--cyan-astro);
         padding-left: 20px;
-        padding-right: 0;
         margin-bottom: 20px;
     }
 
@@ -122,6 +126,13 @@
     .rank-1 { color: var(--gold-winner); font-weight: 900; }
 
     .reveal { opacity: 0; transform: translateY(30px); }
+
+    /* تحسينات إضافية للهاتف */
+    @media (max-width: 768px) {
+        .glass-panel { padding: 20px; }
+        .section-title { font-size: 1.5rem; }
+        .archive-header h1 { font-size: 2rem !important; text-align: center; }
+    }
 </style>
 
 <div class="mission-report-wrapper">
