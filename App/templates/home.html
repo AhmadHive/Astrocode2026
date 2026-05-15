@@ -299,7 +299,23 @@
         border-radius: 8px;
         border: 1px solid rgba(255, 255, 255, 0.05);
     }
-    
+    @keyframes marquee {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(calc(-100% - 2rem)); /* 2rem تعادل الـ space-x-8 لضمان دقة الحركة */
+    }
+}
+
+.animate-marquee {
+    animation: marquee 25s linear infinite;
+}
+
+/* ميزة اختيارية: إيقاف الحركة مؤقتاً عند مرور الماوس فوقها لرؤية الشعار بوضوح */
+.wrapper-marquee:hover .animate-marquee {
+    animation-play-state: paused;
+}
 </style>
 
 <section class="min-h-screen flex flex-col items-center bg-[#000000] text-white overflow-x-hidden pb-20" style="direction: ltr;">
@@ -492,20 +508,38 @@
     </div>
 
     <!-- Partners Section -->
-    <div class="max-w-6xl w-full mt-20 md:mt-40 px-4 mb-20 md:mb-40" id="partnersSection">
-        <h3 class="mono text-cyan-400 text-[10px] md:text-xs tracking-[0.5em] mb-4 uppercase opacity-60 text-center reveal-text">// STRATEGIC_ALLIANCE</h3>
-        <h2 class="reveal-text text-3xl md:text-5xl font-black tracking-tighter leading-tight italic uppercase text-center mb-10 md:mb-16">
-            Our <span class="text-cyan-400">Partners</span>
-        </h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-8 items-center">
-            <div class="partner-logo opacity-0 blur-xl translate-y-10"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669579/10_wcljha.png" class="w-full opacity-80 rounded-md"></div>
-            <div class="partner-logo opacity-0 blur-xl translate-y-10"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/16_vtnfly.png" class="w-full opacity-80 rounded-md"></div>
-            <div class="partner-logo opacity-0 blur-xl translate-y-10"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669580/15_rid5p2.png" class="w-full opacity-80 rounded-md"></div>
-            <div class="partner-logo opacity-0 blur-xl translate-y-10"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/18_bizxou.png" class="w-full opacity-80 rounded-md"></div>
-            <div class="partner-logo opacity-0 blur-xl translate-y-10"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669579/3_cecyf9.png" class="w-full opacity-80 rounded-md"></div>
-            <div class="partner-logo opacity-0 blur-xl translate-y-10"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669475/2_a1hsdg.png" class="w-full opacity-80 rounded-md"></div>
+    <!-- حاوية الشريط الرئيسي - قمنا بإضافة overflow-hidden لمنع ظهور شريط التمرير الأفقي للموقع -->
+<div class="max-w-6xl w-full mt-20 md:mt-40 px-4 mb-20 md:mb-40 overflow-hidden" id="partnersSection">
+    <h3 class="mono text-cyan-400 text-[10px] md:text-xs tracking-[0.5em] mb-4 uppercase opacity-60 text-center reveal-text">// STRATEGIC_ALLIANCE</h3>
+    <h2 class="reveal-text text-3xl md:text-5xl font-black tracking-tighter leading-tight italic uppercase text-center mb-10 md:mb-16">
+        Our <span class="text-cyan-400">Partners</span>
+    </h2>
+
+    <!-- الحاوية المتحركة ممتدة بعرض flex وفجوة gap ثابتة -->
+    <div class="flex space-x-8 w-max wrapper-marquee">
+        
+        <!-- المجموعة الأولى من الشعارات -->
+        <div class="flex space-x-8 items-center animate-marquee">
+            <div class="w-32 md:w-40 flex-shrink-0"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669579/10_wcljha.png" class="w-full opacity-80 rounded-md"></div>
+            <div class="w-32 md:w-40 flex-shrink-0"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/16_vtnfly.png" class="w-full opacity-80 rounded-md"></div>
+            <div class="w-32 md:w-40 flex-shrink-0"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669580/15_rid5p2.png" class="w-full opacity-80 rounded-md"></div>
+            <div class="w-32 md:w-40 flex-shrink-0"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/18_bizxou.png" class="w-full opacity-80 rounded-md"></div>
+            <div class="w-32 md:w-40 flex-shrink-0"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669579/3_cecyf9.png" class="w-full opacity-80 rounded-md"></div>
+            <div class="w-32 md:w-40 flex-shrink-0"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669475/2_a1hsdg.png" class="w-full opacity-80 rounded-md"></div>
         </div>
+
+        <!-- تكرار نفس المجموعة تماماً لضمان سلاسة الحركة اللانهائية -->
+        <div class="flex space-x-8 items-center animate-marquee" aria-hidden="true">
+            <div class="w-32 md:w-40 flex-shrink-0"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669579/10_wcljha.png" class="w-full opacity-80 rounded-md"></div>
+            <div class="w-32 md:w-40 flex-shrink-0"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/16_vtnfly.png" class="w-full opacity-80 rounded-md"></div>
+            <div class="w-32 md:w-40 flex-shrink-0"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669580/15_rid5p2.png" class="w-full opacity-80 rounded-md"></div>
+            <div class="w-32 md:w-40 flex-shrink-0"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/18_bizxou.png" class="w-full opacity-80 rounded-md"></div>
+            <div class="w-32 md:w-40 flex-shrink-0"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669579/3_cecyf9.png" class="w-full opacity-80 rounded-md"></div>
+            <div class="w-32 md:w-40 flex-shrink-0"><img src="https://res.cloudinary.com/diadkkzve/image/upload/v1777669475/2_a1hsdg.png" class="w-full opacity-80 rounded-md"></div>
+        </div>
+
     </div>
+</div>
 
     <!-- Sponsors Carousel Section -->
     <div class="max-w-6xl w-full mt-20 md:mt-40 px-4 mb-20 md:mb-40" id="sponsorsSection">
