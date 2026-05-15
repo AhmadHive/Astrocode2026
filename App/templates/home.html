@@ -20,26 +20,22 @@
     /* الهيدر الأساسي */
    .webgpu-full-width-wrapper {
     position: relative;
-        width: 95%; /* زيادة العرض قليلاً للموبايل */
-        max-width: 80rem;
-        /* استخدام aspect-ratio يضمن ظهور الكانفاس دائماً */
-        aspect-ratio: 16/9; 
-        height: auto; /* ترك الارتفاع يتحدد بالنسبة */
-        min-height: 250px; 
-        margin: 1.25rem auto;
-        background: #000;
-        overflow: hidden;
-        z-index: 10;
-        border-radius: 12px
+    width: 100%;
+    min-height: 300px; /* ضمان وجود مساحة للموبايل */
+    background-color: #000;
+    overflow: hidden;
 }
 
 #webgpuCanvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 5;
+    /* إضافة هذه الخاصية لإجبار الموبايل على عرض المحتوى */
+    touch-action: none; 
 }
-
     .text-overlay-cyber {
         position: absolute;
         inset: 0;
@@ -585,8 +581,8 @@
         const device = await adapter.requestDevice();
         const context = canvas.getContext('webgpu');
         const [baseBitmap, depthBitmap] = await Promise.all([fetchImage(colorImageUrl), fetchImage(depthImageUrl)]);
-        canvas.width = baseBitmap.width; canvas.height = baseBitmap.height;
-        const format = navigator.gpu.getPreferredCanvasFormat();
+       canvas.width = container.offsetWidth * window.devicePixelRatio;
+canvas.height = container.offsetHeight * window.devicePixelRatio;        const format = navigator.gpu.getPreferredCanvasFormat();
         context.configure({ device, format });
         const colorTex = createTex(device, baseBitmap);
         const depthTex = createTex(device, depthBitmap);
