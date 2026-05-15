@@ -20,25 +20,17 @@
     /* الهيدر الأساسي */
    .webgpu-full-width-wrapper {
     position: relative;
-    /* عرض متوازن يشغل معظم الشاشة مع ترك هوامش */
-    width: 90%; 
-    max-width: 80rem; /* حد أقصى للحفاظ على المظهر في الشاشات الكبيرة جداً */
-    
-    /* تحويل الارتفاع إلى rem باستخدام clamp */
-    /* 260px -> 16.25rem | 380px -> 23.75rem */
-    height: clamp(16.25rem, 35vh, 23.75rem); 
-    
-    /* التوسيط التلقائي */
-    margin-left: auto;
-    margin-right: auto;
-    
-    background: #000;
-    overflow: hidden;
-    
-    /* تحسين الحدود والحواف */
-    
-    margin-top: 1.25rem; /* 20px */
-    z-index: 10;
+        width: 95%; /* زيادة العرض قليلاً للموبايل */
+        max-width: 80rem;
+        /* استخدام aspect-ratio يضمن ظهور الكانفاس دائماً */
+        aspect-ratio: 16/9; 
+        height: auto; /* ترك الارتفاع يتحدد بالنسبة */
+        min-height: 250px; 
+        margin: 1.25rem auto;
+        background: #000;
+        overflow: hidden;
+        z-index: 10;
+        border-radius: 12px
 }
 
 #webgpuCanvas {
@@ -253,30 +245,36 @@
         overflow: hidden;
     }
 
-    .carousel-track {
-        position: relative;
-        width: clamp(200px, 60vw, 300px);
-        height: clamp(133px, 40vw, 200px);
-        transform-style: preserve-3d;
-    }
+   /* أولاً: نحدد حجم الـ Track ليكون مستطيلاً بالعرض */
+.carousel-track { 
+    position: relative; 
+    width: 250px;  /* العرض */
+    height: 140px; /* الارتفاع (أقل من العرض ليعطي شكل المستطيل) */
+    transform-style: preserve-3d; 
+}
 
-    .carousel-item {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border-radius: 12px;
-        overflow: hidden;
-        border: 1px solid rgba(0, 210, 255, 0.3);
-        background: #111;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
+.carousel-item { 
+    position: absolute; 
+    width: 250px;  /* نفس عرض الـ track */
+    height: 140px; /* نفس ارتفاع الـ track */
+    border-radius: 8px; 
+    overflow: hidden; 
+    border: 1px solid rgba(0, 210, 255, 0.3); 
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px; 
+}
 
-    .carousel-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
+.carousel-item img { 
+    /* لفرض الحجم المستطيل على الصورة نفسها */
+    width: 30rem; 
+    height: 30rem; 
+    /* cover سيجبر الصورة على ملء المستطيل بالكامل، 
+       لكن إذا كانت اللوغوهات بخلفية شفافة يفضل استخدام contain */
+    object-fit: contain; 
+}
     /* --- Pixel Dispersion Canvas Styles --- */
     /* ابحث عن هذا الكود وقم بتعديله */
 .pixel-dispersion-section {
@@ -295,6 +293,15 @@
     #pixelCanvas {
         max-width: 100%;
         max-height: 100%;
+    }
+    .partner-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
     }
     
 </style>
@@ -671,33 +678,29 @@
 
     // --- 3D Carousel Scroll Logic ---
     function initCarousel() {
-        const items = document.querySelectorAll('.carousel-item');
-        const totalItems = items.length;
-        
-        // حساب الـ Radius بناءً على حجم الشاشة لتجنب خروج العناصر في الموبايل
-        const radius = window.innerWidth < 768 ? Math.max(160, window.innerWidth / 2.2) : 400; 
-
-        gsap.set("#carouselTrack", { transformOrigin: `50% 50% -${radius}px` });
-
-        items.forEach((item, i) => {
-            const angle = (i / totalItems) * 360;
-            gsap.set(item, {
-                rotationY: angle,
-                transformOrigin: `50% 50% -${radius}px`
-            });
+    const items = document.querySelectorAll('.carousel-item');
+    // تعديل الـ radius: زيادة المسافة في الموبايل لمنع الالتصاق
+    const radius = window.innerWidth < 768 ? 250 : 450; 
+    
+    gsap.set("#carouselTrack", { transformOrigin: `50% 50% -${radius}px` });
+    
+    items.forEach((item, i) => {
+        gsap.set(item, { 
+            rotationY: (i / items.length) * 360, 
+            transformOrigin: `50% 50% -${radius}px` 
         });
+    });
 
-        gsap.to("#carouselTrack", {
-            rotationY: 360,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#sponsorsSection",
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 1
-            }
-        });
-    }
+    // لجعل الالتفاف أسرع عند التمرير، نستخدم scrub بقيمة أقل أو نزيد سرعة الـ rotation
+    gsap.to("#carouselTrack", { 
+        rotationY: 720, // جعلناه يلف دورتين كاملتين بدلاً من واحدة لزيادة السرعة
+        ease: "none", 
+        scrollTrigger: { 
+            trigger: "#sponsorsSection", 
+            scrub: 0.5, // تقليل القيمة يجعل الاستجابة للتمرير أسرع وأكثر حيوية
+        } 
+    });
+}
     initCarousel();
     // إعادة ضبط الـ Carousel عند تغيير حجم الشاشة
     window.addEventListener('resize', () => {
