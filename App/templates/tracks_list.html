@@ -7,12 +7,21 @@
 <section class="min-h-screen pt-32 pb-20 px-6 bg-[#020408]">
     <div class="max-w-7xl mx-auto">
         
-        <!-- رأس الصفحة (Header) -->
-        <header class="mb-16 relative">
-            <div class="absolute -left-10 top-0 w-24 h-24 bg-cyan-500/10 blur-[60px] pointer-events-none"></div>
-            <div class="mono text-[10px] text-cyan-400 tracking-[0.5em] uppercase mb-2">Navigation_System</div>
-            <h2 class="text-4xl md:text-5xl font-black italic tracking-tighter uppercase text-white">Mission <span class="text-cyan-400">Tracks</span></h2>
-            <div class="h-[1px] w-full bg-gradient-to-r from-cyan-500/30 via-white/5 to-transparent mt-4"></div>
+        <!-- رأس الصفحة (Header) - تم تعديله ليصبح كل شيء في المنتصف -->
+        <header class="mb-16 relative flex flex-col items-center text-center">
+            <!-- الوهج الخلفي تم توسيطه خلف النص -->
+            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-24 bg-cyan-500/10 blur-[80px] pointer-events-none"></div>
+            
+            <!-- جملة Navigation_System في المنتصف -->
+            <div class="mono text-[10px] text-cyan-400 tracking-[0.5em] uppercase mb-2 block w-full text-center">Navigation_System</div>
+            
+            <!-- عنوان Mission Tracks في المنتصف -->
+            <h2 class="text-4xl md:text-5xl font-black italic tracking-tighter uppercase text-white block w-full text-center">
+                Mission <span class="text-cyan-400">Tracks</span>
+            </h2>
+            
+            <!-- الخط الممتد تم تعديل التدرج الخاص به (via-cyan-500/30) ليبدأ بريق التلوين من المنتصف وينتهي شفافاً عند الأطراف -->
+            <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent mt-4"></div>
         </header>
 
         <!-- شبكة المسارات (Track Grid) -->
@@ -24,16 +33,13 @@
                     <!-- تأثير الشبكة الخلفية عند التحويم -->
                     <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none bg-[linear-gradient(rgba(0,210,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,210,255,0.1)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
 
-                    <!-- الجزء الخاص بالشعار المحدث (تم التكبير هنا) -->
+                    <!-- الجزء الخاص بالشعار المحدث -->
                     <div class="mb-10 flex justify-between items-start relative z-10">
-                        <!-- حاوية الشعار العملاقة: تم زيادة الحجم من w-28/36 إلى w-32/48 وتقليل الـ p -->
-                    <div class="w-28 h-32 md:w-48 md:h-48 border-2 border-white/10 rounded-2xl flex items-center justify-center bg-[#000000] overflow-hidden p-2 group-hover:border-cyan-500/50 group-hover:bg-black transition-all duration-500 shadow-2xl relative">                            <!-- تأثير خلفي لبروز الصورة -->
-                            
+                        <div class="w-28 h-32 md:w-48 md:h-48 border-2 border-white/10 rounded-2xl flex items-center justify-center bg-[#000000] overflow-hidden p-2 group-hover:border-cyan-500/50 group-hover:bg-black transition-all duration-500 shadow-2xl relative">
                             {% if track.logo %}
                                 <img src="{{ track.logo }}" alt="{{ track.name }}" 
                                      class="w-full h-full object-contain transition-all duration-700 group-hover:scale-110 relative z-10">
                             {% else %}
-                                <!-- تكبير الأيقونة البديلة -->
                                 <svg class="w-24 h-24 text-gray-800 group-hover:text-cyan-500/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
                                 </svg>
@@ -90,9 +96,10 @@
             clearProps: "all"
         });
 
+        // تم تعديل تأثير دخول الـ GSAP ليكون من الأسفل (y) بدلاً من الإزاحة لليسار (x) ليناسب التوسيط الجديد
         gsap.from("header", {
             duration: 1.2,
-            x: -30,
+            y: -20,
             opacity: 0,
             ease: "power3.out"
         });
@@ -105,7 +112,6 @@
     }
     
     .hull-border {
-        /* زاوية مشطوفة كلاسيكية للتصميم السايبربانك */
         clip-path: polygon(
             0 0, 
             100% 0, 

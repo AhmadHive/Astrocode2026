@@ -99,8 +99,7 @@ def tracks_list_view(request):
 
 
 def track_detail_view(request, track_id):
-    """Briefing for a specific track and its 2 associated challenges."""
-    track = get_object_or_404(models.Track, pk=track_id)
+    track = get_object_or_404(models.Track.objects.prefetch_related('challenges'), pk=track_id)
     return render(request, 'track_detail.html', {'track': track})
 
 

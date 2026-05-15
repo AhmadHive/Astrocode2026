@@ -24,6 +24,7 @@ class Track(models.Model):
 
 class Challenge(models.Model):
     track = models.ForeignKey(Track, on_delete=models.CASCADE, related_name='challenges')
+    logo = models.URLField(default='https://res.cloudinary.com/diadkkzve/image/upload/v1778875753/Screenshot_2026-05-15_230827_jdc4yb.png')
     name = models.CharField(max_length=200)
     details = models.TextField()
     requirements = models.TextField()
