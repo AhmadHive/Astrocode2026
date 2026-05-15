@@ -19,19 +19,21 @@
         color: white;
         font-family: 'Space Mono', monospace;
         overflow-x: hidden;
+        direction: ltr; /* التأكد من أن الاتجاه من اليسار لليمين */
+        text-align: left;
     }
 
     .courses-header {
-        padding: 80px 15px 40px; /* تقليل الحواف للهاتف */
+        padding: 80px 15px 40px; 
         text-align: center;
         background: linear-gradient(to bottom, rgba(0, 210, 255, 0.05), transparent);
     }
 
     .cyber-title {
         font-family: 'Orbitron', sans-serif;
-        font-size: clamp(1.8rem, 8vw, 4rem); /* حجم مرن جداً */
+        font-size: clamp(1.8rem, 8vw, 4rem); 
         text-transform: uppercase;
-        letter-spacing: 4px; /* تقليل المسافات للهاتف */
+        letter-spacing: 4px; 
         color: #fff;
         text-shadow: 0 0 15px var(--cyan-glow);
         margin-bottom: 15px;
@@ -44,7 +46,6 @@
 
     .course-grid {
         display: grid;
-       
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
         gap: 20px;
         padding: 20px;
@@ -63,7 +64,7 @@
     .course-card {
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(0, 210, 255, 0.1);
-        padding: 20px; /* تقليل الحشو الداخلي في الموبايل */
+        padding: 20px; 
         position: relative;
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         overflow: hidden;
@@ -71,6 +72,7 @@
         display: flex;
         flex-direction: column;
         height: 100%;
+        text-align: left; /* محاذاة النص داخل البطاقة لليسار */
     }
 
     @media (min-width: 768px) {
@@ -134,12 +136,12 @@
         margin-bottom: 20px;
         border-left: 2px solid rgba(255, 255, 255, 0.1);
         padding-left: 12px;
-        flex-grow: 1; /* جعل الوصف يأخذ المساحة المتبقية لتوحيد حجم البطاقات */
+        flex-grow: 1; 
     }
 
     .course-meta {
         display: flex;
-        flex-wrap: wrap; /* السماح للعناصر بالنزول لسطر جديد في الشاشات الصغيرة جداً */
+        flex-wrap: wrap; 
         justify-content: space-between;
         align-items: center;
         gap: 10px;
@@ -184,10 +186,8 @@
     <div class="courses-header">
         <h1 class="cyber-title">Available Courses</h1>
         <p class="mono text-cyan-400/60 text-xs md:text-sm">The session is open to all students and anyone interested in the field</p>
-        <a href="https://chat.whatsapp.com/IqnWD1UJtYh6LakEuCnokw" class="hover:text-cyan-400 transition">Session Groube Linke</a>
-
+        <a href="https://chat.whatsapp.com/IqnWD1UJtYh6LakEuCnokw" class="hover:text-cyan-400 transition">Session Group Link</a>
     </div>
-
 
     <div class="course-grid" id="courseContainer"></div>
 </section>
@@ -198,32 +198,30 @@
             courseTitle: "Robotics design and programming",
             instructor: "Khaled Ahmad",
             bio: "Robotics and AI Trainer & Mechatronics Engineer | Founder Of RoboMind",
-            time: "18 MAY 2026 6:00 pM - 8:00 PM ",
+            time: "18 MAY 2026 6:00 PM - 8:00 PM",
             status: "Zoom Online Course",
             image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777994540/Screenshot_2026-05-05_182202_te0uiu.png",
-            zoom_url:'https://www.youtube.com/watch?v=lF0MlMz2Rvk&t=11623s'
-
+            zoom_url: 'https://www.youtube.com/watch?v=lF0MlMz2Rvk&t=11623s'
         },
-        
         {
             courseTitle: "Space and Aerospace Systems",
             instructor: "Eng.Diana Al-Jbour",
             bio: "Space Systems & Thermal Engineering | Al-Rhim Sat Project Coordinator| SGAC Middle East Awardee",
-            time: "19-20 MAY 2026 6:00 PM - 8:00 PM ",
+            time: "19-20 MAY 2026 6:00 PM - 8:00 PM",
             status: "Zoom Online Course",
             image: "https://res.cloudinary.com/diadkkzve/image/upload/v1778831038/WhatsApp_Image_2026-05-14_at_11.44.00_PM_d790sk.jpg",
-            zoom_url:"https://www.youtube.com/watch?v=lF0MlMz2Rvk&t=11623s",
-            secound_Zoom_Url:"https://www.youtube.com/watch?v=lF0MlMz2Rvk&t=11623s",
-            Secound_name:"20 May Course Linke"
+            zoom_url: "https://www.youtube.com/watch?v=lF0MlMz2Rvk&t=11623s",
+            secound_Zoom_Url: "https://www.youtube.com/watch?v=lF0MlMz2Rvk&t=11623s",
+            Secound_name: "20 May Course Link"
         },
-         {
+        {
             courseTitle: "Smart Web Apps with AI Agents",
             instructor: "Mohammad Yacoub",
-            bio: "Founder of CODEgy | Senior Full-Stack .NET Developer | Oracle & SQL ServerExpert | Technical Trainer & IT Consultant",
-            time: "19-20 MAY 2026 6:00 PM - 8:00 PM ",
+            bio: "Founder of CODEgy | Senior Full-Stack .NET Developer | Oracle & SQL Server Expert | Technical Trainer & IT Consultant",
+            time: "19-20 MAY 2026 6:00 PM - 8:00 PM",
             status: "Zoom Online Course",
             image: "https://res.cloudinary.com/diadkkzve/image/upload/v1777669581/20_kswvyx.png",
-            zoom_url:"https://www.youtube.com/watch?v=lF0MlMz2Rvk&t=11623s"
+            zoom_url: "https://www.youtube.com/watch?v=lF0MlMz2Rvk&t=11623s"
         }
     ];
 
@@ -245,7 +243,7 @@
                     </div>
                     <span class="mono text-[9px] md:text-[10px] opacity-40 uppercase">${course.status}</span>
                 </div>
-                <a href=${course.zoom_url} target="_blank" class="hover:text-cyan-400 transition">Course Linke</a>
+                <a href="${course.zoom_url}" target="_blank" class="hover:text-cyan-400 transition mt-4 block">Course Link</a>
             `;
             container.appendChild(card);
         });
