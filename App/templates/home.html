@@ -507,16 +507,15 @@
         </div>
     </div>
 
-    <!-- Partners Section -->
-    <!-- حاوية الشريط الرئيسي - قمنا بإضافة overflow-hidden لمنع ظهور شريط التمرير الأفقي للموقع -->
+ <!-- Partners Section -->
 <div class="max-w-6xl w-full mt-20 md:mt-40 px-4 mb-20 md:mb-40 overflow-hidden" id="partnersSection">
     <h3 class="mono text-cyan-400 text-[10px] md:text-xs tracking-[0.5em] mb-4 uppercase opacity-60 text-center reveal-text">// STRATEGIC_ALLIANCE</h3>
     <h2 class="reveal-text text-3xl md:text-5xl font-black tracking-tighter leading-tight italic uppercase text-center mb-10 md:mb-16">
         Our <span class="text-cyan-400">Partners</span>
     </h2>
 
-    <!-- الحاوية المتحركة ممتدة بعرض flex وفجوة gap ثابتة -->
-    <div class="flex space-x-8 w-max wrapper-marquee">
+    <!-- تم إضافة كلاس pointer-events-none هنا لمنع الماوس من إيقاف أو التأثير على الحركة -->
+    <div class="flex space-x-8 w-max wrapper-marquee pointer-events-none">
         
         <!-- المجموعة الأولى من الشعارات -->
         <div class="flex space-x-8 items-center animate-marquee">
@@ -570,9 +569,13 @@
 <script type="module">
     gsap.registerPlugin(ScrollTrigger);
 
+
+
     // --- Countdown Logic ---
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 30);
+    // تم تحديد تاريخ ثابت للمسابقة (8 يونيو 2026) لمنع إعادة العداد عند كل Refresh
+    const targetDate = new Date('June 8, 2026 00:00:00');
+
+
 
     function updateCountdown() {
         const now = new Date().getTime();
@@ -581,13 +584,21 @@
             const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
             const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const secs = Math.floor((diff % (1000 * 60)) / 1000);
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
             document.getElementById('months').innerText = String(months).padStart(2, '0');
             document.getElementById('days').innerText = String(days).padStart(2, '0');
             document.getElementById('hours').innerText = String(hours).padStart(2, '0');
-            document.getElementById('minutes').innerText = String(mins).padStart(2, '0');
-            document.getElementById('seconds').innerText = String(secs).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+        } else {
+            // في حال انتهاء الوقت المستهدف
+            document.getElementById('months').innerText = "00";
+            document.getElementById('days').innerText = "00";
+            document.getElementById('hours').innerText = "00";
+            document.getElementById('minutes').innerText = "00";
+            document.getElementById('seconds').innerText = "00";
         }
     }
     updateCountdown();
@@ -700,7 +711,6 @@ canvas.height = container.offsetHeight * window.devicePixelRatio;        const f
     // --- 3D Carousel Scroll Logic ---
     function initCarousel() {
     const items = document.querySelectorAll('.carousel-item');
-    // تعديل الـ radius: زيادة المسافة في الموبايل لمنع الالتصاق
     const radius = window.innerWidth < 768 ? 250 : 450; 
     
     gsap.set("#carouselTrack", { transformOrigin: `50% 50% -${radius}px` });
@@ -712,18 +722,16 @@ canvas.height = container.offsetHeight * window.devicePixelRatio;        const f
         });
     });
 
-    // لجعل الالتفاف أسرع عند التمرير، نستخدم scrub بقيمة أقل أو نزيد سرعة الـ rotation
     gsap.to("#carouselTrack", { 
-        rotationY: 720, // جعلناه يلف دورتين كاملتين بدلاً من واحدة لزيادة السرعة
+        rotationY: 720, 
         ease: "none", 
         scrollTrigger: { 
             trigger: "#sponsorsSection", 
-            scrub: 0.5, // تقليل القيمة يجعل الاستجابة للتمرير أسرع وأكثر حيوية
+            scrub: 0.5, 
         } 
     });
 }
     initCarousel();
-    // إعادة ضبط الـ Carousel عند تغيير حجم الشاشة
     window.addEventListener('resize', () => {
         ScrollTrigger.refresh();
         initCarousel();
@@ -752,11 +760,9 @@ canvas.height = container.offsetHeight * window.devicePixelRatio;        const f
     
     function initPixels() {
         pCanvas.width = window.innerWidth;
-        // جعل مساحة الكانفاس مناسبة للشاشة
         pCanvas.height = window.innerWidth < 768 ? 300 : 400;
         pCtx.fillStyle = "white";
         
-        // تغيير حجم الخط ديناميكياً ليناسب الموبايل
         const fontSize = Math.max(30, Math.min(80, window.innerWidth / 12));
         pCtx.font = `bold ${fontSize}px Orbitron`;
         
@@ -768,7 +774,6 @@ canvas.height = container.offsetHeight * window.devicePixelRatio;        const f
         pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
         particles = [];
 
-        // تقليل كثافة البيكسل في الموبايل لتحسين الأداء
         const step = window.innerWidth < 768 ? 6 : 4;
 
         for (let y = 0; y < pCanvas.height; y += step) {
@@ -789,7 +794,6 @@ canvas.height = container.offsetHeight * window.devicePixelRatio;        const f
         pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
         pCtx.fillStyle = "#00d2ff";
         
-        // تكبير حجم نقطة البيكسل قليلا في الموبايل للوضوح
         const dotSize = window.innerWidth < 768 ? 3 : 2;
 
         particles.forEach(p => {
@@ -816,6 +820,8 @@ canvas.height = container.offsetHeight * window.devicePixelRatio;        const f
         initPixels();
         drawPixels(pObj.p);
     });
+
+    
 
 </script>
 {% endblock %}
