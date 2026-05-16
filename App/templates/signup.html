@@ -4,7 +4,7 @@
 <!-- تضمين مكتبة GSAP للأنيميشن -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-<section class="min-h-screen flex items-center justify-center px-4 py-20 bg-[#020408]">
+<section class="min-h-screen flex items-center justify-center px-4 py-20 bg-[#020408]" dir="ltr">
     <div class="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-5 gap-0 relative">
         
         <!-- اللوحة الجانبية (تظهر في الشاشات الكبيرة فقط) -->
@@ -58,9 +58,9 @@
                         {# التحقق إذا كان الحقل هو حقل اختيار #}
                         {% if field.field.choices %}
                             <select name="{{ field.name }}" id="{{ field.auto_id }}" 
-                                    class="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-none mono text-sm focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all text-white appearance-none cursor-pointer">
+                                    class="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-none mono text-sm focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all text-white appearance-none cursor-pointer dynamic-select">
                                 {% for choice in field.field.choices %}
-                                    <option value="{{ choice.0 }}" class="bg-[#0b0e14] text-white">{{ choice.1 }}</option>
+                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
                                 {% endfor %}
                             </select>
                             <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-cyan-500/50">
@@ -71,7 +71,7 @@
                                    name="{{ field.name }}"
                                    id="{{ field.auto_id }}"
                                    {% if field.value %}value="{{ field.value }}"{% endif %}
-                                   class="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-none mono text-sm focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all placeholder:text-gray-700 text-white"
+                                   class="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-none mono text-sm focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all placeholder:text-gray-700 text-white cyber-input"
                                    placeholder="Input {{ field.label }}...">
                         {% endif %}
                         
@@ -88,13 +88,16 @@
 
                 <div class="pt-6">
                     <button type="submit" 
-                            class="w-full relative py-4 group/btn overflow-hidden transition-all">
+                            class="w-full relative py-4 group/btn overflow-hidden transition-all duration-300 shadow-[0_0_0_rgba(6,182,212,0)] hover:shadow-[0_0_25px_rgba(6,182,212,0.3)]">
                         <!-- الحدود والخلفية -->
                         <div class="absolute inset-0 bg-white/5 border border-white/20 group-hover/btn:border-cyan-500/50 transition-all"></div>
                         <!-- تأثير التعبئة عند التحويم -->
-                        <div class="absolute inset-0 bg-cyan-500 translate-x-[-101%] group-hover/btn:translate-x-0 transition-transform duration-500 ease-out"></div>
+                        <div class="absolute inset-0 bg-cyan-500/10 translate-x-[-101%] group-hover/btn:translate-x-0 transition-transform duration-500 ease-out"></div>
                         
-                        <span class="relative z-10 mono font-bold uppercase tracking-[0.4em] group-hover/btn:text-black transition-colors text-white">
+                        <!-- خط اللمعان المتحرك المتولد عند الـ Hover -->
+                        <div class="absolute inset-0 w-[50%] h-full top-0 left-[-60%] bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent -skew-x-12 transition-all duration-1000 group-hover/btn:animate-shimmer"></div>
+                        
+                        <span class="relative z-10 mono font-bold uppercase tracking-[0.4em] group-hover/btn:text-cyan-400 transition-colors text-white duration-300">
                             Confirm_Commission
                         </span>
                     </button>
@@ -111,11 +114,53 @@
 </section>
 
 <style>
-    /* تحسين شكل القائمة المنسدلة في المتصفحات */
-    select option {
-        background: #0b0e14;
-        color: white;
-        padding: 10px;
+    /* منع المتصفح من تغيير لون الخلفية والنص عند الملء التلقائي */
+    .cyber-input:-webkit-autofill,
+    .cyber-input:-webkit-autofill:hover, 
+    .cyber-input:-webkit-autofill:focus, 
+    .cyber-input:-webkit-autofill:active {
+        -webkit-text-fill-color: #ffffff !important;
+        transition: background-color 5000s ease-in-out 0s;
+        box-shadow: inset 0 0 0px 1000px rgba(2, 4, 8, 0.95) !important;
+    }
+
+    /* هندسة وتنسيق القائمة المنسدلة للثيم الفضائي المخصص */
+    .dynamic-select {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        text-shadow: 0 0 5px rgba(6, 182, 212, 0.3);
+    }
+    
+    .dynamic-select:focus {
+        border-color: rgba(6, 182, 212, 0.5) !important;
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+    }
+
+    /* تنسيق خيارات القائمة المنسدلة بالكامل داخل المتصفحات */
+    .dynamic-select option {
+        background-color: #020408 !important;
+        color: #ffffff !important;
+        font-family: monospace;
+        padding: 14px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .dynamic-select option:hover,
+    .dynamic-select option:focus,
+    .dynamic-select option:checked {
+        background-color: #0b0e14 !important;
+        color: #22d3ee !important;
+    }
+
+    /* أنيميشن لمعان الزر */
+    @keyframes shimmer-effect {
+        0% { left: -60%; }
+        100% { left: 160%; }
+    }
+    .group\/btn:hover .group-hover\/btn\:animate-shimmer {
+        animation: shimmer-effect 1.2s infinite ease-in-out;
     }
 
     /* أنيميشن بسيط للنبض */
