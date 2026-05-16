@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('AstroCode2026/', include('App.urls')),
+    path('', include('App.urls')),
 ]
 
 # هذا الجزء هو المسؤول عن تشغيل الـ CSS والـ JS محلياً
