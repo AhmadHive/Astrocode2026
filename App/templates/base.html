@@ -92,14 +92,11 @@
 
                 <div class="flex gap-3 md:gap-4 items-center mono text-[10px] md:text-sm tracking-widest uppercase">
                     {% if user.is_authenticated %}
-                        <a href="{% url 'submission' %}" class="text-cyan-400 hover:text-white transition hidden sm:block">Submit</a>
-                        <form action="{% url 'logout' %}" method="post" class="m-0">
                             {% csrf_token %}
                             <button class="text-red-400 hover:text-white transition">Logout</button>
                         </form>
                     {% else %}
-                        <a href="{% url 'login' %}" class="text-gray-400 hover:text-cyan-400">Login</a>
-                        <a href="{% url 'signup' %}" class="px-3 py-1 md:px-4 md:py-1 bg-white text-pulsar font-bold hover:bg-cyan-400 transition">Join</a>
+                        <!--sign up and login place-->
                     {% endif %}
                 </div>
             </div>
