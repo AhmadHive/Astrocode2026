@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="selection:bg-cyan-500/30">
+<html lang="en" dir="rtl" class="selection:bg-cyan-500/30">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTRO CODE 2026 | Mission Control</title>
     
+    <title>{% block title %}ASTRO CODE 2026 | Mission Control{% endblock %}</title>
+    
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="IEEE AAU Student Branch">
+    <link rel="canonical" href="{% block canonical_url %}{{ request.build_absolute_uri }}{% endblock %}">
+
+    <meta name="keywords" content="{% block meta_keywords %}Astro Code, AstroCode 2026, AAU, Amman Arab University, IEEE, IEEE Jordan, AESS, AESS AAU, coding competition, space theme, جامعة عمان العربية{% endblock %}">
+    
+    <meta name="description" content="{% block meta_description %}Official platform for ASTRO CODE 2026 - A space-themed coding competition organized by the IEEE Student Branch and AESS Chapter at Amman Arab University (AAU), Jordan.{% endblock %}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ASTRO CODE 2026">
+    <meta property="og:title" content="{% block og_title %}ASTRO CODE 2026 | Mission Control{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Embark on an extraordinary programming journey. Join the ultimate space-themed coding challenge organized by IEEE AESS AAU in Amman, Jordan.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}https://res.cloudinary.com/diadkkzve/image/upload/v1778842361/Screenshot_2026-05-15_135146_be9g6z.png{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}ASTRO CODE 2026 | Mission Control{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Space-themed coding competition organized by IEEE AAU & AESS Jordan.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}https://res.cloudinary.com/diadkkzve/image/upload/v1778842361/Screenshot_2026-05-15_135146_be9g6z.png{% endblock %}">
+
     <link rel="icon" type="image/png" href="https://res.cloudinary.com/diadkkzve/image/upload/v1778842361/Screenshot_2026-05-15_135146_be9g6z.png">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -111,8 +132,6 @@
     <main class="relative z-10 pt-48 min-h-screen px-4 md:px-0">
         <div class="max-w-7xl mx-auto flex flex-col items-center">
             
-            
-
             <div class="w-full">
                 {% block content %}
                 {% endblock %}
