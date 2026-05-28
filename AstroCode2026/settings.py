@@ -12,16 +12,30 @@ load_dotenv()
 # 3. إعدادات الأمان
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-# تأكد أن DEBUG تكون False في السيرفر و True في جهازك عبر ملف .env
+# إعداد DEBUG (يجب أن يكون False في السيرفر)
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-# السماح لجميع النطاقات في المرحلة الحالية
-ALLOWED_HOSTS = ['*']
+# السماح للنطاقات (يفضل تحديد رابط Railway بدلاً من *)
+ALLOWED_HOSTS = [
+    'satisfied-curiosity-production-f8a2.up.railway.app',
+    'localhost',
+    '127.0.0.1'
+]
 
-# أضف رابط موقعك هنا مع https://
+# إعدادات CSRF و HTTPS للبرودكشن
 CSRF_TRUSTED_ORIGINS = [
     'https://satisfied-curiosity-production-f8a2.up.railway.app',
 ]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_HTTPONLY = False 
+
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
 
 # 4. تعريف التطبيقات
 INSTALLED_APPS = [
@@ -33,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'App',
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,7 +78,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'AstroCode2026.wsgi.application'
 
-
 DATABASES = {
     'default': dj_database_url.config(
         default=os.environ.get('DATABASE_URL'),
@@ -74,7 +86,6 @@ DATABASES = {
     )
 }
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -82,30 +93,19 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-
+# إعدادات الملفات الثابتة
 STATIC_URL = 'static/'
-
-
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
-
-
+STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles' 
-
-
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'App.Team'
