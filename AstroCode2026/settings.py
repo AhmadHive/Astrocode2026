@@ -16,11 +16,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 # السماح للنطاقات (يفضل تحديد رابط Railway بدلاً من *)
-ALLOWED_HOSTS = [
-    'satisfied-curiosity-production-f8a2.up.railway.app',
-    'localhost',
-    '127.0.0.1'
-]
+ALLOWED_HOSTS = ['*']
 
 # إعدادات CSRF و HTTPS للبرودكشن
 CSRF_TRUSTED_ORIGINS = [
