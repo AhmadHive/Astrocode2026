@@ -1,33 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
 <section class="min-h-screen flex items-center justify-center px-4 py-24 bg-[#020408]" dir="ltr">
     <div class="max-w-3xl w-full relative" id="submission-module">
-        
-        <!-- خلفية هندسية (Hexagon Trace) -->
         <div class="absolute inset-0 -m-10 md:-m-20 opacity-10 pointer-events-none overflow-hidden">
-            <svg viewBox="0 0 100 100" class="w-full h-full stroke-cyan-500 fill-none" stroke-width="0.05">
-                <polygon points="50,1 95,25 95,75 50,99 5,75 5,25" />
-            </svg>
+            <svg viewBox="0 0 100 100" class="w-full h-full stroke-cyan-500 fill-none" stroke-width="0.05"><polygon points="50,1 95,25 95,75 50,99 5,75 5,25" /></svg>
         </div>
 
         <div class="hull-border p-6 md:p-12 relative overflow-hidden bg-[#020408]/90 backdrop-blur-3xl shadow-[0_0_100px_rgba(0,0,0,0.8)] border border-white/5">
             
-            <!-- الرأس (Header) مع بيانات HUD -->
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
                 <div>
                     <div class="mono text-[10px] text-cyan-400 tracking-[0.5em] uppercase">Payload_Deployment</div>
                     <h2 class="text-3xl md:text-4xl font-black italic tracking-tighter uppercase mt-2 text-white">Mission <span class="text-cyan-400">Submission</span></h2>
                 </div>
-                <div class="text-left md:text-right border-l md:border-l-0 md:border-r border-cyan-500/30 pl-4 md:pr-4">
-                    <div class="mono text-[8px] text-gray-500">UPLINK_STRENGTH: <span class="text-cyan-400">98.4%</span></div>
-                    <div class="mono text-[8px] text-gray-500 mt-1">LATENCY: <span class="text-cyan-400">14MS</span></div>
-                </div>
             </div>
 
-            <!-- تنبيه الأذونات -->
             <div class="mb-8 p-4 border-l-2 border-yellow-500/50 bg-yellow-500/5 flex items-start gap-4">
                 <span class="text-yellow-500 animate-pulse font-bold">!</span>
                 <p class="text-[10px] md:text-xs text-gray-400 mono uppercase tracking-wider leading-relaxed">
@@ -38,147 +30,53 @@
             <form method="post" class="space-y-8" id="payload-form">
                 {% csrf_token %}
                 
-                <!-- وصف المشروع -->
                 <div class="relative group/field">
-                    <label class="block mono text-[10px] text-gray-500 uppercase mb-3 ml-1 tracking-[0.2em]">
-                        Mission_Briefing <span class="opacity-50">(Technical Architecture)</span>
-                    </label>
-                    <div class="relative">
-                        <textarea name="{{ form.description.name }}" 
-                                  id="{{ form.description.auto_id }}"
-                                  rows="6"
-                                  maxlength="1000"
-                                  class="w-full bg-white/5 border border-white/10 p-5 rounded-none mono text-sm focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all resize-none text-white cyber-autofill"
-                                  placeholder="Describe your project's core logic and tools used..."></textarea>
-                        
-                        <!-- عداد الحروف الذكي -->
-                        <div id="counter" class="absolute bottom-4 right-4 mono text-[9px] text-gray-500 tracking-[0.2em] transition-colors pointer-events-none">
-                            0000 / 1000_CHAR
-                        </div>
-                    </div>
-                    {% if form.description.errors %}
-                        <p class="text-[9px] text-red-400 mt-2 mono uppercase tracking-widest">[ERR]: {{ form.description.errors.0 }}</p>
-                    {% endif %}
+                    <label class="block mono text-[10px] text-gray-500 uppercase mb-3 ml-1 tracking-[0.2em]">Mission_Briefing</label>
+                    <textarea name="{{ form.description.name }}" id="{{ form.description.auto_id }}" rows="6" maxlength="1000" class="w-full bg-white/5 border border-white/10 p-5 text-white focus:border-cyan-500 outline-none transition-all resize-none"></textarea>
+                    <div id="counter" class="absolute bottom-4 right-4 mono text-[9px] text-gray-500">0000 / 1000_CHAR</div>
                 </div>
 
-                <!-- رابط المشروع -->
                 <div class="relative group/field">
-                    <label class="block mono text-[10px] text-gray-500 uppercase mb-3 ml-1 tracking-[0.2em]">Uplink_URL (Google Drive / Cloud Storage)</label>
-                    <div class="relative flex items-center">
-                        <span class="absolute left-4 text-cyan-500/30">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
-                        </span>
-                        <input type="url" 
-                               name="{{ form.drive_link.name }}" 
-                               id="{{ form.drive_link.auto_id }}"
-                               required
-                               class="w-full bg-white/5 border border-white/10 pl-12 pr-4 py-4 rounded-none mono text-sm focus:outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all text-white cyber-autofill"
-                               placeholder="https://drive.google.com/your-project">
-                    </div>
-                    {% if form.drive_link.errors %}
-                        <p class="text-[9px] text-red-400 mt-2 mono uppercase tracking-widest">[ERR]: {{ form.drive_link.errors.0 }}</p>
-                    {% endif %}
+                    <label class="block mono text-[10px] text-gray-500 uppercase mb-3 ml-1 tracking-[0.2em]">Select_Challenge</label>
+                    <select name="{{ form.challenge.name }}" id="challenge-select" required>
+                        {% for value, label in form.challenge.field.choices %}
+                            <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
 
-                <!-- زر الإرسال المعدل -->
-                <div class="pt-4">
-                    <button type="submit" id="submit-btn"
-                            class="w-full relative py-5 group/btn overflow-hidden transition-all duration-300 shadow-[0_0_0_rgba(6,182,212,0)] hover:shadow-[0_0_30px_rgba(6,182,212,0.4)]">
-                        <!-- الخلفية التفاعلية -->
-                        <div class="absolute inset-0 bg-cyan-500/5 group-hover/btn:bg-cyan-500/20 transition-all duration-500"></div>
-                        <!-- الحدود التفاعلية -->
-                        <div class="absolute inset-0 border border-cyan-500/30 group-hover/btn:border-cyan-400 transition-all duration-300"></div>
-                        
-                        <!-- تأثير اللمعان الفضائي المتحرك (Shimmer Line) -->
-                        <div class="absolute inset-0 w-[40%] h-full top-0 left-[-50%] bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent -skew-x-12 transition-all duration-1000 group-hover/btn:animate-shimmer"></div>
-                        
-                        <!-- النص المتوهج باللون الأزرق عند الـ Hover -->
-                        <span id="btn-text" class="relative z-10 mono font-black uppercase tracking-[0.5em] text-white group-hover/btn:text-cyan-400 transition-colors duration-300 drop-shadow-[0_0_8px_rgba(34,211,238,0)] group-hover/btn:drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]">
-                            Transmit_Payload
-                        </span>
-                    </button>
+                <div class="relative group/field">
+                    <label class="block mono text-[10px] text-gray-500 uppercase mb-3 ml-1 tracking-[0.2em]">Uplink_URL</label>
+                    <input type="url" name="{{ form.drive_link.name }}" required class="w-full bg-white/5 border border-white/10 p-4 text-white focus:border-cyan-500 outline-none transition-all">
                 </div>
+
+                <button type="submit" id="submit-btn" class="w-full py-5 border border-cyan-500/30 text-white font-black uppercase tracking-[0.5em] hover:border-cyan-400 hover:bg-cyan-500/10 transition-all">
+                    <span id="btn-text">Transmit_Payload</span>
+                </button>
             </form>
         </div>
     </div>
 </section>
 
 <style>
-    /* منع المتصفح من فرض الخلفية البيضاء أو النص الأسود عند الملء التلقائي */
-    .cyber-autofill:-webkit-autofill,
-    .cyber-autofill:-webkit-autofill:hover, 
-    .cyber-autofill:-webkit-autofill:focus, 
-    .cyber-autofill:-webkit-autofill:active {
-        -webkit-text-fill-color: #ffffff !important;
-        transition: background-color 5000s ease-in-out 0s;
-        box-shadow: inset 0 0 0px 1000px rgba(255, 255, 255, 0.05) !important;
-    }
-
-    /* تحريك خط اللمعان عند التحويم فقط */
-    @keyframes shimmer-effect {
-        0% { left: -50%; }
-        100% { left: 150%; }
-    }
-    .group\/btn:hover .group-hover\/btn\:animate-shimmer {
-        animation: shimmer-effect 1.5s infinite ease-in-out;
-    }
-
-    /* تحسين مظهر التمرير داخل منطقة النص */
-    textarea::-webkit-scrollbar {
-        width: 4px;
-    }
-    textarea::-webkit-scrollbar-thumb {
-        background: rgba(0, 210, 255, 0.2);
-    }
+    .choices__inner { background-color: #020408 !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 0 !important; min-height: 50px !important; }
+    .choices__list--dropdown { background-color: #000 !important; border: 1px solid #06b6d4 !important; border-radius: 0 !important; }
+    .choices__item--selectable { color: #fff !important; }
+    .choices__item--selectable:hover { background-color: #06b6d4 !important; color: #000 !important; }
+    .choices[data-type*=select-one]::after { border-color: #06b6d4 transparent transparent transparent !important; }
 </style>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
+        new Choices(document.getElementById('challenge-select'), { searchEnabled: false, itemSelectText: '' });
+        
         const textArea = document.querySelector('textarea');
         const counter = document.getElementById('counter');
-        const form = document.getElementById('payload-form');
-        const btnText = document.getElementById('btn-text');
-
-        // منطق عداد الحروف
-        if(textArea) {
-            textArea.addEventListener('input', () => {
-                const length = textArea.value.length;
-                const paddedLength = length.toString().padStart(4, '0');
-                counter.textContent = `${paddedLength} / 1000_CHAR`;
-                
-                if(length > 900) {
-                    counter.style.color = "#eab308"; // Yellow
-                    counter.classList.add('animate-pulse');
-                } else {
-                    counter.style.color = "#6b7280"; // Gray
-                    counter.classList.remove('animate-pulse');
-                }
-            });
-        }
-
-        // أنيميشن عند الإرسال
-        form.addEventListener('submit', () => {
-            btnText.textContent = "TRANSMITTING DATA...";
-            btnText.classList.add('animate-pulse');
+        textArea.addEventListener('input', () => {
+            counter.textContent = `${textArea.value.length.toString().padStart(4, '0')} / 1000_CHAR`;
         });
 
-        // GSAP: تسلسل دخول العناصر
-        gsap.from("#submission-module", {
-            duration: 1.2,
-            scale: 0.95,
-            opacity: 0,
-            y: 30,
-            ease: "power3.out"
-        });
-
-        gsap.from(".group/field", {
-            duration: 0.8,
-            x: -20,
-            opacity: 0,
-            stagger: 0.15,
-            ease: "power2.out",
-            delay: 0.4
-        });
+        gsap.from("#submission-module", { duration: 1.2, scale: 0.95, opacity: 0, y: 30, ease: "power3.out" });
     });
 </script>
 {% endblock %}

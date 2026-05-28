@@ -113,8 +113,12 @@
 
                 <div class="flex gap-3 md:gap-4 items-center mono text-[10px] md:text-sm tracking-widest uppercase">
                     {% if user.is_authenticated %}
-                        {% else %}
-                        {% endif %}
+<form action="{% url 'logout' %}" method="post" class="inline">
+    {% csrf_token %}
+    <button type="submit" class="text-red-400 hover:text-red-500 transition-colors bg-transparent border-none p-0 cursor-pointer uppercase">
+        Log_out
+    </button>
+</form>                        {% endif %}
                 </div>
             </div>
 

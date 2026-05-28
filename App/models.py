@@ -33,7 +33,6 @@ class Challenge(models.Model):
 class Team(AbstractBaseUser, PermissionsMixin):
     team_name = models.CharField(max_length=100, unique=True)
     university = models.CharField(max_length=150)
-    challenge = models.ForeignKey(Challenge, on_delete=models.PROTECT, related_name='teams', null=True)
     
     leader_name = models.CharField(max_length=100)
     member2_name = models.CharField(max_length=100)
@@ -58,3 +57,4 @@ class Submission(models.Model):
     description = models.TextField(max_length=1000)
     drive_link = models.URLField()
     submitted_at = models.DateTimeField(auto_now_add=True)
+    challenge = models.ForeignKey(Challenge, on_delete=models.PROTECT, related_name='teams', null=True)

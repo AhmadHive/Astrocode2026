@@ -49,7 +49,7 @@ def login_view(request):
 @require_POST
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('regist')
 
 
 @login_required

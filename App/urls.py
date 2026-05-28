@@ -10,6 +10,11 @@ urlpatterns = [
     path('Track_detail/<int:track_id>/', views.track_detail_view, name='track_detail'),
     path('Committee_Competitio',views.Comitee_Team,name='Committee_Competitio'),
     path('Courses',views.Courses,name='Courses'),
-    path('AstroCode2025',views.AstroCode2025,name='AstroCode2025')
+    path('AstroCode2025',views.AstroCode2025,name='AstroCode2025'),
+    path('regist',views.signup_view,name='regist'),
+    path('login',views.login_view,name='login'),
+    path('logout',views.logout_view,name='logout'),
+    path('supmition',views.submission_view,name='supmition')
+    
 
 ]
