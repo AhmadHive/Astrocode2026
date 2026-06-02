@@ -14,7 +14,8 @@ urlpatterns = [
     path('regist',views.signup_view,name='regist'),
     path('login',views.login_view,name='login'),
     path('logout',views.logout_view,name='logout'),
-    path('supmition',views.submission_view,name='supmition')
+    path('supmition',views.submission_view,name='supmition'),
+    path('challenges/<int:challenge_id>/', views.challenge_detail_view, name='challenge_detail'),
     
 
 ]

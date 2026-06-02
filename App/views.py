@@ -113,3 +113,11 @@ def Courses(request):
 
 def AstroCode2025(request):
     return render(request, '2025.html')
+
+from django.shortcuts import render, get_object_or_404
+from .models import Challenge
+
+def challenge_detail_view(request, challenge_id):
+    
+    challenge = get_object_or_404(Challenge, id=challenge_id)
+    return render(request, 'challenge_detail.html', {'challenge': challenge})
